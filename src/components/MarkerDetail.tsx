@@ -5,12 +5,13 @@ import { ICollectionDetail } from 'types/collection';
 
 const MarkerDetail = ({ collectionId }: { collectionId: number }) => {
 	const [detail, setDetail] = useState<ICollectionDetail>();
+
 	useEffect(() => {
 		getCollectionDetail(collectionId).then(setDetail);
 	}, []);
 
 	return (
-		<div className="flex flex-col gap-3 p-[20px] bg-white min-w-[300px] border-2 border-[#ECE9E5] rounded-lg">
+		<div className="absolute top-[-160px] left-[-70px] flex flex-col gap-3 p-[20px] bg-white min-w-[300px] border-2 border-[#ECE9E5] rounded-lg">
 			<p className="text-[#43413E] text-[20px]">{detail?.roadName}</p>
 			<p className="flex items-center gap-2 text-[#817E7B]">
 				<div className="px-3 py-1 rounded-md bg-[#ECE9E5]">지번</div>
