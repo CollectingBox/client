@@ -23,4 +23,14 @@ export const handlers = [
 			},
 		]);
 	}),
+	http.get('/api/collections/:id', ({ params }) => {
+		const { id } = params;
+		return HttpResponse.json({
+			location: null,
+			roadName: '서울특별시 성동구 무학로 33',
+			streetNumber: '효창동 5-74',
+			modifiedDate: '2024-04-14',
+			tag: '폐의류',
+		});
+	}),
 ];
