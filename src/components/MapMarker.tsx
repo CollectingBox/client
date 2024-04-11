@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { ICollection } from 'types/collection';
+import { ICollection } from '@/types/collection';
 import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
 import MarkerDetail from './MarkerDetail';
 

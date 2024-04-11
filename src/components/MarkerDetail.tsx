@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { getCollectionDetail } from 'service/collection';
-import { ICollectionDetail } from 'types/collection';
+import { getCollectionDetail } from '@/service/collection';
+import { ICollectionDetail } from '@/types/collection';
 
 const MarkerDetail = ({ collectionId }: { collectionId: number }) => {
 	const [detail, setDetail] = useState<ICollectionDetail>();

@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
-import { getCollections } from 'service/collection';
-import { ICollection } from 'types/collection';
+import { getCollections } from '@/service/collection';
+import { ICollection } from '@/types/collection';
 import MapMarker from './MapMarker';
+import FilterButtons from './FilterButtons';
 
 export default function Kakaomap() {
 	const [loading, error] = useKakaoLoader({
@@ -16,13 +17,16 @@ export default function Kakaomap() {
 	}, []);
 
 	return (
-		<Map
-			center={{ lat: 37.498, lng: 127.028 }}
-			style={{ width: '100dvw', height: '100dvh' }}
-		>
-			{collections.map((collection) => (
-				<MapMarker key={collection.id} collection={collection} />
-			))}
-		</Map>
+		<div className="relative">
+			<FilterButtons />
+			<Map
+				center={{ lat: 37.498, lng: 127.028 }}
+				style={{ width: '100dvw', height: '100dvh' }}
+			>
+				{collections.map((collection) => (
+					<MapMarker key={collection.id} collection={collection} />
+				))}
+			</Map>
+		</div>
 	);
 }
