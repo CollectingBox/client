@@ -42,9 +42,6 @@ const config: Config = {
 				Success: '#0079D0',
 			},
 		},
-		fontFamily: {
-			Pretendard: ['Pretendard'],
-		},
 	},
 	plugins: [],
 };
