@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getCollectionDetail } from '@/service/collection';
 import { ICollectionDetail } from '@/types/collection';
+import Copy from './Copy';
 
 const MarkerDetail = ({ collectionId }: { collectionId: number }) => {
 	const [detail, setDetail] = useState<ICollectionDetail>();
@@ -11,8 +12,11 @@ const MarkerDetail = ({ collectionId }: { collectionId: number }) => {
 	}, []);
 
 	return (
-		<div className="absolute top-[-160px] left-[-70px] flex flex-col gap-3 p-[20px] bg-white min-w-[300px] border-2 border-[#ECE9E5] rounded-lg">
-			<p className="text-Gray-700 text-[20px]">{detail?.roadName}</p>
+		<div className="absolute top-[-160px] left-[-70px] flex flex-col gap-3 p-[20px] bg-white border-2 border-[#ECE9E5] rounded-lg">
+			<p className="flex gap-2 text-[20px] whitespace-nowrap">
+				{detail?.roadName}
+				{detail && <Copy text={detail?.roadName} />}
+			</p>
 			<p className="flex items-center gap-2 text-Gray-500">
 				<div className="px-3 py-1 rounded-md bg-Gray-100">지번</div>
 				{detail?.streetNumber}
