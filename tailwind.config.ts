@@ -127,7 +127,7 @@ const config: Config = {
 				'.Title-Large': {
 					fontFamily: 'Pretendard',
 					fontWeight: '700',
-					fontSize: '22px',
+					fontSize: '20px',
 					lineHeight: '28px',
 					letterSpacing: '-0.01em',
 				},
