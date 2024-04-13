@@ -76,8 +76,10 @@ const config: Config = {
 	plugins: [
 		plugin(function ({
 			addUtilities,
+			addComponents,
 		}: {
 			addUtilities: PluginAPI['addUtilities'];
+			addComponents: PluginAPI['addComponents'];
 		}) {
 			addUtilities({
 				'.Display-Large': {
@@ -184,6 +186,38 @@ const config: Config = {
 					fontSize: '10px',
 					lineHeight: '16px',
 					letterSpacing: '0em',
+				},
+			});
+			addComponents({
+				'.Elevation-1-Bottom': {
+					boxShadow: '0 2px 4px 0 rgba(51, 49, 46, 0.15)',
+				},
+				'.Elevation-1-Top': {
+					boxShadow: '0 -2px 4px 0 rgba(46, 49, 51, 0.15)',
+				},
+				'.Elevation-2-Bottom': {
+					boxShadow: '0 4px 8px 0 rgba(51, 49, 46, 0.15)',
+				},
+				'.Elevation-2-Top': {
+					boxShadow: '0 -4px 8px 0 rgba(46, 49, 51, 0.15)',
+				},
+				'.Elevation-3-Bottom': {
+					boxShadow: '0 6px 12px 0 rgba(51, 49, 46, 0.15)',
+				},
+				'.Elevation-3-Top': {
+					boxShadow: '0 -6px 12px 0 rgba(46, 49, 51, 0.15)',
+				},
+				'.Elevation-4-Bottom': {
+					boxShadow: '0 8px 16px 0 rgba(51, 49, 46, 0.15)',
+				},
+				'.Elevation-4-Top': {
+					boxShadow: '0 -8px 16px 0 rgba(46, 49, 51, 0.15)',
+				},
+				'.Elevation-5-Bottom': {
+					boxShadow: '0 10px 20px 0 rgba(51, 49, 46, 0.15)',
+				},
+				'.Elevation-5-Top': {
+					boxShadow: ' 0 -10px 20px 0 rgba(46, 49, 51, 0.15)',
 				},
 			});
 		}),
