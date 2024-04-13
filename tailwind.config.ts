@@ -1,4 +1,6 @@
+import plugin from 'tailwindcss/plugin';
 import type { Config } from 'tailwindcss';
+import type { PluginAPI } from 'tailwindcss/types/config';
 
 const config: Config = {
 	content: [
@@ -43,6 +45,120 @@ const config: Config = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		plugin(function ({
+			addUtilities,
+		}: {
+			addUtilities: PluginAPI['addUtilities'];
+		}) {
+			addUtilities({
+				'.Display-Large': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '57px',
+					lineHeight: '64px',
+					letterSpacing: '-0.01em',
+				},
+				'.Display-Medium': {
+					fontFamily: 'Pretendard',
+					fontWeight: '700',
+					fontSize: '45px',
+					lineHeight: '54px',
+					letterSpacing: '-0.01em',
+				},
+				'.Display-Small': {
+					fontFamily: 'Pretendard',
+					fontWeight: '500',
+					fontSize: '36px',
+					lineHeight: '44px',
+					letterSpacing: '-0.01em',
+				},
+				'.Headline-Large': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '32px',
+					lineHeight: '42px',
+					letterSpacing: '-0.01em',
+				},
+				'.Headline-Medium': {
+					fontFamily: 'Pretendard',
+					fontWeight: '700',
+					fontSize: '28px',
+					lineHeight: '38px',
+					letterSpacing: '-0.01em',
+				},
+				'.Headline-Small': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '24px',
+					lineHeight: '32px',
+					letterSpacing: '-0.01em',
+				},
+				'.Title-Large': {
+					fontFamily: 'Pretendard',
+					fontWeight: '700',
+					fontSize: '22px',
+					lineHeight: '28px',
+					letterSpacing: '-0.01em',
+				},
+				'.Title-Medium': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '18px',
+					lineHeight: '26px',
+					letterSpacing: '-0.01em',
+				},
+				'.Title-Small': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '16px',
+					lineHeight: '24px',
+					letterSpacing: '-0.01em',
+				},
+				'.Body-Large': {
+					fontFamily: 'Pretendard',
+					fontWeight: '500',
+					fontSize: '16px',
+					lineHeight: '24px',
+					letterSpacing: '0em',
+				},
+				'.Body-Medium': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '14px',
+					lineHeight: '20px',
+					letterSpacing: '0em',
+				},
+				'.Body-Small': {
+					fontFamily: 'Pretendard',
+					fontWeight: '600',
+					fontSize: '12px',
+					lineHeight: '16px',
+					letterSpacing: '0em',
+				},
+				'.Label-Large': {
+					fontFamily: 'Pretendard',
+					fontWeight: '500',
+					fontSize: '14px',
+					lineHeight: '20px',
+					letterSpacing: '0em',
+				},
+				'.Label-Medium': {
+					fontFamily: 'Pretendard',
+					fontWeight: '500',
+					fontSize: '12px',
+					lineHeight: '16px',
+					letterSpacing: '0em',
+				},
+				'.Label-Small': {
+					fontFamily: 'Pretendard',
+					fontWeight: '500',
+					fontSize: '10px',
+					lineHeight: '16px',
+					letterSpacing: '0em',
+				},
+			});
+		}),
+	],
 };
 export default config;
