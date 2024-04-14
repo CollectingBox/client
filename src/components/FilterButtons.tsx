@@ -1,10 +1,10 @@
 'use client';
 
-import BatteryIcon from './ui/icons/BatteryIcon';
-import ClothesIcon from './ui/icons/ClothesIcon';
-import FluorescentLampIcon from './ui/icons/FluorescentLamp';
-import PillIcon from './ui/icons/PillIcon';
-import TrashcanIcon from './ui/icons/TrashcanIcon';
+import BatteryIcon from '@/public/icons/battery.svg';
+import ClothesIcon from '@/public/icons/clothes.svg';
+import FluorescentLampIcon from '@/public/icons/fluorescentLamp.svg';
+import PillIcon from '@/public/icons/pill.svg';
+import TrashcanIcon from '@/public/icons/trashcan.svg';
 
 const FilterButtons = () => {
 	const filterButtonStyle =
@@ -12,19 +12,19 @@ const FilterButtons = () => {
 	return (
 		<div className="flex gap-2 absolute top-4 left-4 z-10">
 			<button className={filterButtonStyle}>
-				<ClothesIcon size={20} /> 폐의류
+				<ClothesIcon /> 폐의류
 			</button>
 			<button className={filterButtonStyle}>
-				<FluorescentLampIcon size={20} /> 폐형광등
+				<FluorescentLampIcon /> 폐형광등
 			</button>
 			<button className={filterButtonStyle}>
-				<BatteryIcon size={20} /> 폐건전지
+				<BatteryIcon /> 폐건전지
 			</button>
 			<button className={filterButtonStyle}>
-				<PillIcon size={20} /> 폐의약품
+				<PillIcon /> 폐의약품
 			</button>
 			<button className={filterButtonStyle}>
-				<TrashcanIcon size={20} /> 쓰레기통
+				<TrashcanIcon /> 쓰레기통
 			</button>
 		</div>
 	);

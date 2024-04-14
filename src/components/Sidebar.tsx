@@ -12,7 +12,7 @@ const Sidebar = () => {
 	return (
 		<div
 			onClick={() => setisopen((prev) => !prev)}
-			className={`flex flex-col p-5 w-[86px] ${isopen && 'w-[390px]'} transition-all duration-1000`}
+			className={`flex flex-col p-5 ${isopen ? 'w-[390px]' : 'w-[86px]'} transition-all duration-1000`}
 		>
 			<div className="flex items-center gap-2">
 				<LogoIcon />
