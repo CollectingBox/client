@@ -22,7 +22,7 @@ export default function Kakaomap({
 	return (
 		<Map
 			center={{ lat: 37.498, lng: 127.028 }}
-			style={{ width: '100dvw', height: '100dvh' }}
+			style={{ width: '100%', height: '100dvh' }}
 			zoomable={true}
 			ref={mapRef}
 		>
