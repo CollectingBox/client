@@ -1,9 +1,9 @@
 'use client';
 
-import { createContext, useState } from 'react';
+import { createContext, useCallback, useState } from 'react';
 
 export const OpenContext = createContext({
-	isOpen: true,
+	isOpen: false,
 	setIsOpen: (value: boolean) => {},
 });
 
