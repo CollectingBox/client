@@ -35,7 +35,7 @@ const MapController = ({ location, setLocation, mapRef, setCenter }: Props) => {
 					<SearchBar />
 					<button
 						onClick={onClickLocation}
-						className="flex justify-center items-center p-S-14 bg-white rounded-xl Elevation-2-Bottom"
+						className="fixed bottom-14 right-5 xl:static flex justify-center items-center p-S-14 bg-white rounded-xl Elevation-2-Bottom"
 					>
 						<LocationIcon />
 					</button>
