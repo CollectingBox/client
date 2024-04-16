@@ -14,7 +14,7 @@ const FilterButtons = () => {
 	]);
 
 	const filterButtonStyle = (filter: string, color: string) => {
-		return `flex items-center justify-between px-4 py-2 gap-2 rounded-full 
+		return `flex items-center justify-between min-w-max h-S-32 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
 		${selectedFilters.includes(filter) ? color + ' text-white' : 'bg-white text-Gray-200'}`;
 	};
 
@@ -38,7 +38,7 @@ const FilterButtons = () => {
 	};
 
 	return (
-		<div className="flex gap-2">
+		<div className="flex gap-2 flex-wrap">
 			<button
 				value="폐의류"
 				onClick={handleClickFilter}
