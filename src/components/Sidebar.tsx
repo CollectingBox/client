@@ -16,9 +16,10 @@ const Sidebar = () => {
 	const { isOpen, setIsOpen } = useContext(OpenContext);
 	return (
 		<div
-			className={`fixed bottom-0 w-full xl:static rounded-t-[32px] xl:rounded-none flex flex-col gap-3 ${isOpen ? 'xl:w-[390px]' : 'xl:w-[86px]'} z-10 bg-Gray-50 transition-all duration-1000`}
+			className={`fixed bottom-0 w-full xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'xl:w-[86px]'} z-10 bg-white transition-all duration-1000`}
 			onClick={() => setIsOpen(!isOpen)}
 		>
+			<div className="h-S-24 rounded-t-[32px] bg-white xl:hidden"></div>
 			<div
 				className={`hidden xl:flex bg-white  ${isOpen ? 'px-S-28' : 'px-S-20'} pt-S-24 pb-S-16 transition-all duration-1000`}
 			>
@@ -29,7 +30,7 @@ const Sidebar = () => {
 			</div>
 			{isOpen && (
 				<>
-					<article className="flex flex-col gap-3">
+					<article className="flex flex-col gap-3 bg-Gray-50 xl:pt-S-12">
 						<BoxInformation />
 					</article>
 					<div

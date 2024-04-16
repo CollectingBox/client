@@ -4,7 +4,7 @@ import Copy from '@/components/Copy';
 
 export default function BoxInformation() {
 	return (
-		<section className="flex flex-col w-full px-S-28 xl:pt-S-12 pb-S-32 bg-white pt-S-36 rounded-t-[32px] xl:rounded-none">
+		<section className="flex flex-col w-full px-S-28 pt-S-12 pb-S-32 bg-white xl:rounded-none">
 			<div className="flex flex-col gap-S-20">
 				<div className="flex flex-col gap-S-24">
 					<header>
