@@ -8,43 +8,49 @@ import BoxInformation from './ui/sidebars/BoxInformation';
 import Link from 'next/link';
 import Back from '@/public/icons/back.svg';
 import VisitRecord from './ui/sidebars/VisitRecord';
+import DiscardMethod from './ui/sidebars/DiscardMethod';
 
 const Sidebar = () => {
 	const { isOpen, setIsOpen } = useContext(OpenContext);
 	const [state, setState] = useState<'summary' | 'detail'>('summary');
+	const tag = '폐의류';
 
 	return (
 		<aside
 			className={`fixed bottom-0 left-0 right-0 xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
 		>
 			<button onClick={() => setIsOpen(!isOpen)}>열고닫기임시</button>
+
 			<div className="flex justify-center items-end h-S-24 rounded-t-[32px] bg-white xl:hidden">
 				<div className="w-S-48 h-S-4 bg-Gray-200 rounded-full" />
 			</div>
-			<div
-				className={`hidden xl:flex bg-white ${isOpen ? 'px-S-28' : 'px-S-20'} pt-S-24 pb-S-16 transition-all duration-1000`}
-			>
-				<Link href="/" className="flex items-center gap-2 w-min">
-					<LogoIcon />
-					{isOpen && <LogoWordIcon />}
-				</Link>
+			<div className="max-h-[calc(100dvh_-_150px)] overflow-y-scroll">
+				<div
+					className={`hidden xl:flex bg-white ${isOpen ? 'px-S-28' : 'px-S-20'} pt-S-24 pb-S-16 transition-all duration-1000`}
+				>
+					<Link href="/" className="flex items-center gap-2 w-min">
+						<LogoIcon />
+						{isOpen && <LogoWordIcon />}
+					</Link>
+				</div>
+				{isOpen && (
+					<>
+						<article className="flex flex-col gap-3 bg-Gray-50 xl:pt-S-12">
+							<BoxInformation />
+							<VisitRecord />
+							<DiscardMethod tag={tag} />
+						</article>
+						<div
+							className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} z-10 justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
+							onClick={() => {
+								setIsOpen(false);
+							}}
+						>
+							<Back />
+						</div>
+					</>
+				)}
 			</div>
-			{isOpen && (
-				<>
-					<article className="flex flex-col gap-3 bg-Gray-50 xl:pt-S-12">
-						<BoxInformation />
-						<VisitRecord />
-					</article>
-					<div
-						className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} z-10 justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
-						onClick={() => {
-							setIsOpen(false);
-						}}
-					>
-						<Back />
-					</div>
-				</>
-			)}
 		</aside>
 	);
 };
