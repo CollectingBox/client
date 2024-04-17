@@ -38,7 +38,7 @@ const FilterButtons = () => {
 	};
 
 	return (
-		<div className="flex gap-2 flex-wrap">
+		<div className="flex gap-S-4 xl:gap-S-6 flex-wrap">
 			<button
 				value="폐의류"
 				onClick={handleClickFilter}
