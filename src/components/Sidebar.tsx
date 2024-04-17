@@ -24,7 +24,7 @@ const Sidebar = () => {
 			<div className="flex justify-center items-end h-S-24 rounded-t-[32px] bg-white xl:hidden">
 				<div className="w-S-48 h-S-4 bg-Gray-200 rounded-full" />
 			</div>
-			<div className="max-h-[calc(100dvh_-_150px)] overflow-y-scroll">
+			<div className="max-h-[calc(100dvh_-_150px)] overflow-y-scroll xl:max-h-[calc(100dvh_-_24px)]">
 				<div
 					className={`hidden xl:flex bg-white ${isOpen ? 'px-S-28' : 'px-S-20'} pt-S-24 pb-S-16 transition-all duration-1000`}
 				>
