@@ -1,24 +1,57 @@
 'use client';
+
+import React, { useContext, useState } from 'react';
+import { OpenContext } from '../app/open-provider';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
-import { useState } from 'react';
-
-interface Props {
-	isOpen: boolean;
-}
+import BoxInformation from './ui/sidebars/BoxInformation';
+import Link from 'next/link';
+import Back from '@/public/icons/back.svg';
+import VisitRecord from './ui/sidebars/VisitRecord';
+import DiscardMethod from './ui/sidebars/DiscardMethod';
 
 const Sidebar = () => {
-	const [isopen, setisopen] = useState(false);
+	const { isOpen, setIsOpen } = useContext(OpenContext);
+	const [state, setState] = useState<'summary' | 'detail'>('summary');
+	const tag = '폐의류';
+
 	return (
-		<div
-			onClick={() => setisopen((prev) => !prev)}
-			className={`flex flex-col p-5 ${isopen ? 'w-[390px]' : 'w-[86px]'} transition-all duration-1000`}
+		<aside
+			className={`fixed bottom-0 left-0 right-0 xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
 		>
-			<div className="flex items-center gap-2">
-				<LogoIcon />
-				{isopen && <LogoWordIcon />}
+			<button onClick={() => setIsOpen(!isOpen)}>열고닫기임시</button>
+
+			<div className="flex justify-center items-end h-S-24 rounded-t-[32px] bg-white xl:hidden">
+				<div className="w-S-48 h-S-4 bg-Gray-200 rounded-full" />
 			</div>
-		</div>
+			<div className="max-h-[calc(100dvh_-_150px)] overflow-y-scroll xl:max-h-[calc(100dvh_-_24px)]">
+				<div
+					className={`hidden xl:flex bg-white ${isOpen ? 'px-S-28' : 'px-S-20'} pt-S-24 pb-S-16 transition-all duration-1000`}
+				>
+					<Link href="/" className="flex items-center gap-2 w-min">
+						<LogoIcon />
+						{isOpen && <LogoWordIcon />}
+					</Link>
+				</div>
+				{isOpen && (
+					<>
+						<article className="flex flex-col gap-3 bg-Gray-50 xl:pt-S-12">
+							<BoxInformation />
+							<VisitRecord />
+							<DiscardMethod tag={tag} />
+						</article>
+						<div
+							className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} z-10 justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
+							onClick={() => {
+								setIsOpen(false);
+							}}
+						>
+							<Back />
+						</div>
+					</>
+				)}
+			</div>
+		</aside>
 	);
 };
 
