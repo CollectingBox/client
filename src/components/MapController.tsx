@@ -32,7 +32,7 @@ const MapController = ({ location, setLocation, mapRef, setCenter }: Props) => {
 		<div className="absolute top-0 left-0 w-full h-full">
 			<div className="absolute top-6 left-6 flex flex-col gap-S-14 z-10">
 				<div className="flex gap-S-12">
-					<SearchBar />
+					<SearchBar setCenter={setCenter} />
 					<button
 						onClick={onClickLocation}
 						className="fixed bottom-14 right-5 xl:static flex justify-center items-center p-S-14 bg-white rounded-xl Elevation-2-Bottom"
