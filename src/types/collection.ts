@@ -8,9 +8,15 @@ export interface ICollection {
 }
 
 export interface ICollectionDetail {
-	location: unknown;
+	location: string;
 	roadName: string;
 	streetNumber: string;
 	modifiedDate: string;
 	tag: string;
+	reviews: IReview[];
+}
+
+export interface IReview {
+	content: string;
+	createdDate: string;
 }

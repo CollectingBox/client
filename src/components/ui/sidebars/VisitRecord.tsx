@@ -5,22 +5,13 @@ import VisitMessage from './VisitMessage';
 import Down from '../icons/Down';
 import Add from '../icons/Add';
 import Up from '../icons/Up';
+import { IReview } from '@/types/collection';
 
-interface IMessage {
-	content: string;
-	date: string;
+interface Props {
+	reviews: IReview[];
 }
 
-const messages: IMessage[] = [
-	{ content: '수거함이 사라졌어요 😢', date: '24.8.23' },
-	{ content: '수거함이 사라졌어요 😢', date: '24.4.13' },
-	{ content: '잘 이용했어요 👍', date: '23.12.20' },
-	{ content: '잘 이용했어요 👍', date: '23.12.2' },
-	{ content: '꽉 차 있었어요 🗑', date: '23.11.24' },
-	{ content: '잘 이용했어요 👍', date: '23.8.2' },
-];
-
-export default function VisitRecord() {
+export default function VisitRecord({ reviews }: Props) {
 	const [showAll, setShowAll] = useState(false);
 	const handleShowMoreClick = () => {
 		setShowAll((prev) => !prev);
@@ -37,26 +28,26 @@ export default function VisitRecord() {
 				</div>
 			</div>
 			<div className="flex flex-col gap-S-16">
-				{messages.length > 0 && messages.length < 5 && (
+				{reviews.length > 0 && reviews.length < 5 && (
 					<>
-						{messages.map((message, index) => (
+						{reviews.map((message, index) => (
 							<VisitMessage
 								key={index}
 								content={message.content}
-								date={message.date}
+								createdDate={message.createdDate}
 							/>
 						))}
 					</>
 				)}
-				{messages.length > 5 && (
+				{reviews.length > 5 && (
 					<>
-						{messages
-							.slice(0, showAll ? messages.length : 5)
+						{reviews
+							.slice(0, showAll ? reviews.length : 5)
 							.map((message, index) => (
 								<VisitMessage
 									key={index}
 									content={message.content}
-									date={message.date}
+									createdDate={message.createdDate}
 								/>
 							))}
 						{!showAll ? (
@@ -76,7 +67,7 @@ export default function VisitRecord() {
 						)}
 					</>
 				)}
-				{messages.length === 0 && (
+				{reviews.length === 0 && (
 					<div className="flex flex-col items-center gap-S-8 pb-S-2">
 						<p className="text-Gray-400 Title-Small">방문 기록이 없어요</p>
 						<p className="text-Gray-400 Label-Large">

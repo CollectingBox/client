@@ -9,11 +9,17 @@ import Link from 'next/link';
 import Back from '@/public/icons/back.svg';
 import VisitRecord from './ui/sidebars/VisitRecord';
 import DiscardMethod from './ui/sidebars/DiscardMethod';
+import { getCollectionDetail } from '@/service/collection';
+import { useQuery } from '@tanstack/react-query';
 
 const Sidebar = () => {
 	const { isOpen, setIsOpen } = useContext(OpenContext);
 	const [state, setState] = useState<'summary' | 'detail'>('summary');
-	const tag = '폐의류';
+	const id = 1;
+	const { data } = useQuery({
+		queryKey: ['collectionDetail', id],
+		queryFn: async () => getCollectionDetail(id),
+	});
 
 	return (
 		<aside
@@ -33,12 +39,18 @@ const Sidebar = () => {
 						{isOpen && <LogoWordIcon />}
 					</Link>
 				</div>
-				{isOpen && (
+				{isOpen && data && (
 					<>
 						<article className="flex flex-col gap-3 bg-Gray-50 xl:pt-S-12">
-							<BoxInformation />
-							<VisitRecord />
-							<DiscardMethod tag={tag} />
+							<BoxInformation
+								location={data.location}
+								roadName={data.roadName}
+								streetNumber={data.streetNumber}
+								modifiedDate={data.modifiedDate}
+								tag={data.tag}
+							/>
+							<VisitRecord reviews={data.reviews} />
+							{data.tag !== '쓰레기통' && <DiscardMethod tag={data.tag} />}
 						</article>
 						<div
 							className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} z-10 justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
