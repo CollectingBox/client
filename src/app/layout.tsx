@@ -4,6 +4,7 @@ import './globals.css';
 import Script from 'next/script';
 import OpenProvider from './open-provider';
 import Sidebar from '@/components/Sidebar';
+import RQProvider from '@/components/RQProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,12 +30,14 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className={inter.className}>
-				<OpenProvider>
-					<main className="flex xl:flex-row">
-						<Sidebar />
-						{children}
-					</main>
-				</OpenProvider>
+				<RQProvider>
+					<OpenProvider>
+						<main className="flex xl:flex-row">
+							<Sidebar />
+							{children}
+						</main>
+					</OpenProvider>
+				</RQProvider>
 			</body>
 		</html>
 	);
