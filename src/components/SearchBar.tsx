@@ -1,31 +1,36 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-const SearchBar = () => {
-	const [ps, setPs] = useState<kakao.maps.services.Places | null>(null);
+interface Props {
+	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
+}
+
+const SearchBar = ({ setCenter }: Props) => {
+	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
+		null,
+	);
 
 	useEffect(() => {
 		kakao.maps.load(() => {
-			setPs(new kakao.maps.services.Places());
+			setGeocoder(new kakao.maps.services.Geocoder());
 		});
 	}, []);
 
 	const [value, setValue] = useState('');
 
 	const handleSearch = () => {
-		if (!ps) return;
+		if (!geocoder) return;
 
-		ps.keywordSearch(value, (data, status) => {
+		geocoder.addressSearch(value, (data, status) => {
 			if (status === kakao.maps.services.Status.OK) {
-				const place = data[0]; // 첫 번째로 검색된 장소를 가져옵니다.
-				const address = place.address_name; // 검색된 장소의 주소를 가져옵니다.
 				console.log('data', data);
 
 				// 주소에 '구'가 포함된 경우 해당 구청으로 이동합니다.
-				if (address.includes('구')) {
-				} else if (address.includes('동')) {
-					// 주소에 '동'이 포함된 경우 해당 동사무소로 이동합니다.
+				if (value.includes('구') || value.includes('동')) {
+					const xstr = data[0].x;
+					const ystr = data[0].y;
+					setCenter({ lat: Number(ystr), lng: Number(xstr) });
 				} else {
 					console.log('검색된 장소에 동이나 구가 포함되어 있지 않습니다.');
 				}
