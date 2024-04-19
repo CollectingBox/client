@@ -28,6 +28,10 @@ const FilterButtons = () => {
 			if (!prev.includes(value)) {
 				return [...prev, value];
 			}
+			if (prev.length === 1) {
+				alert('최소 1개 이상의 필터를 선택해주세요');
+				return prev;
+			}
 			return prev.filter((filter) => filter !== value);
 		});
 	};
@@ -38,7 +42,7 @@ const FilterButtons = () => {
 	};
 
 	return (
-		<div className="flex gap-S-4 xl:gap-S-6 flex-wrap">
+		<div className="flex gap-S-4 xl:gap-S-6 w-[95dvw] overflow-scroll scrollbar-hide">
 			<button
 				value="폐의류"
 				onClick={handleClickFilter}
