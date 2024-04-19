@@ -43,7 +43,7 @@ export const methodTypes = [
 		],
 	},
 	{
-		tag: '폐건건지',
+		tag: '폐건전지',
 		methods: [
 			{
 				title: '건전지는 어떻게 버리나요?',
