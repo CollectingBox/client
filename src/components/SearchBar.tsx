@@ -1,7 +1,6 @@
 'use client';
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { OpenContext } from '../app/open-provider';
 import ToastError from './ui/toasts/ToastError';
 
 interface Props {

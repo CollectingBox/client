@@ -1,24 +1,25 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { ICollection } from '@/types/collection';
 import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
-import MarkerDetail from './MarkerDetail';
 import { getMarkerUrl } from '@/utils/util';
+import { OpenContext } from './contexts/open-provider';
 
 const MapMarker = ({ collection }: { collection: ICollection }) => {
-	const [showMarker, setShowMarker] = useState(false);
-
+	const { setCollectionId, setIsOpen } = useContext(OpenContext);
+	const handleClickMaker = () => {
+		setCollectionId(collection.id);
+		setIsOpen(true);
+	};
 	return (
 		<KakaoMapMaker
 			position={{ lat: collection.latitude, lng: collection.longitude }}
-			onClick={() => setShowMarker((prev) => !prev)}
+			onClick={handleClickMaker}
 			image={{
 				src: getMarkerUrl(collection.tag),
 				size: { width: 60, height: 60 },
 			}}
-		>
-			{showMarker && <MarkerDetail collectionId={collection.id} />}
-		</KakaoMapMaker>
+		/>
 	);
 };
 

@@ -1,21 +1,14 @@
 import RoadView1Icon from '@/public/icons/roadview1.svg';
 import Direction1 from '../icons/Direction1';
 import Copy from '@/components/Copy';
+import { ICollectionDetail } from '@/types/collection';
 
 interface Props {
-	location: string;
-	roadName: string;
-	streetNumber: string;
-	modifiedDate: string;
-	tag: string;
+	collectionDetail: ICollectionDetail;
 }
 
 export default function BoxInformation({
-	location,
-	roadName,
-	streetNumber,
-	modifiedDate,
-	tag,
+	collectionDetail: { tag, location, roadName, streetNumber, modifiedDate },
 }: Props) {
 	return (
 		<section className="flex flex-col w-full px-S-28 pt-S-12 pb-S-32 bg-white xl:rounded-none">
@@ -31,7 +24,7 @@ export default function BoxInformation({
 						<div className="flex flex-col gap-S-8">
 							<span className="flex gap-S-4">
 								<h3 className="text-Gray-700 Body-Large">{roadName}</h3>
-								<Copy text={roadName} />
+								<Copy text={roadName || ''} />
 							</span>
 							<span className="flex gap-S-6">
 								<div className="flex justify-center items-center w-[30px] h-S-20 py-S-2 px-S-6 rounded-[4px] bg-Gray-100 text-Gray-500 Label-Small">
