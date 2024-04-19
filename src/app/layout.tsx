@@ -2,9 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
-import OpenProvider from './open-provider';
 import Sidebar from '@/components/Sidebar';
-import RQProvider from '@/components/RQProvider';
+import ProvidersWrapper from '@/components/contexts/ProvidersWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,14 +29,12 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className={inter.className}>
-				<RQProvider>
-					<OpenProvider>
-						<main className="flex xl:flex-row">
-							<Sidebar />
-							{children}
-						</main>
-					</OpenProvider>
-				</RQProvider>
+				<ProvidersWrapper>
+					<main className="flex xl:flex-row">
+						<Sidebar />
+						{children}
+					</main>
+				</ProvidersWrapper>
 			</body>
 		</html>
 	);
