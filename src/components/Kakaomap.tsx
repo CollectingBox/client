@@ -1,9 +1,10 @@
 'use client';
 import { RefObject, useEffect, useState } from 'react';
-import { Map, useKakaoLoader, MapMarker as Marker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import { getCollections } from '@/service/collection';
 import { ICollection } from '@/types/collection';
 import MapMarker from './MapMarker';
+import useKakaoLoader from '@/utils/util';
 
 export default function Kakaomap({
 	mapRef,
@@ -14,9 +15,7 @@ export default function Kakaomap({
 	center: { lat: number; lng: number };
 	location?: { lat: number; lng: number };
 }) {
-	const [loading, error] = useKakaoLoader({
-		appkey: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID || '',
-	});
+	useKakaoLoader();
 	const [collections, setCollections] = useState<ICollection[]>([]);
 
 	useEffect(() => {

@@ -1,6 +1,13 @@
 import { CollectionTags } from '@/types/define';
 import PillMarkerPng from '@/public/icons/pillMarker.png';
 import FluorescentLampMarkerPng from '@/public/icons/fluorescentLampMarker.png';
+import { useKakaoLoader as useKakaoLoaderOrigin } from 'react-kakao-maps-sdk';
+
+export default function useKakaoLoader() {
+	useKakaoLoaderOrigin({
+		appkey: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID || '',
+	});
+}
 
 export const getMarkerUrl = (tag: CollectionTags): string => {
 	switch (tag) {
