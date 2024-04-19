@@ -40,9 +40,11 @@ const Sidebar = () => {
 						{isOpen && <LogoWordIcon />}
 					</Link>
 				</div>
-				{isOpen && collectionDetail && (
+				{collectionDetail && (
 					<>
-						<article className="flex flex-col gap-3 bg-Gray-50 xl:pt-S-12">
+						<article
+							className={`flex flex-col gap-3 bg-Gray-50 w-[390px] ${isOpen ? 'translate-x-0' : '-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
+						>
 							<BoxInformation collectionDetail={collectionDetail} />
 							<VisitRecord reviews={collectionDetail.reviews} />
 							{collectionDetail.tag !== '쓰레기통' && (
