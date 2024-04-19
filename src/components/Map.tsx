@@ -8,7 +8,7 @@ import useKakaoLoader from '@/utils/util';
 const Map = () => {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [center, setCenter] = useState({ lat: 33.450701, lng: 126.570667 });
+	const [center, setCenter] = useState({ lat: 37.497701, lng: 127.0284066 });
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
 	return (
