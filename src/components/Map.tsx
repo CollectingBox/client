@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
+import FilterProvider from './contexts/FilterProvider';
 
 const Map = () => {
 	useKakaoLoader();
@@ -13,13 +14,15 @@ const Map = () => {
 
 	return (
 		<div className="relative flex-1">
-			<Kakaomap mapRef={mapRef} center={center} location={location} />
-			<MapController
-				mapRef={mapRef}
-				setCenter={setCenter}
-				location={location}
-				setLocation={setLocation}
-			/>
+			<FilterProvider>
+				<Kakaomap mapRef={mapRef} center={center} location={location} />
+				<MapController
+					mapRef={mapRef}
+					setCenter={setCenter}
+					location={location}
+					setLocation={setLocation}
+				/>
+			</FilterProvider>
 		</div>
 	);
 };

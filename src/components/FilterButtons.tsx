@@ -5,14 +5,16 @@ import FluorescentLampIcon from './ui/icons/FluorescentLampIcon';
 import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
-import { MouseEvent, useState } from 'react';
+import { Dispatch, MouseEvent, SetStateAction, useContext } from 'react';
+import { FilterContext } from './contexts/FilterProvider';
+
+interface Props {
+	selectedFilters: string[];
+	setSelectedFilters: Dispatch<SetStateAction<string[]>>;
+}
 
 const FilterButtons = () => {
-	const [selectedFilters, setSelectedFilters] = useState<string[]>([
-		'폐의류',
-		'폐형광등',
-	]);
-
+	const { selectedFilters, setSelectedFilters } = useContext(FilterContext);
 	const filterButtonStyle = (filter: string, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-32 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
 		${selectedFilters.includes(filter) ? color + ' text-white' : 'bg-white text-Gray-200'}`;
