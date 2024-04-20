@@ -43,7 +43,7 @@ const Sidebar = () => {
 				{collectionDetail && (
 					<>
 						<article
-							className={`flex flex-col gap-3 bg-Gray-50 ${isOpen ? 'lg:translate-x-0' : 'lg:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
+							className={`flex flex-col gap-3 bg-Gray-50 ${isOpen ? 'xl:translate-x-0' : 'xl:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
 						>
 							<BoxInformation collectionDetail={collectionDetail} />
 							<VisitRecord reviews={collectionDetail.reviews} />
