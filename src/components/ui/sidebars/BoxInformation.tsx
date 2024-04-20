@@ -2,6 +2,7 @@ import RoadView1Icon from '@/public/icons/roadview1.svg';
 import Direction1 from '../icons/Direction1';
 import Copy from '@/components/Copy';
 import { ICollectionDetail } from '@/types/collection';
+import Tag from '../Tag';
 
 interface Props {
 	collectionDetail: ICollectionDetail;
@@ -15,9 +16,7 @@ export default function BoxInformation({
 			<div className="flex flex-col gap-S-20">
 				<div className="flex flex-col gap-S-24">
 					<header>
-						<div className="flex justify-center items-center w-S-48 h-S-24 py-S-4 px-S-8 rounded-[4px] Label-Medium text-Green-500 bg-Green-50">
-							{tag}
-						</div>
+						<Tag text={tag} colored />
 					</header>
 					<div className="flex flex-col gap-S-12">
 						<h2 className="text-Gray-900 Title-Large">{location}</h2>
