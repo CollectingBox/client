@@ -3,6 +3,7 @@ import Direction1 from '../icons/Direction1';
 import Copy from '@/components/Copy';
 import { ICollectionDetail } from '@/types/collection';
 import Tag from '../Tag';
+import Button from '../Button';
 
 interface Props {
 	collectionDetail: ICollectionDetail;
@@ -36,14 +37,14 @@ export default function BoxInformation({
 						</div>
 					</div>
 					<div className="flex justify-between gap-[10px]">
-						<button className="flex flex-1 gap-S-6 py-S-12 px-S-16 justify-center items-center border border-solid border-Green-500 rounded-lg text-Green-500 Title-Small">
+						<Button>
 							<RoadView1Icon />
 							로드뷰
-						</button>
-						<button className="flex flex-1 gap-S-6 py-S-12 px-S-16 justify-center items-center bg-Green-500 rounded-lg text-white Title-Small">
+						</Button>
+						<Button variant="contained">
 							<Direction1 className="white" />
 							길찾기
-						</button>
+						</Button>
 					</div>
 				</div>
 				<span className="Label-Small text-Gray-300">
