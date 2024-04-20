@@ -23,7 +23,7 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`fixed h-[80dvh] bottom-0 left-0 right-0 xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'translate-y-[75dvh] xl:translate-y-0 xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
+			className={`fixed h-[80dvh] xl:h-[100dvh] bottom-0 left-0 right-0 xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'translate-y-[75dvh] xl:translate-y-0 xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
 		>
 			<button
 				onClick={() => setIsOpen(false)}
@@ -43,7 +43,7 @@ const Sidebar = () => {
 				{collectionDetail && (
 					<>
 						<article
-							className={`flex flex-col gap-3 bg-Gray-50 w-[390px] ${isOpen ? 'lg:translate-x-0' : 'lg:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
+							className={`flex flex-col gap-3 bg-Gray-50 ${isOpen ? 'lg:translate-x-0' : 'lg:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
 						>
 							<BoxInformation collectionDetail={collectionDetail} />
 							<VisitRecord reviews={collectionDetail.reviews} />
