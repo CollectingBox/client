@@ -1,6 +1,40 @@
+import { ICollection, ICollectionDetail } from '@/types/collection';
 import { http, HttpResponse } from 'msw';
 
-const COLLECTIONS_MOCK = [
+export const COLLECTION_MOCK: ICollection[] = [
+	{
+		id: 1,
+		latitude: 37.4975,
+		longitude: 127.03,
+		tag: '폐건전지',
+	},
+	{
+		id: 2,
+		latitude: 37.4985,
+		longitude: 127.026,
+		tag: '폐의류',
+	},
+	{
+		id: 3,
+		latitude: 37.4995,
+		longitude: 127.028,
+		tag: '폐형광등',
+	},
+	{
+		id: 4,
+		latitude: 37.5,
+		longitude: 127.03,
+		tag: '폐의약품',
+	},
+	{
+		id: 5,
+		latitude: 37.4975,
+		longitude: 127.027,
+		tag: '쓰레기통',
+	},
+];
+
+export const COLLECTION_DETAILS_MOCK: ICollectionDetail[] = [
 	{
 		location: '서울숲',
 		roadName: '서울특별시 성동구 뚝섬로 273',
@@ -70,42 +104,11 @@ const COLLECTIONS_MOCK = [
 
 export const handlers = [
 	http.get('/api/collections', () => {
-		return HttpResponse.json([
-			{
-				id: 1,
-				latitude: 37.4975,
-				longitude: 127.03,
-				tag: '폐건전지',
-			},
-			{
-				id: 2,
-				latitude: 37.4985,
-				longitude: 127.026,
-				tag: '폐의류',
-			},
-			{
-				id: 3,
-				latitude: 37.4995,
-				longitude: 127.028,
-				tag: '폐형광등',
-			},
-			{
-				id: 4,
-				latitude: 37.5,
-				longitude: 127.03,
-				tag: '폐의약품',
-			},
-			{
-				id: 5,
-				latitude: 37.4975,
-				longitude: 127.027,
-				tag: '쓰레기통',
-			},
-		]);
+		return HttpResponse.json(COLLECTION_MOCK);
 	}),
 	http.get('/api/collections/:id', ({ params }) => {
 		const { id } = params;
 		console.log(params);
-		return HttpResponse.json(COLLECTIONS_MOCK[Number(id) - 1]);
+		return HttpResponse.json(COLLECTION_DETAILS_MOCK[Number(id) - 1]);
 	}),
 ];

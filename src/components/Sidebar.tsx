@@ -11,6 +11,7 @@ import VisitRecord from './ui/sidebars/VisitRecord';
 import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
 import { ICollectionDetail } from '@/types/collection';
+import { COLLECTION_DETAILS_MOCK } from '@/mocks/handlers';
 
 const Sidebar = () => {
 	const { isOpen, setIsOpen, collectionId } = useContext(OpenContext);
@@ -19,6 +20,10 @@ const Sidebar = () => {
 	useEffect(() => {
 		if (!collectionId) return;
 		getCollectionDetail(collectionId).then(setCollectionDetail);
+
+		if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
+			setCollectionDetail(COLLECTION_DETAILS_MOCK[collectionId]);
+		}
 	}, [collectionId]);
 
 	return (

@@ -6,6 +6,7 @@ import { ICollection } from '@/types/collection';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
 import { FilterContext } from './contexts/FilterProvider';
+import { COLLECTION_MOCK } from '@/mocks/handlers';
 
 export default function Kakaomap({
 	mapRef,
@@ -17,10 +18,10 @@ export default function Kakaomap({
 	location?: { lat: number; lng: number };
 }) {
 	useKakaoLoader();
-	const [collections, setCollections] = useState<ICollection[]>([]);
+	const [collections, setCollections] = useState<ICollection[]>(
+		process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? COLLECTION_MOCK : [],
+	);
 	const { selectedFilters } = useContext(FilterContext);
-
-	console.log(selectedFilters);
 
 	useEffect(() => {
 		getCollections().then(setCollections);
