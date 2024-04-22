@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import { OpenContext } from './contexts/open-provider';
+import { OpenContext } from './contexts/OpenProvider';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
 import BoxInformation from './ui/sidebars/BoxInformation';
@@ -12,10 +12,8 @@ import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
 import { ICollectionDetail } from '@/types/collection';
 import { COLLECTION_DETAILS_MOCK } from '@/mocks/handlers';
-import LeaveVisitHistoryModal from './ui/modal/LeaveVisitHistoryModal';
 
 const Sidebar = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { isOpen, setIsOpen, collectionId } = useContext(OpenContext);
 	const [collectionDetail, setCollectionDetail] = useState<ICollectionDetail>();
 
@@ -35,7 +33,6 @@ const Sidebar = () => {
 			<button
 				onClick={() => {
 					setIsOpen(false);
-					setIsModalOpen(false);
 				}}
 				className="flex justify-center items-end h-S-24 rounded-t-[32px] bg-white xl:hidden"
 			>
@@ -56,10 +53,7 @@ const Sidebar = () => {
 							className={`flex flex-col gap-3 bg-Gray-50 ${isOpen ? 'xl:translate-x-0' : 'xl:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
 						>
 							<BoxInformation collectionDetail={collectionDetail} />
-							<VisitRecord
-								reviews={collectionDetail.reviews}
-								setIsModalOpen={setIsModalOpen}
-							/>
+							<VisitRecord reviews={collectionDetail.reviews} />
 							{collectionDetail.tag !== '쓰레기통' && (
 								<DiscardMethod tag={collectionDetail.tag} />
 							)}
@@ -71,14 +65,10 @@ const Sidebar = () => {
 				className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
 				onClick={() => {
 					setIsOpen(false);
-					setIsModalOpen(false);
 				}}
 			>
 				<Back />
 			</div>
-			{isOpen && isModalOpen && (
-				<LeaveVisitHistoryModal setIsModalOpen={setIsModalOpen} />
-			)}
 		</aside>
 	);
 };

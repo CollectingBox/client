@@ -1,23 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import VisitMessage from './VisitMessage';
 import Down from '../icons/Down';
 import Add from '../icons/Add';
 import Up from '../icons/Up';
 import { IReview } from '@/types/collection';
+import { OpenContext } from '@/components/contexts/OpenProvider';
+import LeaveVisitHistoryModal from '../modal/LeaveVisitHistoryModal';
+import ModalPortal from '../modal/Portal';
 
 interface Props {
 	reviews: IReview[];
-	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function VisitRecord({ reviews, setIsModalOpen }: Props) {
+export default function VisitRecord({ reviews }: Props) {
 	const [showAll, setShowAll] = useState(false);
-
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { isOpen } = useContext(OpenContext);
 	const handleShowMoreClick = () => {
 		setShowAll((prev) => !prev);
 	};
+	useEffect(() => {
+		console.log(isModalOpen);
+	}, [isModalOpen]);
 	return (
 		<section className="flex flex-col gap-S-20 p-S-28 bg-white">
 			<div className="flex gap-[10px] justify-between">
@@ -81,6 +87,11 @@ export default function VisitRecord({ reviews, setIsModalOpen }: Props) {
 					</div>
 				)}
 			</div>
+			<ModalPortal>
+				{isOpen && isModalOpen && (
+					<LeaveVisitHistoryModal setIsModalOpen={setIsModalOpen} />
+				)}
+			</ModalPortal>
 		</section>
 	);
 }
