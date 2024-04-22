@@ -6,15 +6,15 @@ import Down from '../icons/Down';
 import Add from '../icons/Add';
 import Up from '../icons/Up';
 import { IReview } from '@/types/collection';
-import LeaveVisitHistoryModal from '../modal/LeaveVisitHistoryModal';
 
 interface Props {
 	reviews: IReview[];
+	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function VisitRecord({ reviews }: Props) {
+export default function VisitRecord({ reviews, setIsModalOpen }: Props) {
 	const [showAll, setShowAll] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const handleShowMoreClick = () => {
 		setShowAll((prev) => !prev);
 	};
@@ -81,9 +81,6 @@ export default function VisitRecord({ reviews }: Props) {
 					</div>
 				)}
 			</div>
-			{isModalOpen && (
-				<LeaveVisitHistoryModal setIsModalOpen={setIsModalOpen} />
-			)}
 		</section>
 	);
 }

@@ -13,8 +13,8 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const handleSelectOption = (value: string) => setOption(value);
 
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50">
-			<div className="fixed flex flex-col gap-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-100 px-S-24 py-S-28 bg-white rounded-lg">
+		<div className="fixed inset-0 xl:right-[calc(100dvw-390px)] bg-black bg-opacity-50 p-S-16 xl:p-S-26">
+			<div className="relative flex flex-col gap-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-100 px-S-24 py-S-28 bg-white rounded-2xl">
 				<header className="flex justify-between">
 					<h3 className="flex-1 mx-0 Title-Medium">방문 기록 남기기</h3>
 					<button onClick={() => setIsModalOpen(false)}>X</button>
