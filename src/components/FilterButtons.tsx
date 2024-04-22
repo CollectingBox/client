@@ -98,12 +98,7 @@ const FilterButtons = () => {
 				<TrashcanIcon enabled={selectedFilters.includes('쓰레기통')} />
 				<p className={filterTextStyle('쓰레기통')}>쓰레기통</p>
 			</button>
-			{isFilterZero && (
-				<ToastError
-					title="한 개 이상의 필터를 선택해주세요
-"
-				/>
-			)}
+			{isFilterZero && <ToastError title="한 개 이상의 필터를 선택해주세요" />}
 		</div>
 	);
 };
