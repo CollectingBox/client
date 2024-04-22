@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import VisitMessage from './VisitMessage';
 import Down from '../icons/Down';
 import Add from '../icons/Add';
@@ -21,9 +21,6 @@ export default function VisitRecord({ reviews }: Props) {
 	const handleShowMoreClick = () => {
 		setShowAll((prev) => !prev);
 	};
-	useEffect(() => {
-		console.log(isModalOpen);
-	}, [isModalOpen]);
 	return (
 		<section className="flex flex-col gap-S-20 p-S-28 bg-white">
 			<div className="flex gap-[10px] justify-between">
