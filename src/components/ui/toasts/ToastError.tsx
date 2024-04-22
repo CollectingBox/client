@@ -2,7 +2,7 @@ import Alert from '../icons/Alert';
 
 interface Props {
 	title: string;
-	description: string;
+	description?: string;
 	className?: string;
 }
 

@@ -5,8 +5,15 @@ import FluorescentLampIcon from './ui/icons/FluorescentLampIcon';
 import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
-import { Dispatch, MouseEvent, SetStateAction, useContext } from 'react';
+import {
+	Dispatch,
+	MouseEvent,
+	SetStateAction,
+	useContext,
+	useState,
+} from 'react';
 import { FilterContext } from './contexts/FilterProvider';
+import ToastError from './ui/toasts/ToastError';
 
 interface Props {
 	selectedFilters: string[];
@@ -14,6 +21,7 @@ interface Props {
 }
 
 const FilterButtons = () => {
+	const [isFilterZero, setIsFilterZero] = useState(false);
 	const { selectedFilters, setSelectedFilters } = useContext(FilterContext);
 	const filterButtonStyle = (filter: string, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-32 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
@@ -31,7 +39,10 @@ const FilterButtons = () => {
 				return [...prev, value];
 			}
 			if (prev.length === 1) {
-				alert('최소 1개 이상의 필터를 선택해주세요');
+				setIsFilterZero(true);
+				setTimeout(() => {
+					setIsFilterZero(false);
+				}, 3000);
 				return prev;
 			}
 			return prev.filter((filter) => filter !== value);
@@ -87,6 +98,12 @@ const FilterButtons = () => {
 				<TrashcanIcon enabled={selectedFilters.includes('쓰레기통')} />
 				<p className={filterTextStyle('쓰레기통')}>쓰레기통</p>
 			</button>
+			{isFilterZero && (
+				<ToastError
+					title="한 개 이상의 필터를 선택해주세요
+"
+				/>
+			)}
 		</div>
 	);
 };
