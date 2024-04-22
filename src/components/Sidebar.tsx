@@ -50,7 +50,7 @@ const Sidebar = () => {
 				{isOpen && collectionDetail && (
 					<>
 						<article
-							className={`flex flex-col gap-3 bg-Gray-50 ${isOpen ? 'xl:translate-x-0' : 'xl:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
+							className={`flex flex-col gap-3 bg-Gray-50 xl:w-[390px] ${isOpen ? 'xl:translate-x-0' : 'xl:-translate-x-[304px]'} transition-all duration-1000  xl:pt-S-12`}
 						>
 							<BoxInformation collectionDetail={collectionDetail} />
 							<VisitRecord reviews={collectionDetail.reviews} />
