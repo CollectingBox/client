@@ -8,6 +8,7 @@ import useKakaoLoader from '@/utils/util';
 import { FilterContext } from './contexts/FilterProvider';
 import { COLLECTION_MOCK } from '@/mocks/handlers';
 import ToastError from './ui/toasts/ToastError';
+import ReSearchBtn from './ui/ReSearchBtn';
 
 export default function Kakaomap({
 	mapRef,
@@ -35,6 +36,7 @@ export default function Kakaomap({
 	);
 
 	const [isError, setIsError] = useState(false);
+	const [isMoved, setIsMoved] = useState(false);
 	useEffect(() => {
 		kakao.maps.load(() => {
 			setGeocoder(new kakao.maps.services.Geocoder());
@@ -55,6 +57,7 @@ export default function Kakaomap({
 				}
 			}
 		});
+		setIsMoved(true);
 	}, [center]);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
@@ -94,6 +97,7 @@ export default function Kakaomap({
 					description="지금은 서울시의 수거함만 조회할 수 있어요"
 				/>
 			)}
+			{isMoved && <ReSearchBtn setIsMoved={setIsMoved} />}
 		</Map>
 	);
 }
