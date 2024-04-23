@@ -13,10 +13,17 @@ export default function Kakaomap({
 	mapRef,
 	center,
 	location,
+	setCenter,
 }: {
 	mapRef: RefObject<kakao.maps.Map>;
 	center: { lat: number; lng: number };
 	location?: { lat: number; lng: number };
+	setCenter: React.Dispatch<
+		React.SetStateAction<{
+			lat: number;
+			lng: number;
+		}>
+	>;
 }) {
 	useKakaoLoader();
 	const [collections, setCollections] = useState<ICollection[]>(
@@ -46,6 +53,7 @@ export default function Kakaomap({
 		const latlng = map.getCenter();
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
+		setCenter({ lat, lng });
 		geocoder?.coord2RegionCode(lng, lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				console.log('지역 명칭 : ' + result[0].address_name);
