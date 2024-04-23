@@ -46,7 +46,15 @@ export default function Kakaomap({
 	}, []);
 
 	useEffect(() => {
-		console.log(center);
+		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
+			if (status === kakao.maps.services.Status.OK) {
+				console.log('지역 명칭 : ' + result[0].address_name);
+				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
+					setIsError(true);
+					setTimeout(() => setIsError(false), 3000);
+				}
+			}
+		});
 	}, [center]);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
