@@ -53,7 +53,10 @@ export default function Kakaomap({
 				console.log('지역 명칭 : ' + result[0].address_name);
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
 					setIsError(true);
+					setIsMoved(false);
 					setTimeout(() => setIsError(false), 3000);
+				} else {
+					setIsError(false);
 				}
 			}
 		});
