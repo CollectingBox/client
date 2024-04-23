@@ -56,11 +56,10 @@ export default function Kakaomap({
 					setIsMoved(false);
 					setTimeout(() => setIsError(false), 3000);
 				} else {
-					setIsError(false);
+					setIsMoved(true);
 				}
 			}
 		});
-		setIsMoved(true);
 	}, [center]);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
