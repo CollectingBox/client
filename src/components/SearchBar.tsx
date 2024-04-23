@@ -27,14 +27,6 @@ const SearchBar = ({ setCenter }: Props) => {
 		geocoder.addressSearch(value, (data, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				console.log('data', data);
-
-				// 주소에 '구'가 포함된 경우 해당 구청으로 이동합니다.
-				if (value.includes('구') || value.includes('동')) {
-					const xstr = data[0].x;
-					const ystr = data[0].y;
-					setCenter({ lat: Number(ystr), lng: Number(xstr) });
-					return;
-				}
 				const xstr = data[0].x;
 				const ystr = data[0].y;
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });

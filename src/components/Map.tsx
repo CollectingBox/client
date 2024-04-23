@@ -15,7 +15,12 @@ const Map = () => {
 	return (
 		<div className="relative flex-1">
 			<FilterProvider>
-				<Kakaomap mapRef={mapRef} center={center} location={location} />
+				<Kakaomap
+					mapRef={mapRef}
+					center={center}
+					setCenter={setCenter}
+					location={location}
+				/>
 				<MapController
 					mapRef={mapRef}
 					setCenter={setCenter}

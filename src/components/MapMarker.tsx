@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { ICollection } from '@/types/collection';
 import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
 import { getMarkerUrl } from '@/utils/util';
-import { OpenContext } from './contexts/open-provider';
+import { OpenContext } from './contexts/OpenProvider';
 
 const MapMarker = ({ collection }: { collection: ICollection }) => {
 	const { setCollectionId, setIsOpen } = useContext(OpenContext);

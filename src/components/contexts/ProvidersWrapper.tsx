@@ -1,6 +1,6 @@
 import React from 'react';
 import RQProvider from './RQProvider';
-import OpenProvider from './open-provider';
+import OpenProvider from './OpenProvider';
 
 const ProvidersWrapper = ({ children }: { children: React.ReactNode }) => {
 	return (

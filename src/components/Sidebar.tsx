@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import { OpenContext } from './contexts/open-provider';
+import { OpenContext } from './contexts/OpenProvider';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
 import BoxInformation from './ui/sidebars/BoxInformation';
@@ -31,7 +31,9 @@ const Sidebar = () => {
 			className={`fixed h-[80dvh] xl:h-[100dvh] bottom-0 left-0 right-0 xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'translate-y-[75dvh] xl:translate-y-0 xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
 		>
 			<button
-				onClick={() => setIsOpen(false)}
+				onClick={() => {
+					setIsOpen(false);
+				}}
 				className="flex justify-center items-end h-S-24 rounded-t-[32px] bg-white xl:hidden"
 			>
 				<div className="w-S-48 h-S-4 bg-Gray-200 rounded-full" />
@@ -45,10 +47,10 @@ const Sidebar = () => {
 						{isOpen && <LogoWordIcon />}
 					</Link>
 				</div>
-				{collectionDetail && (
+				{isOpen && collectionDetail && (
 					<>
 						<article
-							className={`flex flex-col gap-3 bg-Gray-50 ${isOpen ? 'xl:translate-x-0' : 'xl:-translate-x-[400px]'} transition-all duration-[1200ms]  xl:pt-S-12`}
+							className={`flex flex-col gap-3 bg-Gray-50 xl:w-[390px] ${isOpen ? 'xl:translate-x-0' : 'xl:-translate-x-[304px]'} transition-all duration-1000  xl:pt-S-12`}
 						>
 							<BoxInformation collectionDetail={collectionDetail} />
 							<VisitRecord reviews={collectionDetail.reviews} />
@@ -60,7 +62,7 @@ const Sidebar = () => {
 				)}
 			</div>
 			<div
-				className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} z-10 justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
+				className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
 				onClick={() => {
 					setIsOpen(false);
 				}}

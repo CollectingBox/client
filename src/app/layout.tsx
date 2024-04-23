@@ -33,6 +33,7 @@ export default function RootLayout({
 					<main className="flex xl:flex-row w-[100dvw] overflow-hidden">
 						<Sidebar />
 						{children}
+						<div id="portal"></div>
 					</main>
 				</ProvidersWrapper>
 			</body>
