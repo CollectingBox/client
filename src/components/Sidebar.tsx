@@ -18,8 +18,6 @@ const Sidebar = () => {
 	const { isOpen, setIsOpen, collectionId } = useContext(OpenContext);
 	const [collectionDetail, setCollectionDetail] = useState<ICollectionDetail>();
 
-	console.log(collectionDetail);
-
 	const handleToggleSideBar = () => {
 		setIsOpen((prev) => !prev);
 	};
