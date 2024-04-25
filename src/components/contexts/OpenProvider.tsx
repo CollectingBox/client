@@ -1,17 +1,17 @@
 'use client';
 
-import { createContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface IOpenProviderContext {
 	isOpen: boolean;
-	setIsOpen: (value: boolean) => void;
+	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	collectionId?: number;
 	setCollectionId: (value: number) => void;
 }
 
 export const OpenContext = createContext<IOpenProviderContext>({
 	isOpen: false,
-	setIsOpen: (value: boolean) => {},
+	setIsOpen: () => {},
 	setCollectionId: (value: number) => {},
 });
 

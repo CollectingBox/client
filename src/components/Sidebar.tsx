@@ -7,6 +7,7 @@ import LogoWordIcon from '@/public/icons/logo_word.svg';
 import BoxInformation from './ui/sidebars/BoxInformation';
 import Link from 'next/link';
 import Back from '@/public/icons/back.svg';
+import Front from '@/public/icons/front.svg';
 import VisitRecord from './ui/sidebars/VisitRecord';
 import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
@@ -16,6 +17,12 @@ import { COLLECTION_DETAILS_MOCK } from '@/mocks/handlers';
 const Sidebar = () => {
 	const { isOpen, setIsOpen, collectionId } = useContext(OpenContext);
 	const [collectionDetail, setCollectionDetail] = useState<ICollectionDetail>();
+
+	console.log(collectionDetail);
+
+	const handleToggleSideBar = () => {
+		setIsOpen((prev) => !prev);
+	};
 
 	useEffect(() => {
 		if (!collectionId) return;
@@ -28,12 +35,10 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`fixed h-[80dvh] xl:h-[100dvh] bottom-0 left-0 right-0 xl:static rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'translate-y-[75dvh] xl:translate-y-0 xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
+			className={`fixed h-[80dvh] xl:h-[100dvh] bottom-0 left-0 right-0 xl:relative rounded-t-[32px] xl:rounded-none flex flex-col ${isOpen ? 'xl:w-[390px]' : 'translate-y-[75dvh] xl:translate-y-0 xl:w-[86px]'} z-20 bg-white Elevation-2-Top xl:Elevation-4-Bottom transition-all duration-1000`}
 		>
 			<button
-				onClick={() => {
-					setIsOpen(false);
-				}}
+				onClick={handleToggleSideBar}
 				className="flex justify-center items-end h-S-24 rounded-t-[32px] bg-white xl:hidden"
 			>
 				<div className="w-S-48 h-S-4 bg-Gray-200 rounded-full" />
@@ -61,14 +66,14 @@ const Sidebar = () => {
 					</>
 				)}
 			</div>
-			<div
-				className={`hidden xl:flex fixed top-1/2 -translate-y-1/2 ${isOpen ? 'left-[390px] opacity-100 pointer-events-auto' : 'left-[86px] opacity-0 pointer-events-none'} justify-centder items-center w-S-24 h-S-56 rounded-tr rounded-br bg-white transition-all duration-1000`}
-				onClick={() => {
-					setIsOpen(false);
-				}}
-			>
-				<Back />
-			</div>
+			{collectionDetail && (
+				<div
+					className={`hidden xl:flex xl:absolute xl:items-center xl:top-1/2 xl:-translate-y-1/2 xl:right-[-24px] bg-white w-S-24 h-S-56 rounded-tr rounded-br transition-all duration-1000`}
+					onClick={handleToggleSideBar}
+				>
+					{isOpen ? <Back /> : <Front />}
+				</div>
+			)}
 		</aside>
 	);
 };
