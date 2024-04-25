@@ -2,6 +2,8 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ToastError from './ui/toasts/ToastError';
+import { getSearchComplete } from '@/service/searchComplete';
+import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
 
 interface Props {
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
@@ -20,6 +22,20 @@ const SearchBar = ({ setCenter }: Props) => {
 	}, []);
 
 	const [value, setValue] = useState('');
+
+	const [completes, setCompletes] = useState<string[]>([]);
+
+	useEffect(() => {
+		console.log(completes);
+	}, [completes]);
+
+	useEffect(() => {
+		try {
+			getSearchComplete(value).then((res) => setCompletes(res.data.items));
+		} catch (e) {
+			console.log(e);
+		}
+	}, [value]);
 
 	const handleSearch = () => {
 		if (!geocoder) return;
@@ -45,7 +61,7 @@ const SearchBar = ({ setCenter }: Props) => {
 	};
 
 	return (
-		<>
+		<div className="relative">
 			<input
 				className="px-[16px] py-[14px] w-[328px] max-w-[360px] rounded-[16px] border-[1.5px] placeholder:Body-Large placeholder:text-Gray-200 Title-Small text-Gray-800 border-Green-400 Elevation-2-Bottom"
 				type="search"
@@ -60,7 +76,8 @@ const SearchBar = ({ setCenter }: Props) => {
 					description="검색어를 다시 확인해주세요"
 				/>
 			)}
-		</>
+			{completes.length > 0 && <AutoCompleteContainer items={completes} />}
+		</div>
 	);
 };
 
