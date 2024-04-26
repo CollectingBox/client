@@ -37,7 +37,7 @@ const SearchBar = ({ setCenter }: Props) => {
 		}
 	}, [value]);
 
-	const handleSearch = () => {
+	const handleSearch = (value: string) => {
 		if (!geocoder) return;
 
 		geocoder.addressSearch(value, (data, status) => {
@@ -56,7 +56,8 @@ const SearchBar = ({ setCenter }: Props) => {
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			handleSearch();
+			handleSearch(value);
+			setValue('');
 		}
 	};
 
@@ -76,7 +77,13 @@ const SearchBar = ({ setCenter }: Props) => {
 					description="검색어를 다시 확인해주세요"
 				/>
 			)}
-			{completes.length > 0 && <AutoCompleteContainer items={completes} />}
+			{completes.length > 0 && (
+				<AutoCompleteContainer
+					items={completes}
+					setValue={setValue}
+					handleSearch={handleSearch}
+				/>
+			)}
 		</div>
 	);
 };
