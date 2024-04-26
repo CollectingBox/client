@@ -23,11 +23,6 @@ export default function RootLayout({
 	return (
 		<html lang="ko">
 			<head>
-				{/* 임시로 http 통신 허용 */}
-				<meta
-					http-equiv="Content-Security-Policy"
-					content="upgrade-insecure-requests"
-				/>
 				<Script
 					src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&libraries=services,clusterer&autoload=false`}
 					strategy="beforeInteractive"
