@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { OpenContext } from './contexts/OpenProvider';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
@@ -11,13 +11,17 @@ import Front from '@/public/icons/front.svg';
 import VisitRecord from './ui/sidebars/VisitRecord';
 import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
-import { ICollectionDetail } from '@/types/collection';
-import { COLLECTION_DETAILS_MOCK } from '@/mocks/handlers';
+import { useQuery } from '@tanstack/react-query';
 import { useMediaQuery } from 'react-responsive';
 
 const Sidebar = () => {
 	const { openLevel, setOpenLevel, collectionId } = useContext(OpenContext);
-	const [collectionDetail, setCollectionDetail] = useState<ICollectionDetail>();
+
+	const { data: collectionDetailDTO } = useQuery({
+		queryKey: ['collectionDetail', collectionId],
+		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
+		enabled: !!collectionId,
+	});
 
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
@@ -37,18 +41,9 @@ const Sidebar = () => {
 		});
 	};
 
-	useEffect(() => {
-		if (!collectionId) return;
-		getCollectionDetail(collectionId).then(setCollectionDetail);
-
-		if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
-			setCollectionDetail(COLLECTION_DETAILS_MOCK[collectionId]);
-		}
-	}, [collectionId]);
-
 	return (
 		<aside
-			className={`${collectionDetail ? 'visible' : 'invisible'} fixed 
+			className={`${collectionDetailDTO?.data ? 'visible' : 'invisible'} fixed 
 			bottom-0 left-0 right-0 flex h-[80dvh] flex-col 
 			rounded-t-[32px] xl:visible xl:relative xl:h-[100dvh] xl:rounded-none 
 			${openLevel === 2 ? 'xl:w-[390px]' : 'xl:w-[86px] xl:translate-y-0'} 
@@ -72,16 +67,16 @@ const Sidebar = () => {
 					{openLevel === 2 && <LogoWordIcon />}
 				</Link>
 
-				{(isTabletOrMobile || openLevel >= 1) && collectionDetail && (
+				{(isTabletOrMobile || openLevel >= 1) && collectionDetailDTO?.data && (
 					<>
 						<article
 							className={`flex flex-col gap-3 bg-Gray-50 xl:w-[390px] xl:pt-S-12 
 							${openLevel === 2 ? 'xl:translate-x-0' : 'xl:-translate-x-[304px]'} transition-all duration-1000`}
 						>
-							<BoxInformation collectionDetail={collectionDetail} />
-							<VisitRecord reviews={collectionDetail.reviews} />
-							{collectionDetail.tag !== '쓰레기통' && (
-								<DiscardMethod tag={collectionDetail.tag} />
+							<BoxInformation collectionDetail={collectionDetailDTO?.data} />
+							<VisitRecord reviews={collectionDetailDTO?.data.reviews} />
+							{collectionDetailDTO?.data.tag !== '쓰레기통' && (
+								<DiscardMethod tag={collectionDetailDTO?.data.tag} />
 							)}
 						</article>
 					</>
@@ -89,7 +84,7 @@ const Sidebar = () => {
 			</div>
 
 			{/** Sidebar 여닫기 버튼 */}
-			{collectionDetail && (
+			{collectionDetailDTO?.data && (
 				<div
 					className={`hidden h-S-56 w-S-24 rounded-br rounded-tr bg-white transition-all duration-1000 
 					xl:absolute xl:right-[-24px] xl:top-1/2 xl:flex xl:-translate-y-1/2 xl:items-center`}
