@@ -2,13 +2,12 @@
 import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import { getCollections } from '@/service/collection';
-import { ICollection } from '@/types/collection';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
 import { FilterContext } from './contexts/FilterProvider';
-import { COLLECTION_MOCK } from '@/mocks/handlers';
 import ToastError from './ui/toasts/ToastError';
 import ReSearchBtn from './ui/ReSearchBtn';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Kakaomap({
 	mapRef,
@@ -27,10 +26,19 @@ export default function Kakaomap({
 	>;
 }) {
 	useKakaoLoader();
-	const [collections, setCollections] = useState<ICollection[]>(
-		process.env.NEXT_PUBLIC_ENVIRONMENT === 'production' ? COLLECTION_MOCK : [],
-	);
+
 	const { selectedFilters } = useContext(FilterContext);
+
+	const { data: collectionsDTO } = useQuery({
+		queryKey: ['collections', center, selectedFilters],
+		queryFn: () =>
+			getCollections({
+				latitude: center.lat,
+				longitude: center.lng,
+				tags: selectedFilters,
+			}),
+	});
+
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
@@ -43,10 +51,6 @@ export default function Kakaomap({
 		kakao.maps.load(() => {
 			setGeocoder(new kakao.maps.services.Geocoder());
 		});
-	}, []);
-
-	useEffect(() => {
-		getCollections().then(setCollections);
 	}, []);
 
 	useEffect(() => {
@@ -101,11 +105,13 @@ export default function Kakaomap({
 				handleLevelChange(map);
 			}}
 		>
-			{collections
-				.filter((collection) => selectedFilters.includes(collection.tag))
-				.map((collection) => (
-					<MapMarker key={collection.id} collection={collection} />
-				))}
+			{collectionsDTO &&
+				collectionsDTO?.data.length > 0 &&
+				collectionsDTO.data
+					.filter((collection) => selectedFilters.includes(collection.tag))
+					.map((collection) => (
+						<MapMarker key={collection.id} collection={collection} />
+					))}
 			{location && <Marker position={location} />}
 			{(isError || isLevelExceed) && (
 				<ToastError
