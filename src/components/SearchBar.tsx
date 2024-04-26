@@ -1,6 +1,6 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import ToastError from './ui/toasts/ToastError';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
@@ -22,8 +22,8 @@ const SearchBar = ({ setCenter }: Props) => {
 	}, []);
 
 	const [value, setValue] = useState('');
-
 	const [completes, setCompletes] = useState<string[]>([]);
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
 		console.log(completes);
@@ -37,6 +37,14 @@ const SearchBar = ({ setCenter }: Props) => {
 		}
 	}, [value]);
 
+	useEffect(() => {
+		return () => {
+			if (timerRef.current !== null) {
+				clearTimeout(timerRef.current);
+			}
+		};
+	}, []);
+
 	const handleSearch = (value: string) => {
 		if (!geocoder) return;
 
@@ -49,7 +57,7 @@ const SearchBar = ({ setCenter }: Props) => {
 			} else {
 				console.log('검색된 장소가 없습니다.');
 				setIsError(true);
-				setTimeout(() => setIsError(false), 3000);
+				timerRef.current = setTimeout(() => setIsError(false), 3000);
 			}
 		});
 	};

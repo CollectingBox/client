@@ -1,5 +1,5 @@
 'use client';
-import { RefObject, useContext, useEffect, useState } from 'react';
+import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import { getCollections } from '@/service/collection';
 import { ICollection } from '@/types/collection';
@@ -34,9 +34,11 @@ export default function Kakaomap({
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-
 	const [isError, setIsError] = useState(false);
 	const [isMoved, setIsMoved] = useState(false);
+	const [isLevelExceed, setIsLevelExceed] = useState(false);
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
+
 	useEffect(() => {
 		kakao.maps.load(() => {
 			setGeocoder(new kakao.maps.services.Geocoder());
@@ -54,7 +56,7 @@ export default function Kakaomap({
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
 					setIsError(true);
 					setIsMoved(false);
-					setTimeout(() => setIsError(false), 3000);
+					timerRef.current = setTimeout(() => setIsError(false), 3000);
 				} else {
 					setIsMoved(true);
 				}
@@ -67,16 +69,25 @@ export default function Kakaomap({
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
 		setCenter({ lat, lng });
-		geocoder?.coord2RegionCode(lng, lat, (result, status) => {
-			if (status === kakao.maps.services.Status.OK) {
-				console.log('지역 명칭 : ' + result[0].address_name);
-				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
-					setIsError(true);
-					setTimeout(() => setIsError(false), 3000);
-				}
-			}
-		});
 	};
+
+	const handleLevelChange = (map: kakao.maps.Map) => {
+		const currentLavel = map.getLevel();
+		if (currentLavel > 8) {
+			map.setLevel(8);
+			setIsLevelExceed(true);
+			timerRef.current = setTimeout(() => {
+				setIsLevelExceed(false);
+			}, 3000);
+		}
+	};
+	useEffect(() => {
+		return () => {
+			if (timerRef.current !== null) {
+				clearTimeout(timerRef.current);
+			}
+		};
+	}, []);
 
 	return (
 		<Map
@@ -86,6 +97,9 @@ export default function Kakaomap({
 			onDragEnd={(map) => {
 				handleDragEnd(map);
 			}}
+			onZoomChanged={(map) => {
+				handleLevelChange(map);
+			}}
 		>
 			{collections
 				.filter((collection) => selectedFilters.includes(collection.tag))
@@ -93,7 +107,7 @@ export default function Kakaomap({
 					<MapMarker key={collection.id} collection={collection} />
 				))}
 			{location && <Marker position={location} />}
-			{isError && (
+			{(isError || isLevelExceed) && (
 				<ToastError
 					title="더 이상 조회할 수 없습니다"
 					description="지금은 서울시의 수거함만 조회할 수 있어요"
