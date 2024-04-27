@@ -3,15 +3,15 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface IOpenProviderContext {
-	isOpen: boolean;
-	setIsOpen: Dispatch<SetStateAction<boolean>>;
+	openLevel: number;
+	setOpenLevel: Dispatch<SetStateAction<number>>;
 	collectionId?: number;
 	setCollectionId: (value: number) => void;
 }
 
 export const OpenContext = createContext<IOpenProviderContext>({
-	isOpen: false,
-	setIsOpen: () => {},
+	openLevel: 0,
+	setOpenLevel: () => {},
 	setCollectionId: (value: number) => {},
 });
 
@@ -20,12 +20,12 @@ export default function OpenProvider({
 }: {
 	children: React.ReactNode;
 }) {
-	const [isOpen, setIsOpen] = useState(false);
+	const [openLevel, setOpenLevel] = useState(0);
 	const [collectionId, setCollectionId] = useState<number>();
 
 	return (
 		<OpenContext.Provider
-			value={{ isOpen, setIsOpen, collectionId, setCollectionId }}
+			value={{ openLevel, setOpenLevel, collectionId, setCollectionId }}
 		>
 			{children}
 		</OpenContext.Provider>
