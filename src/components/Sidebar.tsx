@@ -22,7 +22,6 @@ const Sidebar = () => {
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
 	const handleToggleSideBar = () => {
-		console.log(isTabletOrMobile);
 		setOpenLevel((prevLevel) => {
 			console.log(prevLevel);
 			switch (prevLevel) {
