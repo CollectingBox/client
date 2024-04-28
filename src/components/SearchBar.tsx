@@ -72,7 +72,7 @@ const SearchBar = ({ setCenter }: Props) => {
 	return (
 		<div className="relative">
 			<input
-				className="px-[16px] py-[14px] w-[328px] max-w-[360px] rounded-[16px] border-[1.5px] placeholder:Body-Large placeholder:text-Gray-200 Title-Small text-Gray-800 border-Green-400 Elevation-2-Bottom"
+				className="Elevation-2-Bottom w-[328px] max-w-[360px] rounded-[16px] border-[1.5px] border-Green-400 px-[16px] py-[14px] text-Gray-800 Title-Small placeholder:text-Gray-200 placeholder:Body-Large"
 				type="search"
 				placeholder="동네명 검색 (Ex. 종로구, 상수동)"
 				value={value}

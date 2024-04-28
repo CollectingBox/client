@@ -30,7 +30,7 @@ export default function RootLayout({
 			</head>
 			<body className={inter.className}>
 				<ProvidersWrapper>
-					<main className="flex xl:flex-row w-[100dvw] overflow-hidden">
+					<main className="flex w-[100dvw] overflow-hidden xl:flex-row">
 						<Sidebar />
 						{children}
 						<div id="portal"></div>

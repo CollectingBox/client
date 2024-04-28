@@ -17,7 +17,7 @@ interface Props {
 export function SelectVisitHistory({ handleSelectOption }: Props) {
 	return (
 		<Select onValueChange={handleSelectOption}>
-			<SelectTrigger className="w-full h-S-56 focus:border-Green-400">
+			<SelectTrigger className="h-S-56 w-full focus:border-Green-400">
 				<SelectValue placeholder="선택" />
 			</SelectTrigger>
 			<SelectContent>

@@ -11,13 +11,13 @@ export default function DiscardMethod({ tag }: Props) {
 	const DM = methodTypes.filter((item) => item.tag === tag)[0].methods;
 	const [openIndex, SetOpenIndex] = useState(-1);
 	return (
-		<section className="flex flex-col gap-S-20 p-S-24 bg-white">
-			<h5 className="Title-Small text-Gray-700">배출 방법</h5>
+		<section className="flex flex-col gap-S-20 bg-white p-S-24">
+			<h5 className="text-Gray-700 Title-Small">배출 방법</h5>
 			<div className="flex flex-col gap-S-14">
 				{DM.map((method, index) => (
 					<div
 						key={index}
-						className="flex flex-col gap-S-16 p-S-16 bg-Green-50 rounded-[8px]"
+						className="flex flex-col gap-S-16 rounded-[8px] bg-Green-50 p-S-16"
 					>
 						<div className="flex justify-between">
 							<p className="text-Green-500 Title-Small">{method.title}</p>
@@ -36,7 +36,7 @@ export default function DiscardMethod({ tag }: Props) {
 								{method.descriptions.map((content, index) => (
 									<p
 										key={`description-${index}`}
-										className="text-Gray-600 Label-Large leading-[26px]"
+										className="leading-[26px] text-Gray-600 Label-Large"
 									>
 										{content}
 									</p>

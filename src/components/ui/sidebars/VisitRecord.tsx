@@ -20,14 +20,14 @@ export default function VisitRecord({ reviews }: Props) {
 		setShowAll((prev) => !prev);
 	};
 	return (
-		<section className="flex flex-col gap-S-20 p-S-28 bg-white">
-			<div className="flex gap-[10px] justify-between">
+		<section className="flex flex-col gap-S-20 bg-white p-S-28">
+			<div className="flex justify-between gap-[10px]">
 				<h5 className="flex-1 text-Gray-700 Title-Small">방문 기록</h5>
 				<button
 					className="flex items-center gap-S-6"
 					onClick={() => setIsModalOpen(true)}
 				>
-					<div className="flex justify-center items-center w-[18px] h-[18px] rounded-full bg-Green-500">
+					<div className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-Green-500">
 						<Add color={'white'} w={12} h={12} />
 					</div>
 					<p className="text-Green-500 Body-Small">기록 남기기</p>
@@ -58,14 +58,14 @@ export default function VisitRecord({ reviews }: Props) {
 							))}
 						{!showAll ? (
 							<button
-								className="flex justify-center items-center gap-S-4 Label-Medium h-S-16 text-Gray-500"
+								className="flex h-S-16 items-center justify-center gap-S-4 text-Gray-500 Label-Medium"
 								onClick={handleShowMoreClick}
 							>
 								더보기 <Down w={14} h={14} />
 							</button>
 						) : (
 							<button
-								className="flex justify-center items-center gap-S-4 Label-Medium h-S-16 text-Gray-500"
+								className="flex h-S-16 items-center justify-center gap-S-4 text-Gray-500 Label-Medium"
 								onClick={handleShowMoreClick}
 							>
 								접기 <Up w={14} h={14} />
