@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;
 	variant?: 'default' | 'contained' | 'disabled';
 }
 
-const Button = ({ children, variant = 'default' }: Props) => {
+const Button = ({ children, variant = 'default', ...props }: Props) => {
 	const commonStyle =
 		'flex flex-1 gap-S-6 py-S-8 px-S-16 justify-center items-center rounded-lg Title-Small';
 
@@ -17,7 +17,7 @@ const Button = ({ children, variant = 'default' }: Props) => {
 	};
 
 	return (
-		<button className={cn(commonStyle, variantStyle[variant])}>
+		<button {...props} className={cn(commonStyle, variantStyle[variant])}>
 			{children}
 		</button>
 	);

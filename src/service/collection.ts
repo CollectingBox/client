@@ -21,3 +21,19 @@ export const getCollectionDetail = async (
 	const url = `${API_URL}/collections/${collectionId}`;
 	return fetch(url).then((res) => res.json());
 };
+
+export const postCollectionReview = async (
+	collectionId: number,
+	review: 'EXIST' | 'DISAPPEAR',
+): Promise<APIResponse<number>> => {
+	const url = `${API_URL}/collections/${collectionId}/review`;
+	return fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			content: review,
+		}),
+	}).then((res) => res.json());
+};

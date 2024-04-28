@@ -9,9 +9,10 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import Tag from './Tag';
+import { VisitHistoryType } from '@/types/collection';
 
 interface Props {
-	handleSelectOption: (value: string) => void;
+	handleSelectOption: (value: VisitHistoryType) => void;
 }
 
 export function SelectVisitHistory({ handleSelectOption }: Props) {
@@ -22,10 +23,10 @@ export function SelectVisitHistory({ handleSelectOption }: Props) {
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					<SelectItem value="disappeared">
+					<SelectItem value="DISAPPEAR">
 						<Tag text="수거함이 사라졌어요 😢" />
 					</SelectItem>
-					<SelectItem value="exist">
+					<SelectItem value="EXIST">
 						<Tag text="잘 이용했어요 👍" />
 					</SelectItem>
 				</SelectGroup>
