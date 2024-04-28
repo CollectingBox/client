@@ -27,7 +27,6 @@ const Sidebar = () => {
 
 	const handleToggleSideBar = () => {
 		setOpenLevel((prevLevel) => {
-			console.log(prevLevel);
 			switch (prevLevel) {
 				case 2:
 					return 0;

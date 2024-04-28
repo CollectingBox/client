@@ -108,7 +108,6 @@ export const handlers = [
 	}),
 	http.get('/api/collections/:id', ({ params }) => {
 		const { id } = params;
-		console.log(params);
 		return HttpResponse.json(COLLECTION_DETAILS_MOCK[Number(id) - 1]);
 	}),
 ];

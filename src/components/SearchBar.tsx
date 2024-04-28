@@ -50,12 +50,10 @@ const SearchBar = ({ setCenter }: Props) => {
 
 		geocoder.addressSearch(value, (data, status) => {
 			if (status === kakao.maps.services.Status.OK) {
-				console.log('data', data);
 				const xstr = data[0].x;
 				const ystr = data[0].y;
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
 			} else {
-				console.log('검색된 장소가 없습니다.');
 				setIsError(true);
 				timerRef.current = setTimeout(() => setIsError(false), 3000);
 			}
