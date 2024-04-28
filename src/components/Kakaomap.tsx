@@ -3,7 +3,7 @@ import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import { getCollections } from '@/service/collection';
 import MapMarker from './MapMarker';
-import useKakaoLoader from '@/utils/util';
+import useKakaoLoader, { tagFormatter } from '@/utils/util';
 import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
 import ReSearchBtn from './ui/ReSearchBtn';
@@ -35,7 +35,7 @@ export default function Kakaomap({
 			getCollections({
 				latitude: center.lat,
 				longitude: center.lng,
-				tags: selectedFilters,
+				tags: selectedFilters.map(tagFormatter),
 			}),
 	});
 
@@ -106,7 +106,7 @@ export default function Kakaomap({
 			}}
 		>
 			{collectionsDTO &&
-				collectionsDTO?.data.length > 0 &&
+				collectionsDTO?.data?.length > 0 &&
 				collectionsDTO.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (

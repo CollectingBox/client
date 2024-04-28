@@ -9,7 +9,10 @@ import FilterProvider from './contexts/FilterProvider';
 const Map = () => {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [center, setCenter] = useState({ lat: 37.497701, lng: 127.0284066 });
+	const [center, setCenter] = useState({
+		lat: 37.4888178446615,
+		lng: 126.902998281977,
+	});
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
 	return (

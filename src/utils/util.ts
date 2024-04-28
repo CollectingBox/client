@@ -51,3 +51,20 @@ export const getSmallMarkerUrl = (tag: CollectionTags): string => {
 			throw new Error('잘못된 태그입니다');
 	}
 };
+
+export const tagFormatter = (tag: string) => {
+	switch (tag) {
+		case '폐의류':
+			return 'CLOTHES';
+		case '폐형광등':
+			return 'LAMP';
+		case '폐건전지':
+			return 'BATTERY';
+		case '폐의약품':
+			return 'MEDICINE';
+		case '쓰레기통':
+			return 'TRASH';
+		default:
+			throw new Error('잘못된 태그입니다');
+	}
+};

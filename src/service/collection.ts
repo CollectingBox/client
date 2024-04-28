@@ -17,7 +17,6 @@ export const getCollections = async (queries: {
 export const getCollectionDetail = async (
 	collectionId: number,
 ): Promise<APIResponse<ICollectionDetail>> => {
-	return fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/${collectionId}`).then(
-		(res) => res.json(),
-	);
+	const url = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/collections/${collectionId}`;
+	return fetch(url).then((res) => res.json());
 };
