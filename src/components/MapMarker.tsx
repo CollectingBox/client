@@ -2,14 +2,15 @@
 import React, { useContext } from 'react';
 import { ICollection } from '@/types/collection';
 import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
-import { getMarkerUrl } from '@/utils/util';
+import { getMarkerUrl, getSmallMarkerUrl } from '@/utils/util';
 import { OpenContext } from './contexts/OpenProvider';
 import { useMediaQuery } from 'react-responsive';
 
 const MapMarker = ({ collection }: { collection: ICollection }) => {
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
-	const { setCollectionId, setOpenLevel } = useContext(OpenContext);
+	const { collectionId, setCollectionId, setOpenLevel } =
+		useContext(OpenContext);
 
 	const handleClickMaker = () => {
 		setCollectionId(collection.id);
@@ -21,7 +22,10 @@ const MapMarker = ({ collection }: { collection: ICollection }) => {
 			position={{ lat: collection.latitude, lng: collection.longitude }}
 			onClick={handleClickMaker}
 			image={{
-				src: getMarkerUrl(collection.tag),
+				src:
+					collectionId === collection.id
+						? getMarkerUrl(collection.tag)
+						: getSmallMarkerUrl(collection.tag),
 				size: { width: 60, height: 60 },
 			}}
 		/>
