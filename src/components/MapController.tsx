@@ -29,13 +29,13 @@ const MapController = ({ location, setLocation, mapRef, setCenter }: Props) => {
 	}, []);
 
 	return (
-		<div className="absolute top-0 left-0 w-full h-full">
-			<div className="absolute top-6 left-6 flex flex-col gap-S-14 z-10">
+		<div className="absolute left-0 top-0 h-full w-full">
+			<div className="absolute left-6 top-6 z-10 flex flex-col gap-S-14">
 				<div className="flex gap-S-12">
 					<SearchBar setCenter={setCenter} />
 					<button
 						onClick={onClickLocation}
-						className="fixed bottom-14 right-5 xl:static flex justify-center items-center p-S-14 bg-white rounded-xl Elevation-2-Bottom"
+						className="Elevation-2-Bottom fixed bottom-14 right-5 flex items-center justify-center rounded-xl bg-white p-S-14 xl:static"
 					>
 						<LocationIcon />
 					</button>

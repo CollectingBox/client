@@ -12,7 +12,7 @@ const ReSearchBtn = ({ setIsMoved }: Props) => {
 			onClick={() => {
 				setIsMoved(false);
 			}}
-			className="fixed bottom-[50px] mx-auto left-0 right-0 w-max xl:bottom-[S-24] z-10 flex gap-S-4 justify-between py-S-12 px-S-20 bg-Green-400 text-white Title-Small rounded-[32px] Elevation-2-Bottom"
+			className="Elevation-2-Bottom fixed bottom-[50px] left-0 right-0 z-10 mx-auto flex w-max justify-between gap-S-4 rounded-[32px] bg-Green-400 px-S-20 py-S-12 text-white Title-Small xl:bottom-[S-24]"
 		>
 			<Refresh color="white" />이 지역 재검색
 		</button>

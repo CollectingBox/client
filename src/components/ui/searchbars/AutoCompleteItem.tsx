@@ -16,7 +16,7 @@ const AutoCompleteItem = ({ address, setValue, handleSearch }: Props) => {
 	};
 	return (
 		<div
-			className="flex gap-S-8 hover:bg-Gray-50 px-S-16 py-S-6"
+			className="flex gap-S-8 px-S-16 py-S-6 hover:bg-Gray-50"
 			onClick={onClick}
 		>
 			<PinMarker />

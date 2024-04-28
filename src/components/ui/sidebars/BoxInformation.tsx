@@ -13,7 +13,7 @@ export default function BoxInformation({
 	collectionDetail: { tag, location, roadName, streetNumber, modifiedDate },
 }: Props) {
 	return (
-		<section className="flex flex-col w-full px-S-28 pt-S-12 pb-S-32 bg-white xl:rounded-none">
+		<section className="flex w-full flex-col bg-white px-S-28 pb-S-32 pt-S-12 xl:rounded-none">
 			<div className="flex flex-col gap-S-20">
 				<div className="flex flex-col gap-S-24">
 					<header>
@@ -27,7 +27,7 @@ export default function BoxInformation({
 								<Copy text={roadName || ''} />
 							</span>
 							<span className="flex gap-S-6">
-								<div className="flex justify-center items-center w-[30px] h-S-20 py-S-2 px-S-6 rounded-[4px] bg-Gray-100 text-Gray-500 Label-Small">
+								<div className="flex h-S-20 w-[30px] items-center justify-center rounded-[4px] bg-Gray-100 px-S-6 py-S-2 text-Gray-500 Label-Small">
 									지번
 								</div>
 								<h3 className="flex items-center text-Gray-500 Label-Medium">
@@ -47,7 +47,7 @@ export default function BoxInformation({
 						</Button>
 					</div>
 				</div>
-				<span className="Label-Small text-Gray-300">
+				<span className="text-Gray-300 Label-Small">
 					마지막 업데이트 {modifiedDate}
 				</span>
 			</div>
