@@ -89,8 +89,9 @@ const SearchBar = ({ setCenter }: Props) => {
 				<span className='absolute right-[52px] top-[-2px]'>
 					<Line />
 				</span>
-				<span className='absolute right-S-16 top-[-2px]'
-						onClick={() => setValue('')}>
+				<span 
+					className='absolute right-S-16 top-[-2px]'
+					onClick={() => setValue('')}>
 					<Close />
 				</span>
 			</span>
