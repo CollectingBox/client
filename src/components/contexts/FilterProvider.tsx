@@ -17,7 +17,10 @@ export default function FilterProvider({
 }: {
 	children: React.ReactNode;
 }) {
-	const [selectedFilters, setSelectedFilters] = useState(['CLOTHES', 'LAMP']);
+	const [selectedFilters, setSelectedFilters] = useState([
+		'폐의류',
+		'폐형광등',
+	]);
 	return (
 		<FilterContext.Provider value={{ selectedFilters, setSelectedFilters }}>
 			{children}

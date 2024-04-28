@@ -48,43 +48,43 @@ const FilterButtons = () => {
 	return (
 		<div className="flex w-[95dvw] gap-S-6 overflow-scroll scrollbar-hide">
 			<button
-				value="CLOTHES"
+				value="폐의류"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('CLOTHES', 'bg-Green-400')}
+				className={filterButtonStyle('폐의류', 'bg-Green-400')}
 			>
-				<ClothesIcon enabled={selectedFilters.includes('CLOTHES')} />
+				<ClothesIcon enabled={selectedFilters.includes('폐의류')} />
 				폐의류
 			</button>
 			<button
-				value="LAMP"
+				value="폐형광등"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('LAMP', 'bg-Blue-100')}
+				className={filterButtonStyle('폐형광등', 'bg-Blue-100')}
 			>
-				<FluorescentLampIcon enabled={selectedFilters.includes('LAMP')} />
+				<FluorescentLampIcon enabled={selectedFilters.includes('폐형광등')} />
 				폐형광등
 			</button>
 			<button
-				value="BATTERY"
+				value="폐건전지"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('BATTERY', 'bg-Red-100')}
+				className={filterButtonStyle('폐건전지', 'bg-Red-100')}
 			>
-				<BatteryIcon enabled={selectedFilters.includes('BATTERY')} />
+				<BatteryIcon enabled={selectedFilters.includes('폐건전지')} />
 				폐건전지
 			</button>
 			<button
-				value="MEDICINE"
+				value="폐의약품"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('MEDICINE', 'bg-Brown-100 ')}
+				className={filterButtonStyle('폐의약품', 'bg-Brown-100 ')}
 			>
-				<PillIcon enabled={selectedFilters.includes('MEDICINE')} />
+				<PillIcon enabled={selectedFilters.includes('폐의약품')} />
 				폐의약품
 			</button>
 			<button
-				value="TRASH"
+				value="쓰레기통"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('TRASH', 'bg-Gray-400')}
+				className={filterButtonStyle('쓰레기통', 'bg-Gray-400')}
 			>
-				<TrashcanIcon enabled={selectedFilters.includes('TRASH')} />
+				<TrashcanIcon enabled={selectedFilters.includes('쓰레기통')} />
 				쓰레기통
 			</button>
 			{isFilterZero && <ToastError title="한 개 이상의 필터를 선택해주세요" />}
