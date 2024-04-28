@@ -70,7 +70,7 @@ export default function Kakaomap({
 		});
 	}, [center]);
 
-	const handleDragEnd = (map: kakao.maps.Map) => {
+	const handleClickResearch = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
@@ -104,9 +104,6 @@ export default function Kakaomap({
 			center={center}
 			style={{ width: '100%', height: '100dvh' }}
 			ref={mapRef}
-			onDragEnd={(map) => {
-				handleDragEnd(map);
-			}}
 			onZoomChanged={(map) => {
 				handleLevelChange(map);
 			}}
@@ -126,7 +123,12 @@ export default function Kakaomap({
 					description="지금은 서울시의 수거함만 조회할 수 있어요"
 				/>
 			)}
-			{isMoved && <ReSearchBtn setIsMoved={setIsMoved} />}
+			{isMoved && (
+				<ReSearchBtn
+					setIsMoved={setIsMoved}
+					onClick={() => handleClickResearch(mapRef.current!)}
+				/>
+			)}
 		</Map>
 	);
 }
