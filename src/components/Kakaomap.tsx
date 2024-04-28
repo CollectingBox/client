@@ -8,6 +8,7 @@ import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
 import ReSearchBtn from './ui/ReSearchBtn';
 import { useQuery } from '@tanstack/react-query';
+import { OpenContext } from './contexts/OpenProvider';
 
 export default function Kakaomap({
 	mapRef,
@@ -28,6 +29,7 @@ export default function Kakaomap({
 	useKakaoLoader();
 
 	const { selectedFilters } = useContext(FilterContext);
+	const { openLevel, setOpenLevel } = useContext(OpenContext);
 
 	const { data: collectionsDTO } = useQuery({
 		queryKey: ['collections', center, selectedFilters],
@@ -93,6 +95,10 @@ export default function Kakaomap({
 		};
 	}, []);
 
+	const handleClickMap = () => {
+		setOpenLevel(0);
+	};
+
 	return (
 		<Map
 			center={center}
@@ -104,6 +110,7 @@ export default function Kakaomap({
 			onZoomChanged={(map) => {
 				handleLevelChange(map);
 			}}
+			onClick={handleClickMap}
 		>
 			{collectionsDTO &&
 				collectionsDTO?.data?.length > 0 &&
