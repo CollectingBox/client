@@ -34,7 +34,7 @@ const SearchBar = ({ setCenter }: Props) => {
 	const [value, setValue] = useState('');
 	const [completes, setCompletes] = useState<string[]>([]);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
-	const searchRef = useRef<HTMLInputElement | null>(null);
+	const searchRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		const handleFocus = (e: Event) => {
@@ -87,10 +87,9 @@ const SearchBar = ({ setCenter }: Props) => {
 	};
 
 	return (
-		<div className="relative">
+		<div className="relative" ref={searchRef}>
 			<span className="relative">
 				<input
-					ref={searchRef}
 					className={`${completes.length === 0 ? 'rounded-b-[16px]' : 'rounded-b-none'} Elevation-2-Bottom w-[328px] max-w-[360px] rounded-t-[16px] border-[1.5px] border-Green-400 py-[14px] pl-[46px] pr-S-64 text-Gray-800 outline-none Title-Small placeholder:text-Gray-200 placeholder:Body-Large`}
 					type="text"
 					placeholder="동네명 검색 (Ex. 종로구, 상수동)"
