@@ -8,7 +8,7 @@ interface Props {
 
 const AutoCompleteContainer = ({ items, setValue, handleSearch }: Props) => {
 	return (
-		<div className="absolute top-[38px] flex w-full flex-col rounded-b-[16px] bg-white py-S-20">
+		<div className="absolute top-[48px] flex w-full flex-col rounded-b-[16px] border border-Gray-400 bg-white py-S-16">
 			{items.map((address, index) => (
 				<AutoCompleteItem
 					key={index}

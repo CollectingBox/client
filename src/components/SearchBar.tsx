@@ -1,9 +1,19 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+	Dispatch,
+	MouseEvent,
+	SetStateAction,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import ToastError from './ui/toasts/ToastError';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
+import SearchIcon from '@/public/icons/search.svg';
+import Line from '@/public/icons/seperate-line.svg';
+import Close from '@/public/icons/close.svg';
 
 interface Props {
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
@@ -24,10 +34,19 @@ const SearchBar = ({ setCenter }: Props) => {
 	const [value, setValue] = useState('');
 	const [completes, setCompletes] = useState<string[]>([]);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
+	const searchRef = useRef<HTMLInputElement | null>(null);
 
 	useEffect(() => {
-		console.log(completes);
-	}, [completes]);
+		const handleFocus = (e: Event) => {
+			if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+				setCompletes([]);
+			}
+		};
+		document.addEventListener('mouseup', handleFocus);
+		return () => {
+			document.removeEventListener('mouseup', handleFocus);
+		};
+	}, [searchRef]);
 
 	useEffect(() => {
 		try {
@@ -69,14 +88,29 @@ const SearchBar = ({ setCenter }: Props) => {
 
 	return (
 		<div className="relative">
-			<input
-				className="Elevation-2-Bottom w-[328px] max-w-[360px] rounded-[16px] border-[1.5px] border-Green-400 px-[16px] py-[14px] text-Gray-800 Title-Small placeholder:text-Gray-200 placeholder:Body-Large"
-				type="search"
-				placeholder="동네명 검색 (Ex. 종로구, 상수동)"
-				value={value}
-				onChange={(e) => setValue(e.target.value)}
-				onKeyDown={handleKeyDown}
-			/>
+			<span className="relative">
+				<input
+					ref={searchRef}
+					className={`${completes.length === 0 ? 'rounded-b-[16px]' : 'rounded-b-none'} Elevation-2-Bottom w-[328px] max-w-[360px] rounded-t-[16px] border-[1.5px] border-Green-400 py-[14px] pl-[46px] pr-S-64 text-Gray-800 outline-none Title-Small placeholder:text-Gray-200 placeholder:Body-Large`}
+					type="text"
+					placeholder="동네명 검색 (Ex. 종로구, 상수동)"
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					onKeyDown={handleKeyDown}
+				/>
+				<span className="absolute left-S-16 top-[-2px]">
+					<SearchIcon />
+				</span>
+				<span className="absolute right-[52px] top-[-2px]">
+					<Line />
+				</span>
+				<span
+					className="absolute right-S-16 top-[-2px]"
+					onClick={() => setValue('')}
+				>
+					<Close />
+				</span>
+			</span>
 			{isError && (
 				<ToastError
 					title="검색 결과가 없습니다"
