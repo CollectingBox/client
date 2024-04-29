@@ -8,7 +8,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({ children, variant = 'default', ...props }: Props) => {
 	const commonStyle =
-		'flex flex-1 gap-S-6 py-S-8 px-S-16 justify-center items-center rounded-lg Title-Small';
+		'flex w-full gap-S-6 py-S-12 px-S-16 justify-center items-center rounded-lg Title-Small';
 
 	const variantStyle = {
 		default: 'border border-solid border-Green-500 text-Green-500 ',

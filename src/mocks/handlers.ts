@@ -36,6 +36,8 @@ export const COLLECTION_MOCK: ICollection[] = [
 
 export const COLLECTION_DETAILS_MOCK: ICollectionDetail[] = [
 	{
+		latitude: 1,
+		longitude: 1,
 		location: '서울숲',
 		roadName: '서울특별시 성동구 뚝섬로 273',
 		streetNumber: '서울특별시 성동구 성수동1가 685-20',
@@ -49,6 +51,8 @@ export const COLLECTION_DETAILS_MOCK: ICollectionDetail[] = [
 		],
 	},
 	{
+		latitude: 37.402056,
+		longitude: 127.108212,
 		location: '이마트24',
 		roadName: '서울특별시 강남구 도산대로66길 43',
 		streetNumber: '서울특별시 강남구 청담동 16-19',
@@ -62,6 +66,8 @@ export const COLLECTION_DETAILS_MOCK: ICollectionDetail[] = [
 		],
 	},
 	{
+		latitude: 37.402056,
+		longitude: 127.108212,
 		location: '버거킹 앞',
 		roadName: '서울 강남구 강남대로 406 GLASS TOWER',
 		streetNumber: '서울특별시 강남구 역삼동 820-9 GLASS TOWER',
@@ -75,6 +81,8 @@ export const COLLECTION_DETAILS_MOCK: ICollectionDetail[] = [
 		],
 	},
 	{
+		latitude: 37.402056,
+		longitude: 127.108212,
 		location: '하이디라오',
 		roadName: '서울 강남구 학동로 33길',
 		streetNumber: '서울특별시 강남구 논현동 수산타워',
@@ -88,6 +96,8 @@ export const COLLECTION_DETAILS_MOCK: ICollectionDetail[] = [
 		],
 	},
 	{
+		latitude: 37.402056,
+		longitude: 127.108212,
 		location: '스타벅스 앞 수거함',
 		roadName: '서울 강남구 강남대로 18길 11',
 		streetNumber: '서울특별시 강남구 역삼동 1542',

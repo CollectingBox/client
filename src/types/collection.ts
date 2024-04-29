@@ -10,6 +10,8 @@ export interface ICollection {
 }
 
 export interface ICollectionDetail {
+	latitude: number;
+	longitude: number;
 	location: string;
 	roadName: string;
 	streetNumber: string;
