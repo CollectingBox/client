@@ -104,7 +104,13 @@ export default function Kakaomap({
 	return (
 		<Map
 			center={center}
-			style={{ width: '100%', height: '100dvh' }}
+			style={{
+				width: '100%',
+				height: '100dvh',
+				position: 'fixed',
+				left: '0',
+				top: '0',
+			}}
 			ref={mapRef}
 			onDragEnd={() => setIsMoved(true)}
 			onZoomChanged={(map) => {

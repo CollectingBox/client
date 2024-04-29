@@ -46,7 +46,7 @@ const FilterButtons = () => {
 	};
 
 	return (
-		<div className="flex w-[95dvw] gap-S-6 overflow-scroll scrollbar-hide">
+		<div className="flex gap-S-6 overflow-scroll scrollbar-hide">
 			<button
 				value="폐의류"
 				onClick={handleClickFilter}

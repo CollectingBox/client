@@ -42,9 +42,10 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`${collectionDetailDTO?.data ? 'visible' : 'invisible'} fixed 
-			bottom-0 left-0 right-0 flex h-[80dvh] flex-col 
-			rounded-t-[32px] xl:visible xl:relative xl:h-[100dvh] xl:rounded-none 
+			className={`${collectionDetailDTO?.data ? 'visible' : 'invisible'} 
+			fixed bottom-0 left-0 right-0 flex h-[80dvh]
+			flex-col rounded-t-[32px]
+			xl:visible xl:relative xl:h-[100dvh] xl:rounded-none 
 			${openLevel === 2 ? 'xl:w-[390px]' : 'xl:w-[86px] xl:translate-y-0'} 
 			${openLevel === 0 ? 'translate-y-[75dvh]' : openLevel === 1 ? 'translate-y-[330px]' : 'translate-y-0'}
 			Elevation-2-Top z-20 bg-white transition-all duration-1000 xl:Elevation-4-Bottom`}
