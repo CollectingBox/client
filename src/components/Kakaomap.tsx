@@ -99,11 +99,14 @@ export default function Kakaomap({
 		setOpenLevel(0);
 	};
 
+	console.log(isMoved);
+
 	return (
 		<Map
 			center={center}
 			style={{ width: '100%', height: '100dvh' }}
 			ref={mapRef}
+			onDragEnd={() => setIsMoved(true)}
 			onZoomChanged={(map) => {
 				handleLevelChange(map);
 			}}
