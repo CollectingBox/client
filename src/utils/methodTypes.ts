@@ -27,7 +27,7 @@ export const methodTypes = [
 		],
 	},
 	{
-		tag: '폐형광등',
+		tag: '폐형광등∙건전지',
 		methods: [
 			{
 				title: '형광등은 어떻게 버리나요?',
@@ -40,11 +40,6 @@ export const methodTypes = [
 				title: 'LED도 버릴 수 있나요?',
 				descriptions: ['LED는 일반 쓰레기로 종량제 봉투에 배출해야 해요. '],
 			},
-		],
-	},
-	{
-		tag: '폐건전지',
-		methods: [
 			{
 				title: '건전지는 어떻게 버리나요?',
 				descriptions: [

@@ -4,20 +4,9 @@ import FluorescentLampIcon from './ui/icons/FluorescentLampIcon';
 import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
-import {
-	Dispatch,
-	MouseEvent,
-	SetStateAction,
-	useContext,
-	useState,
-} from 'react';
+import { MouseEvent, useContext, useState } from 'react';
 import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
-
-interface Props {
-	selectedFilters: string[];
-	setSelectedFilters: Dispatch<SetStateAction<string[]>>;
-}
 
 const FilterButtons = () => {
 	const [isFilterZero, setIsFilterZero] = useState(false);
@@ -55,11 +44,13 @@ const FilterButtons = () => {
 				폐의류
 			</button>
 			<button
-				value="폐형광등"
+				value="폐형광등∙건전지"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('폐형광등', 'bg-Blue-100')}
+				className={filterButtonStyle('폐형광등∙건전지', 'bg-Blue-100')}
 			>
-				<FluorescentLampIcon enabled={selectedFilters.includes('폐형광등')} />
+				<FluorescentLampIcon
+					enabled={selectedFilters.includes('폐형광등∙건전지')}
+				/>
 				폐형광등∙폐건전지
 			</button>
 			<button

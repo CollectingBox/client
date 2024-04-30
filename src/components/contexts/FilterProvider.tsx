@@ -19,7 +19,7 @@ export default function FilterProvider({
 }) {
 	const [selectedFilters, setSelectedFilters] = useState([
 		'폐의류',
-		'폐형광등',
+		'폐형광등∙건전지',
 	]);
 	return (
 		<FilterContext.Provider value={{ selectedFilters, setSelectedFilters }}>
