@@ -1,6 +1,5 @@
 'use client';
 
-import BatteryIcon from './ui/icons/BatteryIcon';
 import FluorescentLampIcon from './ui/icons/FluorescentLampIcon';
 import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
@@ -61,15 +60,7 @@ const FilterButtons = () => {
 				className={filterButtonStyle('폐형광등', 'bg-Blue-100')}
 			>
 				<FluorescentLampIcon enabled={selectedFilters.includes('폐형광등')} />
-				폐형광등
-			</button>
-			<button
-				value="폐건전지"
-				onClick={handleClickFilter}
-				className={filterButtonStyle('폐건전지', 'bg-Red-100')}
-			>
-				<BatteryIcon enabled={selectedFilters.includes('폐건전지')} />
-				폐건전지
+				폐형광등∙폐건전지
 			</button>
 			<button
 				value="폐의약품"
