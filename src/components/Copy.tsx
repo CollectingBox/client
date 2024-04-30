@@ -1,10 +1,8 @@
 'use client';
 import { useState } from 'react';
 import React from 'react';
-import { BsCheckLg } from 'react-icons/bs';
 import CopyIcon from '@/public/icons/copy.svg';
-
-const CheckIcon = () => <BsCheckLg />;
+import CheckIcon from '@/public/icons/check.svg';
 
 export default function Copy({ text }: { text: string }) {
 	const [icon, setIcon] = useState(CopyIcon);

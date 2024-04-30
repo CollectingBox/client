@@ -1,5 +1,7 @@
 import { CollectionTags } from './define';
 
+export type VisitHistoryType = 'EXIST' | 'DISAPPEAR';
+
 export interface ICollection {
 	id: number;
 	latitude: number;
@@ -8,6 +10,8 @@ export interface ICollection {
 }
 
 export interface ICollectionDetail {
+	latitude: number;
+	longitude: number;
 	location: string;
 	roadName: string;
 	streetNumber: string;

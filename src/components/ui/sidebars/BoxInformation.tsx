@@ -4,13 +4,22 @@ import Copy from '@/components/Copy';
 import { ICollectionDetail } from '@/types/collection';
 import Tag from '../Tag';
 import Button from '../Button';
+import Link from 'next/link';
 
 interface Props {
 	collectionDetail: ICollectionDetail;
 }
 
 export default function BoxInformation({
-	collectionDetail: { tag, location, roadName, streetNumber, modifiedDate },
+	collectionDetail: {
+		latitude,
+		longitude,
+		tag,
+		location,
+		roadName,
+		streetNumber,
+		modifiedDate,
+	},
 }: Props) {
 	return (
 		<section className="flex w-full flex-col bg-white px-S-28 pb-S-32 pt-S-12 xl:rounded-none">
@@ -37,14 +46,24 @@ export default function BoxInformation({
 						</div>
 					</div>
 					<div className="flex justify-between gap-[10px]">
-						<Button>
-							<RoadView1Icon />
-							로드뷰
-						</Button>
-						<Button variant="contained">
-							<Direction1 className="white" />
-							길찾기
-						</Button>
+						<Link
+							href={`https://map.kakao.com/link/roadview/${latitude},${longitude}`}
+							className="w-1/2"
+						>
+							<Button>
+								<RoadView1Icon />
+								로드뷰
+							</Button>
+						</Link>
+						<Link
+							href={`https://map.kakao.com/link/to/${location},${latitude},${longitude}`}
+							className="w-1/2"
+						>
+							<Button variant="contained">
+								<Direction1 className="white" />
+								길찾기
+							</Button>
+						</Link>
 					</div>
 				</div>
 				<span className="text-Gray-300 Label-Small">

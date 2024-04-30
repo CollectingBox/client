@@ -15,11 +15,20 @@ export default function Kakaomap({
 	center,
 	location,
 	setCenter,
+	searchCenter,
+	setSearchCenter,
 }: {
 	mapRef: RefObject<kakao.maps.Map>;
 	center: { lat: number; lng: number };
 	location?: { lat: number; lng: number };
 	setCenter: React.Dispatch<
+		React.SetStateAction<{
+			lat: number;
+			lng: number;
+		}>
+	>;
+	searchCenter: { lat: number; lng: number };
+	setSearchCenter: React.Dispatch<
 		React.SetStateAction<{
 			lat: number;
 			lng: number;
@@ -32,11 +41,11 @@ export default function Kakaomap({
 	const { openLevel, setOpenLevel } = useContext(OpenContext);
 
 	const { data: collectionsDTO } = useQuery({
-		queryKey: ['collections', center, selectedFilters],
+		queryKey: ['collections', searchCenter, selectedFilters],
 		queryFn: () =>
 			getCollections({
-				latitude: center.lat,
-				longitude: center.lng,
+				latitude: searchCenter.lat,
+				longitude: searchCenter.lng,
 				tags: selectedFilters.map(tagFormatter),
 			}),
 	});
@@ -55,6 +64,14 @@ export default function Kakaomap({
 		});
 	}, []);
 
+	const handleDragEnd = (map: kakao.maps.Map) => {
+		const latlng = map.getCenter();
+		const lat = latlng.getLat();
+		const lng = latlng.getLng();
+		setCenter({ lat, lng });
+		setIsMoved(true);
+	};
+
 	useEffect(() => {
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
@@ -70,11 +87,12 @@ export default function Kakaomap({
 		});
 	}, [center]);
 
-	const handleDragEnd = (map: kakao.maps.Map) => {
+	const handleClickResearch = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
-		setCenter({ lat, lng });
+		setSearchCenter({ lat, lng });
+		setIsMoved(false);
 	};
 
 	const handleLevelChange = (map: kakao.maps.Map) => {
@@ -102,7 +120,13 @@ export default function Kakaomap({
 	return (
 		<Map
 			center={center}
-			style={{ width: '100%', height: '100dvh' }}
+			style={{
+				width: '100%',
+				height: '100dvh',
+				position: 'fixed',
+				left: '0',
+				top: '0',
+			}}
 			ref={mapRef}
 			onDragEnd={(map) => {
 				handleDragEnd(map);
@@ -126,7 +150,12 @@ export default function Kakaomap({
 					description="지금은 서울시의 수거함만 조회할 수 있어요"
 				/>
 			)}
-			{isMoved && <ReSearchBtn setIsMoved={setIsMoved} />}
+			{isMoved && (
+				<ReSearchBtn
+					setIsMoved={setIsMoved}
+					onClick={() => handleClickResearch(mapRef.current!)}
+				/>
+			)}
 		</Map>
 	);
 }

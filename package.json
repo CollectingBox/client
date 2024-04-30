@@ -6,8 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
-		"mock": "npx tsx watch ./src/mocks/http.ts"
+		"lint": "next lint"
 	},
 	"dependencies": {
 		"@radix-ui/react-select": "^2.0.0",
@@ -21,7 +20,6 @@
 		"next": "14.1.4",
 		"react": "^18",
 		"react-dom": "^18",
-		"react-icons": "^5.0.1",
 		"react-kakao-maps-sdk": "^1.1.26",
 		"react-responsive": "^10.0.0",
 		"sharp": "^0.33.3",
@@ -30,7 +28,6 @@
 		"tailwindcss-animate": "^1.0.7"
 	},
 	"devDependencies": {
-		"@mswjs/http-middleware": "^0.10.0",
 		"@svgr/webpack": "^8.1.0",
 		"@tanstack/react-query-devtools": "^5.29.2",
 		"@types/cors": "^2.8.17",
@@ -51,10 +48,5 @@
 		"prettier-plugin-tailwindcss": "^0.5.14",
 		"tailwindcss": "^3.3.0",
 		"typescript": "^5"
-	},
-	"msw": {
-		"workerDirectory": [
-			"public"
-		]
 	}
 }
