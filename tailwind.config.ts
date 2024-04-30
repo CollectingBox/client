@@ -233,6 +233,13 @@ const config = {
 					lineHeight: '20px',
 					letterSpacing: '0em',
 				},
+				'.Label-Large-Custom': {
+					fontFamily: 'Pretendard',
+					fontWeight: '500',
+					fontSize: '14px',
+					lineHeight: '24px',
+					letterSpacing: '0em',
+				},
 				'.Label-Medium': {
 					fontFamily: 'Pretendard',
 					fontWeight: '500',

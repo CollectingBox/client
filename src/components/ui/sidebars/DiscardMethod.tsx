@@ -36,7 +36,7 @@ export default function DiscardMethod({ tag }: Props) {
 								{method.descriptions.map((content, index) => (
 									<p
 										key={`description-${index}`}
-										className="leading-[26px] text-Gray-600 Label-Large"
+										className="text-Gray-600 Label-Large-Custom"
 									>
 										{content}
 									</p>
