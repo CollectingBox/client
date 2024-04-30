@@ -17,9 +17,10 @@ import Close from '@/public/icons/close.svg';
 
 interface Props {
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
+	setSearchCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
 }
 
-const SearchBar = ({ setCenter }: Props) => {
+const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
@@ -72,6 +73,7 @@ const SearchBar = ({ setCenter }: Props) => {
 				const xstr = data[0].x;
 				const ystr = data[0].y;
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
+				setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 			} else {
 				setIsError(true);
 				timerRef.current = setTimeout(() => setIsError(false), 3000);
