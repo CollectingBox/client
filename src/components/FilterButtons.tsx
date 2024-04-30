@@ -25,7 +25,7 @@ const FilterButtons = () => {
 	const { selectedFilters, setSelectedFilters } = useContext(FilterContext);
 	const filterButtonStyle = (filter: string, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
-		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium' : 'bg-white text-Gray-200 Label-Large'}`;
+		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium' : 'bg-white text-Gray-500 Label-Large'}`;
 	};
 
 	const handleClickFilter = (e: MouseEvent<HTMLButtonElement>) => {
