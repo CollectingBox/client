@@ -11,9 +11,16 @@ interface Props {
 	>;
 	mapRef: RefObject<kakao.maps.Map>;
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
+	setSearchCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
 }
 
-const MapController = ({ location, setLocation, mapRef, setCenter }: Props) => {
+const MapController = ({
+	location,
+	setLocation,
+	mapRef,
+	setCenter,
+	setSearchCenter,
+}: Props) => {
 	const onClickLocation = () => {
 		if (!location) return;
 		setCenter(location);
@@ -32,7 +39,7 @@ const MapController = ({ location, setLocation, mapRef, setCenter }: Props) => {
 		<div className="fixed left-0 top-0 p-6 xl:static">
 			<div className="flex flex-col gap-S-14">
 				<div className="flex gap-S-12">
-					<SearchBar setCenter={setCenter} />
+					<SearchBar setCenter={setCenter} setSearchCenter={setSearchCenter} />
 					<button
 						onClick={onClickLocation}
 						className="Elevation-2-Bottom fixed bottom-14 right-5 flex items-center justify-center rounded-xl bg-white p-S-14 xl:static"

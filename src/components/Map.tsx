@@ -14,6 +14,10 @@ const Map = () => {
 		lat: 37.4888178446615,
 		lng: 126.902998281977,
 	});
+	const [searchCenter, setSearchCenter] = useState({
+		lat: 37.4888178446615,
+		lng: 126.902998281977,
+	});
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
 	return (
@@ -23,6 +27,8 @@ const Map = () => {
 					mapRef={mapRef}
 					center={center}
 					setCenter={setCenter}
+					searchCenter={searchCenter}
+					setSearchCenter={setSearchCenter}
 					location={location}
 				/>
 				<div className="absolute left-0 top-0 w-[100dvw]">
@@ -31,6 +37,7 @@ const Map = () => {
 						<MapController
 							mapRef={mapRef}
 							setCenter={setCenter}
+							setSearchCenter={setSearchCenter}
 							location={location}
 							setLocation={setLocation}
 						/>
