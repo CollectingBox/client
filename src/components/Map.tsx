@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
@@ -31,13 +31,6 @@ const Map = () => {
 		setSearchCenter({ lat, lng });
 		setIsMoved(false);
 	};
-
-	useEffect(() => {
-		if (location) {
-			setCenter(location);
-			setSearchCenter(location);
-		}
-	}, [location]);
 
 	return (
 		<FilterProvider>
