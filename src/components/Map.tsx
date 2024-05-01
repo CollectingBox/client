@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
 import FilterProvider from './contexts/FilterProvider';
 import Sidebar from './Sidebar';
+import { MovedContext } from './contexts/MovedProvider';
+import ReSearchBtn from './ui/ReSearchBtn';
 
 const Map = () => {
 	useKakaoLoader();
@@ -19,6 +21,16 @@ const Map = () => {
 		lng: 126.902998281977,
 	});
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
+
+	const { isMoved, setIsMoved } = useContext(MovedContext);
+
+	const handleClickResearch = (map: kakao.maps.Map) => {
+		const latlng = map.getCenter();
+		const lat = latlng.getLat();
+		const lng = latlng.getLng();
+		setSearchCenter({ lat, lng });
+		setIsMoved(false);
+	};
 
 	return (
 		<FilterProvider>
@@ -41,6 +53,11 @@ const Map = () => {
 							location={location}
 							setLocation={setLocation}
 						/>
+						{isMoved && (
+							<ReSearchBtn
+								onClick={() => handleClickResearch(mapRef.current!)}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
