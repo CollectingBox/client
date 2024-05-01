@@ -89,9 +89,9 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 				setCompletes([]);
 			}
 		};
-		document.addEventListener('mouseup', handleFocus);
+		document.addEventListener('mousedown', handleFocus);
 		return () => {
-			document.removeEventListener('mouseup', handleFocus);
+			document.removeEventListener('mousedown', handleFocus);
 		};
 	}, [searchRef]);
 

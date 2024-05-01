@@ -62,13 +62,11 @@ export default function Kakaomap({
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
 		setCenter({ lat, lng });
-		setIsMoved(true);
 	};
 
 	useEffect(() => {
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
-				console.log('지역 명칭 : ' + result[0].address_name);
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
 					setIsError(true);
 					setIsMoved(false);
