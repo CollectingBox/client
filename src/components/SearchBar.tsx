@@ -72,6 +72,7 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 			if (status === kakao.maps.services.Status.OK) {
 				const xstr = data[0].x;
 				const ystr = data[0].y;
+				console.log(xstr, ystr);
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
 				setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 			} else {
@@ -102,15 +103,19 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 				<span className="absolute left-S-16 top-[-2px]">
 					<SearchIcon />
 				</span>
-				<span className="absolute right-[52px] top-[-2px]">
-					<Line />
-				</span>
-				<span
-					className="absolute right-S-16 top-[-2px]"
-					onClick={() => setValue('')}
-				>
-					<Close />
-				</span>
+				{value.length > 0 && (
+					<>
+						<span className="absolute right-[52px] top-[-2px]">
+							<Line />
+						</span>
+						<span
+							className="absolute right-S-16 top-[-2px]"
+							onClick={() => setValue('')}
+						>
+							<Close />
+						</span>
+					</>
+				)}
 			</span>
 			{isError && (
 				<ToastError

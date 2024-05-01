@@ -13,12 +13,12 @@ const Map = () => {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
 	const [center, setCenter] = useState({
-		lat: 37.4888178446615,
-		lng: 126.902998281977,
+		lat: 37.566826004661,
+		lng: 126.978652258309,
 	});
 	const [searchCenter, setSearchCenter] = useState({
-		lat: 37.4888178446615,
-		lng: 126.902998281977,
+		lat: 37.566826004661,
+		lng: 126.978652258309,
 	});
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
@@ -40,7 +40,6 @@ const Map = () => {
 					center={center}
 					setCenter={setCenter}
 					searchCenter={searchCenter}
-					setSearchCenter={setSearchCenter}
 					location={location}
 				/>
 				<div className="absolute left-0 top-0 w-[100dvw]">
