@@ -6,7 +6,6 @@ import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
 import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
-import ReSearchBtn from './ui/ReSearchBtn';
 import { useQuery } from '@tanstack/react-query';
 import { OpenContext } from './contexts/OpenProvider';
 import { MovedContext } from './contexts/MovedProvider';
@@ -17,7 +16,6 @@ export default function Kakaomap({
 	location,
 	setCenter,
 	searchCenter,
-	setSearchCenter,
 }: {
 	mapRef: RefObject<kakao.maps.Map>;
 	center: { lat: number; lng: number };
@@ -29,17 +27,11 @@ export default function Kakaomap({
 		}>
 	>;
 	searchCenter: { lat: number; lng: number };
-	setSearchCenter: React.Dispatch<
-		React.SetStateAction<{
-			lat: number;
-			lng: number;
-		}>
-	>;
 }) {
 	useKakaoLoader();
 
 	const { selectedFilters } = useContext(FilterContext);
-	const { openLevel, setOpenLevel } = useContext(OpenContext);
+	const { setOpenLevel } = useContext(OpenContext);
 
 	const { data: collectionsDTO } = useQuery({
 		queryKey: ['collections', searchCenter, selectedFilters],

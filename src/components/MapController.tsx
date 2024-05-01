@@ -35,6 +35,13 @@ const MapController = ({
 		});
 	}, []);
 
+	useEffect(() => {
+		if (location) {
+			setCenter(location);
+			setSearchCenter(location);
+		}
+	}, [location]);
+
 	return (
 		<div className="fixed left-0 top-0 p-6 xl:static">
 			<div className="flex flex-col gap-S-14">
