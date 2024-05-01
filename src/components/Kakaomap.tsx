@@ -46,7 +46,7 @@ export default function Kakaomap({
 			getCollections({
 				latitude: searchCenter.lat,
 				longitude: searchCenter.lng,
-				tags: selectedFilters.map(tagFormatter),
+				tags: selectedFilters,
 			}),
 	});
 

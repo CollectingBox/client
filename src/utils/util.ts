@@ -18,13 +18,13 @@ export default function useKakaoLoader() {
 
 export const getMarkerUrl = (tag: CollectionTags): string => {
 	switch (tag) {
-		case '폐의류':
+		case 'CLOTHES':
 			return ClothesMarkerPng.src;
-		case '폐의약품':
+		case 'MEDICINE':
 			return PillMarkerPng.src;
-		case '폐형광등∙건전지':
+		case 'LAMP_BATTERY':
 			return FluorescentLampMarkerPng.src;
-		case '쓰레기통':
+		case 'TRASH':
 			return TrashcanMarkerPng.src;
 		default:
 			throw new Error('잘못된 태그입니다');
@@ -33,31 +33,14 @@ export const getMarkerUrl = (tag: CollectionTags): string => {
 
 export const getSmallMarkerUrl = (tag: CollectionTags): string => {
 	switch (tag) {
-		case '폐의류':
+		case 'CLOTHES':
 			return ClothesSmallMarkerPng.src;
-		case '폐의약품':
+		case 'MEDICINE':
 			return PillSmallMarkerPng.src;
-		case '폐형광등∙건전지':
+		case 'LAMP_BATTERY':
 			return FluorescentLampSmallMarkerPng.src;
-		case '쓰레기통':
+		case 'TRASH':
 			return TrashcanSmallMarkerPng.src;
-		default:
-			throw new Error('잘못된 태그입니다');
-	}
-};
-
-export const tagFormatter = (tag: string) => {
-	switch (tag) {
-		case '폐의류':
-			return 'CLOTHES';
-		case '폐형광등∙건전지':
-			return 'LAMP_BATTERY';
-		case '폐건전지':
-			return 'BATTERY';
-		case '폐의약품':
-			return 'MEDICINE';
-		case '쓰레기통':
-			return 'TRASH';
 		default:
 			throw new Error('잘못된 태그입니다');
 	}
