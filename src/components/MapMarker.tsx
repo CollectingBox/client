@@ -26,7 +26,10 @@ const MapMarker = ({ collection }: { collection: ICollection }) => {
 					collectionId === collection.id
 						? getMarkerUrl(collection.tag)
 						: getSmallMarkerUrl(collection.tag),
-				size: { width: 60, height: 60 },
+				size:
+					collectionId === collection.id
+						? { width: 60, height: 60 }
+						: { width: 34, height: 34 },
 			}}
 		/>
 	);
