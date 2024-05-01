@@ -3,12 +3,13 @@ import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import { getCollections } from '@/service/collection';
 import MapMarker from './MapMarker';
-import useKakaoLoader, { tagFormatter } from '@/utils/util';
+import useKakaoLoader from '@/utils/util';
 import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
 import ReSearchBtn from './ui/ReSearchBtn';
 import { useQuery } from '@tanstack/react-query';
 import { OpenContext } from './contexts/OpenProvider';
+import { MovedContext } from './contexts/MovedProvider';
 
 export default function Kakaomap({
 	mapRef,
@@ -46,7 +47,7 @@ export default function Kakaomap({
 			getCollections({
 				latitude: searchCenter.lat,
 				longitude: searchCenter.lng,
-				tags: selectedFilters.map(tagFormatter),
+				tags: selectedFilters,
 			}),
 	});
 
@@ -54,7 +55,7 @@ export default function Kakaomap({
 		null,
 	);
 	const [isError, setIsError] = useState(false);
-	const [isMoved, setIsMoved] = useState(false);
+	const { setIsMoved } = useContext(MovedContext);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -86,14 +87,6 @@ export default function Kakaomap({
 			}
 		});
 	}, [center]);
-
-	const handleClickResearch = (map: kakao.maps.Map) => {
-		const latlng = map.getCenter();
-		const lat = latlng.getLat();
-		const lng = latlng.getLng();
-		setSearchCenter({ lat, lng });
-		setIsMoved(false);
-	};
 
 	const handleLevelChange = (map: kakao.maps.Map) => {
 		const currentLavel = map.getLevel();
@@ -148,12 +141,6 @@ export default function Kakaomap({
 				<ToastError
 					title="더 이상 조회할 수 없습니다"
 					description="지금은 서울시의 수거함만 조회할 수 있어요"
-				/>
-			)}
-			{isMoved && (
-				<ReSearchBtn
-					setIsMoved={setIsMoved}
-					onClick={() => handleClickResearch(mapRef.current!)}
 				/>
 			)}
 		</Map>

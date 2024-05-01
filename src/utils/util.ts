@@ -2,13 +2,11 @@ import { CollectionTags } from '@/types/define';
 import PillMarkerPng from '@/public/icons/pillMarker.png';
 import FluorescentLampMarkerPng from '@/public/icons/fluorescentLampMarker.png';
 import ClothesMarkerPng from '@/public/icons/clothesMarker.png';
-import BatteryMarkerPng from '@/public/icons/batteryMarker.png';
 import TrashcanMarkerPng from '@/public/icons/trashcanMarker.png';
 
 import PillSmallMarkerPng from '@/public/icons/small_markers/pillSmallMarker.png';
 import FluorescentLampSmallMarkerPng from '@/public/icons/small_markers/lampSmallMarker.png';
 import ClothesSmallMarkerPng from '@/public/icons/small_markers/clothesSmallMarker.png';
-import BatterySmallMarkerPng from '@/public/icons/small_markers/batterySmallMarker.png';
 import TrashcanSmallMarkerPng from '@/public/icons/small_markers/trashcanSmallMarker.png';
 import { useKakaoLoader as useKakaoLoaderOrigin } from 'react-kakao-maps-sdk';
 
@@ -20,15 +18,13 @@ export default function useKakaoLoader() {
 
 export const getMarkerUrl = (tag: CollectionTags): string => {
 	switch (tag) {
-		case '폐의류':
+		case 'CLOTHES':
 			return ClothesMarkerPng.src;
-		case '폐의약품':
+		case 'MEDICINE':
 			return PillMarkerPng.src;
-		case '폐형광등':
+		case 'LAMP_BATTERY':
 			return FluorescentLampMarkerPng.src;
-		case '폐건전지':
-			return BatteryMarkerPng.src;
-		case '쓰레기통':
+		case 'TRASH':
 			return TrashcanMarkerPng.src;
 		default:
 			throw new Error('잘못된 태그입니다');
@@ -37,33 +33,14 @@ export const getMarkerUrl = (tag: CollectionTags): string => {
 
 export const getSmallMarkerUrl = (tag: CollectionTags): string => {
 	switch (tag) {
-		case '폐의류':
+		case 'CLOTHES':
 			return ClothesSmallMarkerPng.src;
-		case '폐의약품':
+		case 'MEDICINE':
 			return PillSmallMarkerPng.src;
-		case '폐형광등':
+		case 'LAMP_BATTERY':
 			return FluorescentLampSmallMarkerPng.src;
-		case '폐건전지':
-			return BatterySmallMarkerPng.src;
-		case '쓰레기통':
+		case 'TRASH':
 			return TrashcanSmallMarkerPng.src;
-		default:
-			throw new Error('잘못된 태그입니다');
-	}
-};
-
-export const tagFormatter = (tag: string) => {
-	switch (tag) {
-		case '폐의류':
-			return 'CLOTHES';
-		case '폐형광등':
-			return 'LAMP';
-		case '폐건전지':
-			return 'BATTERY';
-		case '폐의약품':
-			return 'MEDICINE';
-		case '쓰레기통':
-			return 'TRASH';
 		default:
 			throw new Error('잘못된 태그입니다');
 	}
