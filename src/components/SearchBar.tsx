@@ -1,13 +1,7 @@
 'use client';
 
-import {
-	Dispatch,
-	MouseEvent,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import ToastError from './ui/toasts/ToastError';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
@@ -24,46 +18,21 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-
 	const [isError, setIsError] = useState(false);
-	useEffect(() => {
-		kakao.maps.load(() => {
-			setGeocoder(new kakao.maps.services.Geocoder());
-		});
-	}, []);
-
 	const [value, setValue] = useState('');
 	const [completes, setCompletes] = useState<string[]>([]);
+	const [currentIndex, setCurrentIndex] = useState(-1);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 	const searchRef = useRef<HTMLDivElement | null>(null);
 
-	useEffect(() => {
-		const handleFocus = (e: Event) => {
-			if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-				setCompletes([]);
-			}
-		};
-		document.addEventListener('mouseup', handleFocus);
-		return () => {
-			document.removeEventListener('mouseup', handleFocus);
-		};
-	}, [searchRef]);
-
-	useEffect(() => {
+	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
-			getSearchComplete(value).then((res) => setCompletes(res.data.items));
+			const res = await getSearchComplete(value);
+			setCompletes(res.data.items);
 		} catch (e) {
 			console.log(e);
 		}
-	}, [value]);
-
-	useEffect(() => {
-		return () => {
-			if (timerRef.current !== null) {
-				clearTimeout(timerRef.current);
-			}
-		};
-	}, []);
+	}, 300);
 
 	const handleSearch = (value: string) => {
 		if (!geocoder) return;
@@ -84,10 +53,67 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			handleSearch(value);
-			setValue('');
+			if (currentIndex !== -1) {
+				handleSearch(completes[currentIndex]);
+				setValue('');
+			} else {
+				handleSearch(value);
+				setValue('');
+			}
+		}
+		if (e.key === 'ArrowDown' && completes?.length > 0) {
+			if (currentIndex > -1 && currentIndex < completes.length - 1) {
+				setCurrentIndex((prev) => prev + 1);
+			} else {
+				setCurrentIndex(0);
+			}
+		}
+		if (e.key === 'ArrowUp' && completes?.length > 0) {
+			if (currentIndex > 0 && currentIndex < completes.length) {
+				setCurrentIndex((prev) => prev - 1);
+			} else {
+				setCurrentIndex(completes.length - 1);
+			}
 		}
 	};
+
+	useEffect(() => {
+		kakao.maps.load(() => {
+			setGeocoder(new kakao.maps.services.Geocoder());
+		});
+	}, []);
+
+	useEffect(() => {
+		const handleFocus = (e: Event) => {
+			if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+				setCompletes([]);
+			}
+		};
+		document.addEventListener('mouseup', handleFocus);
+		return () => {
+			document.removeEventListener('mouseup', handleFocus);
+		};
+	}, [searchRef]);
+
+	useEffect(() => {
+		if (value) {
+			getSearchCompleteDebounced(value);
+		} else {
+			setCompletes([]);
+		}
+	}, [value, getSearchCompleteDebounced]);
+
+	useEffect(() => {
+		return () => {
+			if (timerRef.current !== null) {
+				clearTimeout(timerRef.current);
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		setCurrentIndex(-1);
+	}, [completes]);
 
 	return (
 		<div className="relative" ref={searchRef}>
@@ -128,6 +154,7 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 					items={completes}
 					setValue={setValue}
 					handleSearch={handleSearch}
+					currentIndex={currentIndex}
 				/>
 			)}
 		</div>

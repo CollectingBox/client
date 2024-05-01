@@ -21,7 +21,7 @@ const MapLevelController = ({
 		}
 	};
 	return (
-		<div className="fixed bottom-4 right-4 z-20 hidden flex-col rounded-xl border-2 border-Green-500 bg-black bg-white text-4xl text-Green-500 xl:flex">
+		<div className="fixed bottom-4 right-4 z-20 hidden flex-col rounded-xl border-2 border-Green-500 bg-white text-4xl text-Green-500 xl:flex">
 			<button
 				onClick={() => handleLevel('decrease')}
 				className="border-b-[1px] border-Green-500 p-2"

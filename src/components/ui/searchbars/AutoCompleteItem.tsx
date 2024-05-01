@@ -6,9 +6,15 @@ interface Props {
 	address: string;
 	setValue: React.Dispatch<React.SetStateAction<string>>;
 	handleSearch: (value: string) => void;
+	isCurrentIndex: boolean;
 }
 
-const AutoCompleteItem = ({ address, setValue, handleSearch }: Props) => {
+const AutoCompleteItem = ({
+	address,
+	setValue,
+	handleSearch,
+	isCurrentIndex,
+}: Props) => {
 	const onClick = () => {
 		setValue(address);
 		handleSearch(address);
@@ -16,7 +22,7 @@ const AutoCompleteItem = ({ address, setValue, handleSearch }: Props) => {
 	};
 	return (
 		<div
-			className="flex gap-S-8 px-S-16 py-S-6 hover:bg-Gray-50"
+			className={`flex gap-S-8 px-S-16 py-S-6 hover:bg-Gray-50 ${isCurrentIndex && 'bg-Gray-50'}`}
 			onClick={onClick}
 		>
 			<PinMarker />
