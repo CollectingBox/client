@@ -72,6 +72,7 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 			if (status === kakao.maps.services.Status.OK) {
 				const xstr = data[0].x;
 				const ystr = data[0].y;
+				console.log(xstr, ystr);
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
 				setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 			} else {
