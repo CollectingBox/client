@@ -1,13 +1,7 @@
 'use client';
 
-import {
-	Dispatch,
-	MouseEvent,
-	SetStateAction,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import ToastError from './ui/toasts/ToastError';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
@@ -49,13 +43,22 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 		};
 	}, [searchRef]);
 
-	useEffect(() => {
+	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
-			getSearchComplete(value).then((res) => setCompletes(res.data.items));
+			const res = await getSearchComplete(value);
+			setCompletes(res.data.items);
 		} catch (e) {
 			console.log(e);
 		}
-	}, [value]);
+	}, 300);
+
+	useEffect(() => {
+		if (value) {
+			getSearchCompleteDebounced(value);
+		} else {
+			setCompletes([]);
+		}
+	}, [value, getSearchCompleteDebounced]);
 
 	useEffect(() => {
 		return () => {

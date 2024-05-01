@@ -25,7 +25,8 @@
 		"sharp": "^0.33.3",
 		"tailwind-merge": "^2.3.0",
 		"tailwind-scrollbar-hide": "^1.1.7",
-		"tailwindcss-animate": "^1.0.7"
+		"tailwindcss-animate": "^1.0.7",
+		"use-debounce": "^10.0.0"
 	},
 	"devDependencies": {
 		"@svgr/webpack": "^8.1.0",
