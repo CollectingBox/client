@@ -102,15 +102,19 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 				<span className="absolute left-S-16 top-[-2px]">
 					<SearchIcon />
 				</span>
-				<span className="absolute right-[52px] top-[-2px]">
-					<Line />
-				</span>
-				<span
-					className="absolute right-S-16 top-[-2px]"
-					onClick={() => setValue('')}
-				>
-					<Close />
-				</span>
+				{value.length > 0 && (
+					<>
+						<span className="absolute right-[52px] top-[-2px]">
+							<Line />
+						</span>
+						<span
+							className="absolute right-S-16 top-[-2px]"
+							onClick={() => setValue('')}
+						>
+							<Close />
+						</span>
+					</>
+				)}
 			</span>
 			{isError && (
 				<ToastError
