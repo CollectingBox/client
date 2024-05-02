@@ -54,10 +54,17 @@ const Map = () => {
 		};
 	}, [isComplete, setIsComplete]);
 
-	window.addEventListener('offline', () => {
-		setType('network');
-		setIsSystemError(true);
-	});
+	useEffect(() => {
+		const handleOffline = () => {
+			setType('network');
+			setIsSystemError(true);
+		};
+		window.addEventListener('offline', handleOffline);
+
+		return () => {
+			window.removeEventListener('offline', handleOffline);
+		};
+	}, []);
 
 	return (
 		<SystemProvider>
