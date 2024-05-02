@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
@@ -8,6 +8,8 @@ import FilterProvider from './contexts/FilterProvider';
 import Sidebar from './Sidebar';
 import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
+import ToastComplete from './ui/toasts/ToastComplete';
+import CompleteProvider, { CompleteContext } from './contexts/CompleteProvider';
 
 const Map = () => {
 	useKakaoLoader();
@@ -23,6 +25,8 @@ const Map = () => {
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
+	const { isComplete, setIsComplete } = useContext(CompleteContext);
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
@@ -31,6 +35,19 @@ const Map = () => {
 		setSearchCenter({ lat, lng });
 		setIsMoved(false);
 	};
+
+	useEffect(() => {
+		if (isComplete) {
+			timerRef.current = setTimeout(() => {
+				setIsComplete(false);
+			}, 3000);
+		}
+		return () => {
+			if (timerRef.current !== null) {
+				clearTimeout(timerRef.current);
+			}
+		};
+	}, [isComplete, setIsComplete]);
 
 	return (
 		<FilterProvider>
@@ -60,6 +77,7 @@ const Map = () => {
 					</div>
 				</div>
 			</div>
+			{isComplete && <ToastComplete />}
 		</FilterProvider>
 	);
 };

@@ -2,12 +2,12 @@
 
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
-interface IOpenProviderContext {
+interface IMovedProviderContext {
 	isMoved: boolean;
 	setIsMoved: Dispatch<SetStateAction<boolean>>;
 }
 
-export const MovedContext = createContext<IOpenProviderContext>({
+export const MovedContext = createContext<IMovedProviderContext>({
 	isMoved: false,
 	setIsMoved: () => {},
 });
