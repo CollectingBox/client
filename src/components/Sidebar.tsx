@@ -13,11 +13,13 @@ import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
 import { useQuery } from '@tanstack/react-query';
 import { useMediaQuery } from 'react-responsive';
+import { SystemContext } from './contexts/SystemProvider';
 
 const Sidebar = () => {
 	const { openLevel, setOpenLevel, collectionId } = useContext(OpenContext);
+	const { setIsSystemError, setType } = useContext(SystemContext);
 
-	const { data: collectionDetailDTO } = useQuery({
+	const { data: collectionDetailDTO, isError } = useQuery({
 		queryKey: ['collectionDetail', collectionId],
 		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
 		enabled: !!collectionId,
@@ -39,6 +41,11 @@ const Sidebar = () => {
 			}
 		});
 	};
+
+	if (isError) {
+		setType('server');
+		setIsSystemError(true);
+	}
 
 	return (
 		<aside

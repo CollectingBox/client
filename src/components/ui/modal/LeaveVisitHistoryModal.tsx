@@ -14,6 +14,8 @@ import { postCollectionReview } from '@/service/collection';
 import { VisitHistoryType } from '@/types/collection';
 import { OpenContext } from '@/components/contexts/OpenProvider';
 import { useQueryClient } from '@tanstack/react-query';
+import { CompleteContext } from '@/components/contexts/CompleteProvider';
+import { SystemContext } from '@/components/contexts/SystemProvider';
 
 type Props = {
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -23,6 +25,8 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const queryClient = useQueryClient();
 	const [option, setOption] = useState<VisitHistoryType>();
 	const { collectionId } = useContext(OpenContext);
+	const { setIsComplete, setContent } = useContext(CompleteContext);
+	const { setIsSystemError, setType } = useContext(SystemContext);
 
 	const handleSelectOption = (value: VisitHistoryType) => setOption(value);
 	const handleLeaveVisitHistory = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -33,9 +37,12 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 			await queryClient.invalidateQueries({
 				queryKey: ['collectionDetail', collectionId],
 			});
+			setContent('register');
+			setIsComplete(true);
 			setIsModalOpen(false);
-		} catch (err) {
-			console.error(err);
+		} catch (e) {
+			setType('server');
+			setIsSystemError(true);
 		}
 	};
 

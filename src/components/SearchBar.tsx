@@ -1,6 +1,13 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import ToastError from './ui/toasts/ToastError';
 import { getSearchComplete } from '@/service/searchComplete';
@@ -8,6 +15,7 @@ import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
 import SearchIcon from '@/public/icons/search.svg';
 import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
+import { SystemContext } from './contexts/SystemProvider';
 
 interface Props {
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
@@ -24,13 +32,15 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 	const [currentIndex, setCurrentIndex] = useState(-1);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 	const searchRef = useRef<HTMLDivElement | null>(null);
+	const { setIsSystemError, setType } = useContext(SystemContext);
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
 			const res = await getSearchComplete(value);
 			setCompletes(res.data.items);
 		} catch (e) {
-			console.log(e);
+			setType('server');
+			setIsSystemError(true);
 		}
 	}, 300);
 
