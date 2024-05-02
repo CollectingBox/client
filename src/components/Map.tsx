@@ -9,7 +9,10 @@ import Sidebar from './Sidebar';
 import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
-import CompleteProvider, { CompleteContext } from './contexts/CompleteProvider';
+import { CompleteContext } from './contexts/CompleteProvider';
+import SystemErrorModal from './ui/modal/SystemErrorModal';
+import SystemPortal from './ui/modal/SystemPortal';
+import SystemProvider, { SystemContext } from './contexts/SystemProvider';
 
 const Map = () => {
 	useKakaoLoader();
@@ -26,6 +29,8 @@ const Map = () => {
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
 	const { isComplete, setIsComplete } = useContext(CompleteContext);
+	const { isSystemError, setIsSystemError, setType } =
+		useContext(SystemContext);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
@@ -49,36 +54,51 @@ const Map = () => {
 		};
 	}, [isComplete, setIsComplete]);
 
+	useEffect(() => {
+		const handleOffline = () => {
+			setType('network');
+			setIsSystemError(true);
+		};
+		window.addEventListener('offline', handleOffline);
+
+		return () => {
+			window.removeEventListener('offline', handleOffline);
+		};
+	}, []);
+
 	return (
-		<FilterProvider>
-			<div className="absolute">
-				<Kakaomap
-					mapRef={mapRef}
-					center={center}
-					setCenter={setCenter}
-					searchCenter={searchCenter}
-					location={location}
-				/>
-				<div className="absolute left-0 top-0 w-[100dvw]">
-					<div className="xl:flex xl:h-28 xl:items-start">
-						<Sidebar />
-						<MapController
-							mapRef={mapRef}
-							setCenter={setCenter}
-							setSearchCenter={setSearchCenter}
-							location={location}
-							setLocation={setLocation}
-						/>
-						{isMoved && (
-							<ReSearchBtn
-								onClick={() => handleClickResearch(mapRef.current!)}
+		<SystemProvider>
+			<FilterProvider>
+				<div className="absolute">
+					<Kakaomap
+						mapRef={mapRef}
+						center={center}
+						setCenter={setCenter}
+						searchCenter={searchCenter}
+						location={location}
+					/>
+					<div className="absolute left-0 top-0 w-[100dvw]">
+						<div className="xl:flex xl:h-28 xl:items-start">
+							<Sidebar />
+							<MapController
+								mapRef={mapRef}
+								setCenter={setCenter}
+								setSearchCenter={setSearchCenter}
+								location={location}
+								setLocation={setLocation}
 							/>
-						)}
+							{isMoved && (
+								<ReSearchBtn
+									onClick={() => handleClickResearch(mapRef.current!)}
+								/>
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
-			{isComplete && <ToastComplete />}
-		</FilterProvider>
+				{isComplete && <ToastComplete />}
+				<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
+			</FilterProvider>
+		</SystemProvider>
 	);
 };
 

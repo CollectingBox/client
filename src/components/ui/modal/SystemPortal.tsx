@@ -7,7 +7,7 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const ModalPortal = ({ children }: Props) => {
+const SystemPortal = ({ children }: Props) => {
 	const [hasMounted, setHasMounted] = useState(false);
 	useEffect(() => {
 		setHasMounted(true);
@@ -15,8 +15,8 @@ const ModalPortal = ({ children }: Props) => {
 	if (!hasMounted) {
 		return null;
 	}
-	const el = document.getElementById('portal') as HTMLElement;
+	const el = document.getElementById('system') as HTMLElement;
 	return ReactDOM.createPortal(children, el);
 };
 
-export default ModalPortal;
+export default SystemPortal;
