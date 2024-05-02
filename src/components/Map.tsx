@@ -10,6 +10,10 @@ import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
 import CompleteProvider, { CompleteContext } from './contexts/CompleteProvider';
+import ModalPortal from './ui/modal/Portal';
+import SystemErrorModal from './ui/modal/SystemErrorModal';
+import SystemPortal from './ui/modal/SystemPortal';
+import { SystemContext } from './contexts/SystemProvider';
 
 const Map = () => {
 	useKakaoLoader();
@@ -26,6 +30,7 @@ const Map = () => {
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
 	const { isComplete, setIsComplete } = useContext(CompleteContext);
+	const { isSystemError } = useContext(SystemContext);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
@@ -78,6 +83,7 @@ const Map = () => {
 				</div>
 			</div>
 			{isComplete && <ToastComplete />}
+			<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
 		</FilterProvider>
 	);
 };

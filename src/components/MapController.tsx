@@ -33,14 +33,14 @@ const MapController = ({
 				lng: position.coords.longitude,
 			});
 		});
-	}, []);
+	}, [setLocation]);
 
 	useEffect(() => {
 		if (location) {
 			setCenter(location);
 			setSearchCenter(location);
 		}
-	}, [location]);
+	}, [location, setCenter, setSearchCenter]);
 
 	return (
 		<div className="fixed left-0 top-0 p-6 xl:static">
