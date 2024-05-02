@@ -29,7 +29,8 @@ const Map = () => {
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
 	const { isComplete, setIsComplete } = useContext(CompleteContext);
-	const { isSystemError } = useContext(SystemContext);
+	const { isSystemError, setIsSystemError, setType } =
+		useContext(SystemContext);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
@@ -52,6 +53,11 @@ const Map = () => {
 			}
 		};
 	}, [isComplete, setIsComplete]);
+
+	window.addEventListener('offline', () => {
+		setType('network');
+		setIsSystemError(true);
+	});
 
 	return (
 		<SystemProvider>
