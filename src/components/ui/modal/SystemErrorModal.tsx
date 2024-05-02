@@ -43,7 +43,12 @@ const SystemErrorModal = () => {
 							: '인터넷 연결 상태를 확인한 후 다시 시도해주세요.'}
 					</p>
 				</div>
-				<button className="w-full rounded-[8px] bg-Green-500 px-S-16 py-S-12 text-white">
+				<button
+					onClick={() => {
+						location.reload();
+					}}
+					className="w-full rounded-[8px] bg-Green-500 px-S-16 py-S-12 text-white"
+				>
 					{type === 'server' ? '새로고침' : '재시도'}
 				</button>
 			</div>
