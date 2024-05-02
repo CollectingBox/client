@@ -34,7 +34,7 @@ export default function VisitRecord({ reviews }: Props) {
 				</button>
 			</div>
 			<div className="flex flex-col gap-S-16">
-				{reviews.length > 0 && reviews.length < 5 && (
+				{reviews.length > 0 && reviews.length < 6 && (
 					<>
 						{reviews.map((message, index) => (
 							<VisitMessage
