@@ -10,7 +10,7 @@ interface ISystemProviderContext {
 }
 
 export const SystemContext = createContext<ISystemProviderContext>({
-	isSystemError: false,
+	isSystemError: true,
 	setIsSystemError: () => {},
 	type: 'server',
 	setType: () => {},
@@ -21,7 +21,7 @@ export default function SystemProvider({
 }: {
 	children: React.ReactNode;
 }) {
-	const [isSystemError, setIsSystemError] = useState(false);
+	const [isSystemError, setIsSystemError] = useState(true);
 	const [type, setType] = useState('server');
 
 	return (

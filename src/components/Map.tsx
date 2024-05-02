@@ -9,11 +9,10 @@ import Sidebar from './Sidebar';
 import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
-import CompleteProvider, { CompleteContext } from './contexts/CompleteProvider';
-import ModalPortal from './ui/modal/Portal';
+import { CompleteContext } from './contexts/CompleteProvider';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
 import SystemPortal from './ui/modal/SystemPortal';
-import { SystemContext } from './contexts/SystemProvider';
+import SystemProvider, { SystemContext } from './contexts/SystemProvider';
 
 const Map = () => {
 	useKakaoLoader();
@@ -55,36 +54,38 @@ const Map = () => {
 	}, [isComplete, setIsComplete]);
 
 	return (
-		<FilterProvider>
-			<div className="absolute">
-				<Kakaomap
-					mapRef={mapRef}
-					center={center}
-					setCenter={setCenter}
-					searchCenter={searchCenter}
-					location={location}
-				/>
-				<div className="absolute left-0 top-0 w-[100dvw]">
-					<div className="xl:flex xl:h-28 xl:items-start">
-						<Sidebar />
-						<MapController
-							mapRef={mapRef}
-							setCenter={setCenter}
-							setSearchCenter={setSearchCenter}
-							location={location}
-							setLocation={setLocation}
-						/>
-						{isMoved && (
-							<ReSearchBtn
-								onClick={() => handleClickResearch(mapRef.current!)}
+		<SystemProvider>
+			<FilterProvider>
+				<div className="absolute">
+					<Kakaomap
+						mapRef={mapRef}
+						center={center}
+						setCenter={setCenter}
+						searchCenter={searchCenter}
+						location={location}
+					/>
+					<div className="absolute left-0 top-0 w-[100dvw]">
+						<div className="xl:flex xl:h-28 xl:items-start">
+							<Sidebar />
+							<MapController
+								mapRef={mapRef}
+								setCenter={setCenter}
+								setSearchCenter={setSearchCenter}
+								location={location}
+								setLocation={setLocation}
 							/>
-						)}
+							{isMoved && (
+								<ReSearchBtn
+									onClick={() => handleClickResearch(mapRef.current!)}
+								/>
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
-			{isComplete && <ToastComplete />}
-			<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
-		</FilterProvider>
+				{isComplete && <ToastComplete />}
+				<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
+			</FilterProvider>
+		</SystemProvider>
 	);
 };
 

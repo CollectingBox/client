@@ -2,13 +2,26 @@
 
 import { SystemContext } from '@/components/contexts/SystemProvider';
 import Close from '@/public/icons/close.svg';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 const SystemErrorModal = () => {
-	const { type } = useContext(SystemContext);
+	const { type, isSystemError, setIsSystemError } = useContext(SystemContext);
+
+	if (!isSystemError) return null;
+
 	return (
-		<div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50">
-			<div className="Elevation-2-Bottom flex w-full max-w-[400px] flex-col gap-S-24 rounded-[16px] border-Gray-100 bg-white p-S-28">
+		<div
+			className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50"
+			onClick={() => {
+				setIsSystemError(false);
+			}}
+		>
+			<div
+				onClick={(e) => {
+					e.stopPropagation();
+				}}
+				className="Elevation-2-Bottom flex w-full max-w-[400px] flex-col gap-S-24 rounded-[16px] border-Gray-100 bg-white p-S-28"
+			>
 				<div className="flex flex-col justify-between gap-S-20">
 					<div className="flex justify-between">
 						<p className="text-Gray-900 Title-Large">
@@ -16,7 +29,13 @@ const SystemErrorModal = () => {
 								? '일시적인 오류가 발생했습니다'
 								: '네트워크에 연결할 수 없습니다'}
 						</p>
-						<Close />
+						<button
+							onClick={() => {
+								setIsSystemError(false);
+							}}
+						>
+							<Close />
+						</button>
 					</div>
 					<p className="text-Gray-700 Title-Medium">
 						{type === 'server'
