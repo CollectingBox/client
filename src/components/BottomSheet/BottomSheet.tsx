@@ -48,7 +48,7 @@ export default function BottomSheet({
 				half: { y: '250px' },
 				closed: { y: '100%' },
 			}}
-			dragConstraints={{ top: 0 }}
+			dragConstraints={{ top: 150 }}
 			dragElastic={0.2}
 			style={{
 				position: 'fixed',
@@ -69,7 +69,7 @@ export default function BottomSheet({
 				<div className="DragHandle" />
 			</div>
 			{collectionDetailDTO?.data && (
-				<div className="h-[540px] overflow-y-scroll pt-6 scrollbar-hide">
+				<div className="h-[480px] overflow-y-scroll pt-6 scrollbar-hide">
 					<BoxInformation collectionDetail={collectionDetailDTO?.data} />
 					<VisitRecord reviews={collectionDetailDTO?.data.reviews} />
 					{collectionDetailDTO?.data.tag !== '쓰레기통' && (
