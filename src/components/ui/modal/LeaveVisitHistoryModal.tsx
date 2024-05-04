@@ -32,7 +32,23 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const handleLeaveVisitHistory = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (!collectionId || !option) return;
+
+		const reviewHistoryJSON = localStorage.getItem('reviewHistory');
 		try {
+			const reviewHistoryList = reviewHistoryJSON
+				? JSON.parse(reviewHistoryJSON)
+				: [];
+			if (reviewHistoryList.includes(collectionId)) {
+				alert('이미 리뷰를 작성한 수거함입니다.');
+				return;
+			} else {
+				reviewHistoryList.push(collectionId);
+				localStorage.setItem(
+					'reviewHistory',
+					JSON.stringify(reviewHistoryList),
+				);
+			}
+
 			await postCollectionReview(collectionId, option);
 			await queryClient.invalidateQueries({
 				queryKey: ['collectionDetail', collectionId],
