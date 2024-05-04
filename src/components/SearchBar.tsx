@@ -131,7 +131,7 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 				<input
 					className={`${completes.length === 0 ? 'rounded-b-[16px]' : 'rounded-b-none'} Elevation-2-Bottom w-[328px] max-w-[360px] rounded-t-[16px] border-[1.5px] border-Green-400 py-[14px] pl-[46px] pr-S-64 text-Gray-800 outline-none Title-Small placeholder:text-Gray-200 placeholder:Body-Large`}
 					type="text"
-					placeholder="동네명 검색 (Ex. 종로구, 상수동)"
+					placeholder="동네명 검색 (Ex. 강남구, 역삼1동)"
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
 					onKeyDown={handleKeyDown}
