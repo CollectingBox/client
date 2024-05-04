@@ -34,7 +34,7 @@ const FilterButtons = () => {
 	};
 
 	return (
-		<div className="flex w-[95dvw] gap-S-6 overflow-scroll scrollbar-hide xl:w-min">
+		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pr-3 scrollbar-hide xl:w-min">
 			<button
 				value="CLOTHES"
 				onClick={handleClickFilter}
@@ -64,7 +64,7 @@ const FilterButtons = () => {
 			<button
 				value="TRASH"
 				onClick={handleClickFilter}
-				className={filterButtonStyle('TRASH', 'bg-Gray-400')}
+				className={filterButtonStyle('TRASH', 'bg-Red-100')}
 			>
 				<TrashcanIcon enabled={selectedFilters.includes('TRASH')} />
 				쓰레기통
