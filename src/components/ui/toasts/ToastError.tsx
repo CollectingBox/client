@@ -12,7 +12,7 @@ interface Props {
 
 export default function ToastError({ title, description, className }: Props) {
 	const [isVisible, setIsVisible] = useState(true);
-	const { openLevel } = useContext(OpenContext);
+	const { isSidebarOpen } = useContext(OpenContext);
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setIsVisible(false);
@@ -25,7 +25,7 @@ export default function ToastError({ title, description, className }: Props) {
 			className={`${className ? className : ''} ${
 				isVisible ? 'opacity-70' : 'opacity-0'
 			} fixed bottom-[50px] left-0 right-0 mx-auto max-w-[400px] xl:bottom-[S-24] xl:mx-0 
-			${openLevel >= 1 ? 'xl:left-[402px]' : 'xl:left-[110px]'}  
+			${isSidebarOpen ? 'xl:left-[402px]' : 'xl:left-[110px]'}  
 			Elevation-2-Bottom z-50 flex w-[95dvw] gap-S-8 rounded-lg bg-[#92908e] 
 			px-S-20 py-S-12 transition-opacity duration-500 xl:w-[360px]`}
 		>

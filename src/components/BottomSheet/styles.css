@@ -1,0 +1,37 @@
+.DragHandleEdge {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 30px;
+	padding-bottom: 10px;
+	/* background-color: red; */
+	border-top: 2px solid transparent;
+	transition: border-top 0.2s ease;
+	cursor: row-resize;
+	background: white;
+}
+
+.DragHandleEdge:hover {
+	border-top: 2px solid #ebebeb;
+}
+
+.DragHandle {
+	width: 48px;
+	height: 4px;
+
+	background: rgba(212, 206, 202, 1);
+	border-radius: 25px;
+	transition: background 0.2s ease;
+}
+
+.DragHandleEdge:hover .DragHandle {
+	background: #b3b3b3;
+}
+
+.DragHandleEdge:active .DragHandle {
+	background: #b3b3b3;
+}
