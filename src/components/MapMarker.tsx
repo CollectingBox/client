@@ -5,8 +5,14 @@ import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
 import { getMarkerUrl, getSmallMarkerUrl } from '@/utils/util';
 import { OpenContext } from './contexts/OpenProvider';
 import { useMediaQuery } from 'react-responsive';
+import { AnimationControls } from 'framer-motion';
 
-const MapMarker = ({ collection }: { collection: ICollection }) => {
+interface Props {
+	collection: ICollection;
+	controls: AnimationControls;
+}
+
+const MapMarker = ({ collection, controls }: Props) => {
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
 	const { collectionId, setCollectionId, setOpenLevel } =
@@ -15,6 +21,7 @@ const MapMarker = ({ collection }: { collection: ICollection }) => {
 	const handleClickMaker = () => {
 		setCollectionId(collection.id);
 		setOpenLevel(isTabletOrMobile ? 1 : 2);
+		controls.start('half');
 	};
 
 	return (

@@ -5,7 +5,6 @@ import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
 import FilterProvider from './contexts/FilterProvider';
-import Sidebar from './Sidebar';
 import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
@@ -13,6 +12,14 @@ import { CompleteContext } from './contexts/CompleteProvider';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
 import SystemPortal from './ui/modal/SystemPortal';
 import SystemProvider, { SystemContext } from './contexts/SystemProvider';
+import { useMediaQuery } from 'react-responsive';
+import { useAnimation } from 'framer-motion';
+import dynamic from 'next/dynamic';
+
+const Sidebar = dynamic(() => import('./Sidebar'), {
+	ssr: false,
+});
+const BottomSheet = dynamic(() => import('./BottomSheet/BottomSheet'));
 
 const Map = () => {
 	useKakaoLoader();
@@ -26,6 +33,8 @@ const Map = () => {
 		lng: 126.978652258309,
 	});
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
+
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
 	const { isComplete, setIsComplete } = useContext(CompleteContext);
@@ -66,6 +75,8 @@ const Map = () => {
 		};
 	}, []);
 
+	const controls = useAnimation();
+
 	return (
 		<SystemProvider>
 			<FilterProvider>
@@ -76,10 +87,15 @@ const Map = () => {
 						setCenter={setCenter}
 						searchCenter={searchCenter}
 						location={location}
+						controls={controls}
 					/>
 					<div className="absolute left-0 top-0 w-[100dvw]">
 						<div className="xl:flex xl:h-28 xl:items-start">
-							<Sidebar />
+							{isTabletOrMobile ? (
+								<BottomSheet controls={controls} />
+							) : (
+								<Sidebar />
+							)}
 							<MapController
 								mapRef={mapRef}
 								setCenter={setCenter}

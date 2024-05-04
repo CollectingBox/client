@@ -9,6 +9,7 @@ import ToastError from './ui/toasts/ToastError';
 import { useQuery } from '@tanstack/react-query';
 import { OpenContext } from './contexts/OpenProvider';
 import { MovedContext } from './contexts/MovedProvider';
+import { AnimationControls } from 'framer-motion';
 
 export default function Kakaomap({
 	mapRef,
@@ -16,6 +17,7 @@ export default function Kakaomap({
 	location,
 	setCenter,
 	searchCenter,
+	controls,
 }: {
 	mapRef: RefObject<kakao.maps.Map>;
 	center: { lat: number; lng: number };
@@ -27,6 +29,7 @@ export default function Kakaomap({
 		}>
 	>;
 	searchCenter: { lat: number; lng: number };
+	controls: AnimationControls;
 }) {
 	useKakaoLoader();
 
@@ -98,6 +101,7 @@ export default function Kakaomap({
 
 	const handleClickMap = () => {
 		setOpenLevel(0);
+		controls.start('closed');
 	};
 
 	return (
@@ -124,7 +128,11 @@ export default function Kakaomap({
 				collectionsDTO.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
-						<MapMarker key={collection.id} collection={collection} />
+						<MapMarker
+							key={collection.id}
+							collection={collection}
+							controls={controls}
+						/>
 					))}
 			{location && <Marker position={location} />}
 			{(isError || isLevelExceed) && (
