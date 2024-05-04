@@ -11,7 +11,7 @@ import Front from '@/public/icons/front.svg';
 import VisitRecord from './ui/sidebars/VisitRecord';
 import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { SystemContext } from './contexts/SystemProvider';
 
 const Sidebar = () => {
@@ -23,6 +23,7 @@ const Sidebar = () => {
 		queryKey: ['collectionDetail', collectionId],
 		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
 		enabled: !!collectionId,
+		placeholderData: keepPreviousData,
 	});
 
 	if (isError) {

@@ -6,7 +6,7 @@ import BoxInformation from '../ui/sidebars/BoxInformation';
 import VisitRecord from '../ui/sidebars/VisitRecord';
 import DiscardMethod from '../ui/sidebars/DiscardMethod';
 import { OpenContext } from '../contexts/OpenProvider';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getCollectionDetail } from '@/service/collection';
 
 export default function BottomSheet({
@@ -20,6 +20,7 @@ export default function BottomSheet({
 		queryKey: ['collectionDetail', collectionId],
 		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
 		enabled: !!collectionId,
+		placeholderData: keepPreviousData,
 	});
 
 	function onDragEnd(event: MouseEvent, info: PanInfo) {
