@@ -34,7 +34,7 @@ export default function Kakaomap({
 	useKakaoLoader();
 
 	const { selectedFilters } = useContext(FilterContext);
-	const { setOpenLevel } = useContext(OpenContext);
+	const { setIsSidebarOpen } = useContext(OpenContext);
 
 	const { data: collectionsDTO } = useQuery({
 		queryKey: ['collections', searchCenter, selectedFilters],
@@ -100,7 +100,7 @@ export default function Kakaomap({
 	}, []);
 
 	const handleClickMap = () => {
-		setOpenLevel(0);
+		setIsSidebarOpen(false);
 		controls.start('closed');
 	};
 

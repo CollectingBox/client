@@ -15,12 +15,12 @@ interface Props {
 const MapMarker = ({ collection, controls }: Props) => {
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
-	const { collectionId, setCollectionId, setOpenLevel } =
+	const { collectionId, setCollectionId, setIsSidebarOpen } =
 		useContext(OpenContext);
 
 	const handleClickMaker = () => {
 		setCollectionId(collection.id);
-		setOpenLevel(isTabletOrMobile ? 1 : 2);
+		setIsSidebarOpen(true);
 		controls.start('half');
 	};
 

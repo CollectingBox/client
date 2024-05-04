@@ -14,7 +14,7 @@ export default function BottomSheet({
 }: {
 	controls: AnimationControls;
 }) {
-	const { openLevel, setOpenLevel, collectionId } = useContext(OpenContext);
+	const { collectionId } = useContext(OpenContext);
 
 	const { data: collectionDetailDTO, isError } = useQuery({
 		queryKey: ['collectionDetail', collectionId],
