@@ -7,13 +7,13 @@ import useKakaoLoader from '@/utils/util';
 import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
-import { CompleteContext } from './contexts/CompleteProvider';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
 import SystemPortal from './ui/modal/SystemPortal';
 import { SystemContext } from './contexts/SystemProvider';
 import { useMediaQuery } from 'react-responsive';
 import { useAnimation } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import useCompletionStatus from '@/hooks/useCompletionStatus';
 
 const Sidebar = dynamic(() => import('./Sidebar'), {
 	ssr: false,
@@ -36,7 +36,7 @@ const Map = () => {
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
-	const { isComplete, setIsComplete } = useContext(CompleteContext);
+	const { isComplete } = useCompletionStatus();
 	const { isSystemError, setIsSystemError, setType } =
 		useContext(SystemContext);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -48,19 +48,6 @@ const Map = () => {
 		setSearchCenter({ lat, lng });
 		setIsMoved(false);
 	};
-
-	useEffect(() => {
-		if (isComplete) {
-			timerRef.current = setTimeout(() => {
-				setIsComplete(false);
-			}, 3000);
-		}
-		return () => {
-			if (timerRef.current !== null) {
-				clearTimeout(timerRef.current);
-			}
-		};
-	}, [isComplete, setIsComplete]);
 
 	useEffect(() => {
 		const handleOffline = () => {
