@@ -8,7 +8,6 @@ import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
-import SystemPortal from './ui/modal/SystemPortal';
 import { SystemContext } from './contexts/SystemProvider';
 import { useMediaQuery } from 'react-responsive';
 import { useAnimation } from 'framer-motion';
@@ -77,7 +76,7 @@ const MainPage = () => {
 				</div>
 			</div>
 			{isComplete && <ToastComplete />}
-			<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
+			{isSystemError && <SystemErrorModal />}
 		</div>
 	);
 };

@@ -7,7 +7,6 @@ import Add from '../icons/Add';
 import Up from '../icons/Up';
 import { IReview } from '@/types/collection';
 import LeaveVisitHistoryModal from '../modal/LeaveVisitHistoryModal';
-import ModalPortal from '../modal/Portal';
 
 interface Props {
 	reviews: IReview[];
@@ -82,11 +81,9 @@ export default function VisitRecord({ reviews }: Props) {
 					</div>
 				)}
 			</div>
-			<ModalPortal>
-				{isModalOpen && (
-					<LeaveVisitHistoryModal setIsModalOpen={setIsModalOpen} />
-				)}
-			</ModalPortal>
+			{isModalOpen && (
+				<LeaveVisitHistoryModal setIsModalOpen={setIsModalOpen} />
+			)}
 		</section>
 	);
 }
