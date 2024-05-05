@@ -20,17 +20,17 @@ const Sidebar = dynamic(() => import('./Sidebar'), {
 });
 const BottomSheet = dynamic(() => import('./BottomSheet/BottomSheet'));
 
+// NOTE: 위치정보 미허용시 default 값 서울특별시청
+const DEFAULT_LOCATION = {
+	lat: 37.566826004661,
+	lng: 126.978652258309,
+};
+
 const Map = () => {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [center, setCenter] = useState({
-		lat: 37.566826004661,
-		lng: 126.978652258309,
-	});
-	const [searchCenter, setSearchCenter] = useState({
-		lat: 37.566826004661,
-		lng: 126.978652258309,
-	});
+	const [center, setCenter] = useState(DEFAULT_LOCATION);
+	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
