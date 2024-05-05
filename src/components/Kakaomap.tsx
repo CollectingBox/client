@@ -35,18 +35,34 @@ export default function Kakaomap({
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-	useEffect(() => {
-		kakao.maps.load(() => {
-			setGeocoder(new kakao.maps.services.Geocoder());
-		});
-	}, []);
-
 	const handleDragEnd = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
 		setCenter({ lat, lng });
 	};
+
+	const handleLevelChange = (map: kakao.maps.Map) => {
+		const currentLevel = map.getLevel();
+		if (currentLevel > 8) {
+			map.setLevel(8);
+			setIsLevelExceed(true);
+			timerRef.current = setTimeout(() => {
+				setIsLevelExceed(false);
+			}, 3000);
+		}
+	};
+
+	const handleClickMap = () => {
+		setIsSidebarOpen(false);
+		controls.start('closed');
+	};
+
+	useEffect(() => {
+		kakao.maps.load(() => {
+			setGeocoder(new kakao.maps.services.Geocoder());
+		});
+	}, []);
 
 	useEffect(() => {
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
@@ -60,30 +76,13 @@ export default function Kakaomap({
 				}
 			}
 		});
-	}, [center]);
 
-	const handleLevelChange = (map: kakao.maps.Map) => {
-		const currentLevel = map.getLevel();
-		if (currentLevel > 8) {
-			map.setLevel(8);
-			setIsLevelExceed(true);
-			timerRef.current = setTimeout(() => {
-				setIsLevelExceed(false);
-			}, 3000);
-		}
-	};
-	useEffect(() => {
 		return () => {
 			if (timerRef.current !== null) {
 				clearTimeout(timerRef.current);
 			}
 		};
-	}, []);
-
-	const handleClickMap = () => {
-		setIsSidebarOpen(false);
-		controls.start('closed');
-	};
+	}, [center, geocoder, setIsMoved]);
 
 	return (
 		<Map
