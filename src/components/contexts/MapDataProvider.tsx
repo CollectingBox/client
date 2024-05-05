@@ -1,6 +1,6 @@
 'use client';
 
-import { LocationType } from '@/types/define';
+import { CollectionTags, LocationType } from '@/types/define';
 import {
 	Dispatch,
 	RefObject,
@@ -15,8 +15,8 @@ interface IMapDataProviderContext {
 	setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
 	collectionId?: number;
 	setCollectionId: (value: number) => void;
-	selectedFilters: string[];
-	setSelectedFilters: Dispatch<SetStateAction<string[]>>;
+	selectedFilters: CollectionTags[];
+	setSelectedFilters: Dispatch<SetStateAction<CollectionTags[]>>;
 	isMoved: boolean;
 	setIsMoved: Dispatch<SetStateAction<boolean>>;
 	center: LocationType;
@@ -59,7 +59,9 @@ export default function MapDataProvider({
 	const mapRef = useRef<kakao.maps.Map>(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [collectionId, setCollectionId] = useState<number>();
-	const [selectedFilters, setSelectedFilters] = useState(['CLOTHES']);
+	const [selectedFilters, setSelectedFilters] = useState<CollectionTags[]>([
+		'CLOTHES',
+	]);
 	const [isMoved, setIsMoved] = useState(false);
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
