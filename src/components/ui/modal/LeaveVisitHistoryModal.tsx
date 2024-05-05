@@ -33,16 +33,31 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 		e.preventDefault();
 		if (!collectionId || !option) return;
 
-		const reviewHistoryJSON = localStorage.getItem('reviewHistory');
 		try {
+			const reviewHistoryJSON = localStorage.getItem('reviewHistory');
 			const reviewHistoryList = reviewHistoryJSON
 				? JSON.parse(reviewHistoryJSON)
 				: [];
-			if (reviewHistoryList.includes(collectionId)) {
-				alert('이미 리뷰를 작성한 수거함입니다.');
-				return;
+			const index = reviewHistoryList.findIndex(
+				(item: { collectionId: number; createdAt: Date }) =>
+					item.collectionId === collectionId,
+			);
+			if (index !== -1) {
+				const lastCreatedAt = new Date(reviewHistoryList[index].createdAt);
+				const now = new Date();
+				const timeDiff = now.getTime() - lastCreatedAt.getTime();
+				const hoursPassed = timeDiff / (1000 * 60 * 60);
+				if (hoursPassed < 24) {
+					alert(
+						'이미 리뷰를 작성한 수거함입니다. 24시간 후에 다시 작성 가능합니다.',
+					);
+					return;
+				}
 			} else {
-				reviewHistoryList.push(collectionId);
+				reviewHistoryList.push({
+					collectionId,
+					createdAt: new Date(),
+				});
 				localStorage.setItem(
 					'reviewHistory',
 					JSON.stringify(reviewHistoryList),
