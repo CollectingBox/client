@@ -4,14 +4,13 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
-import FilterProvider from './contexts/FilterProvider';
 import { MovedContext } from './contexts/MovedProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
 import { CompleteContext } from './contexts/CompleteProvider';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
 import SystemPortal from './ui/modal/SystemPortal';
-import SystemProvider, { SystemContext } from './contexts/SystemProvider';
+import { SystemContext } from './contexts/SystemProvider';
 import { useMediaQuery } from 'react-responsive';
 import { useAnimation } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -78,43 +77,33 @@ const Map = () => {
 	const controls = useAnimation();
 
 	return (
-		<SystemProvider>
-			<FilterProvider>
-				<div className="absolute">
-					<Kakaomap
+		<div className="absolute">
+			<Kakaomap
+				mapRef={mapRef}
+				center={center}
+				setCenter={setCenter}
+				searchCenter={searchCenter}
+				location={location}
+				controls={controls}
+			/>
+			<div className="absolute left-0 top-0 w-[100dvw]">
+				<div className="xl:flex xl:h-28 xl:items-start">
+					{isTabletOrMobile ? <BottomSheet controls={controls} /> : <Sidebar />}
+					<MapController
 						mapRef={mapRef}
-						center={center}
 						setCenter={setCenter}
-						searchCenter={searchCenter}
+						setSearchCenter={setSearchCenter}
 						location={location}
-						controls={controls}
+						setLocation={setLocation}
 					/>
-					<div className="absolute left-0 top-0 w-[100dvw]">
-						<div className="xl:flex xl:h-28 xl:items-start">
-							{isTabletOrMobile ? (
-								<BottomSheet controls={controls} />
-							) : (
-								<Sidebar />
-							)}
-							<MapController
-								mapRef={mapRef}
-								setCenter={setCenter}
-								setSearchCenter={setSearchCenter}
-								location={location}
-								setLocation={setLocation}
-							/>
-							{isMoved && (
-								<ReSearchBtn
-									onClick={() => handleClickResearch(mapRef.current!)}
-								/>
-							)}
-						</div>
-					</div>
+					{isMoved && (
+						<ReSearchBtn onClick={() => handleClickResearch(mapRef.current!)} />
+					)}
 				</div>
-				{isComplete && <ToastComplete />}
-				<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
-			</FilterProvider>
-		</SystemProvider>
+			</div>
+			{isComplete && <ToastComplete />}
+			<SystemPortal>{isSystemError && <SystemErrorModal />}</SystemPortal>
+		</div>
 	);
 };
 
