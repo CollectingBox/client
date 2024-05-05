@@ -5,12 +5,8 @@ import MapLevelController from './MapLevelController';
 import LocationIcon from '@/public/icons/location.svg';
 import { MapDataContext } from './contexts/MapDataProvider';
 
-interface Props {
-	mapRef: RefObject<kakao.maps.Map>;
-}
-
-const MapController = ({ mapRef }: Props) => {
-	const { setCenter, setSearchCenter, location, setLocation } =
+const MapController = () => {
+	const { mapRef, setCenter, setSearchCenter, location, setLocation } =
 		useContext(MapDataContext);
 	const onClickLocation = () => {
 		if (!location) return;

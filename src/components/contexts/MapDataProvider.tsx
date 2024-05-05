@@ -1,7 +1,14 @@
 'use client';
 
 import { LocationType } from '@/types/define';
-import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import {
+	Dispatch,
+	RefObject,
+	SetStateAction,
+	createContext,
+	useRef,
+	useState,
+} from 'react';
 
 interface IMapDataProviderContext {
 	isSidebarOpen: boolean;
@@ -18,6 +25,7 @@ interface IMapDataProviderContext {
 	setSearchCenter: Dispatch<SetStateAction<LocationType>>;
 	location: LocationType | undefined;
 	setLocation: Dispatch<SetStateAction<LocationType | undefined>>;
+	mapRef: RefObject<kakao.maps.Map>;
 }
 
 // NOTE: 위치정보 미허용시 default 값 서울특별시청
@@ -40,6 +48,7 @@ export const MapDataContext = createContext<IMapDataProviderContext>({
 	setSearchCenter: () => {},
 	location: undefined,
 	setLocation: () => {},
+	mapRef: { current: null },
 });
 
 export default function MapDataProvider({
@@ -47,6 +56,7 @@ export default function MapDataProvider({
 }: {
 	children: React.ReactNode;
 }) {
+	const mapRef = useRef<kakao.maps.Map>(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [collectionId, setCollectionId] = useState<number>();
 	const [selectedFilters, setSelectedFilters] = useState(['CLOTHES']);
@@ -58,6 +68,7 @@ export default function MapDataProvider({
 	return (
 		<MapDataContext.Provider
 			value={{
+				mapRef,
 				isSidebarOpen,
 				setIsSidebarOpen,
 				collectionId,

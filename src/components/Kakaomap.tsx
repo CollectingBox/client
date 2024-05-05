@@ -10,29 +10,22 @@ import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 
 export default function Kakaomap({
-	mapRef,
-	center,
-	location,
-	setCenter,
-	searchCenter,
 	controls,
 }: {
-	mapRef: RefObject<kakao.maps.Map>;
-	center: { lat: number; lng: number };
-	location?: { lat: number; lng: number };
-	setCenter: React.Dispatch<
-		React.SetStateAction<{
-			lat: number;
-			lng: number;
-		}>
-	>;
-	searchCenter: { lat: number; lng: number };
 	controls: AnimationControls;
 }) {
 	useKakaoLoader();
 
-	const { setIsSidebarOpen, selectedFilters, setIsMoved } =
-		useContext(MapDataContext);
+	const {
+		mapRef,
+		setIsSidebarOpen,
+		selectedFilters,
+		setIsMoved,
+		center,
+		location,
+		setCenter,
+		searchCenter,
+	} = useContext(MapDataContext);
 
 	const { data: collectionsDTO } = useQuery({
 		queryKey: ['collections', searchCenter, selectedFilters],
