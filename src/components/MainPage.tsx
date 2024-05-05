@@ -27,7 +27,7 @@ const DEFAULT_LOCATION = {
 	lng: 126.978652258309,
 };
 
-const Map = () => {
+const MainPage = () => {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
@@ -82,4 +82,4 @@ const Map = () => {
 	);
 };
 
-export default Map;
+export default MainPage;

@@ -1,5 +1,5 @@
-import Map from '@/components/Map';
+import MainPage from '@/components/MainPage';
 
 export default function Home() {
-	return <Map />;
+	return <MainPage />;
 }
