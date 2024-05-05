@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
 import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
@@ -14,6 +14,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useAnimation } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import useCompletionStatus from '@/hooks/useCompletionStatus';
+import useNetworkStatus from '@/hooks/useNetworkStatus';
 
 const Sidebar = dynamic(() => import('./Sidebar'), {
 	ssr: false,
@@ -37,9 +38,8 @@ const Map = () => {
 
 	const { isMoved, setIsMoved } = useContext(MovedContext);
 	const { isComplete } = useCompletionStatus();
-	const { isSystemError, setIsSystemError, setType } =
-		useContext(SystemContext);
-	const timerRef = useRef<NodeJS.Timeout | null>(null);
+	const { isSystemError } = useContext(SystemContext);
+	useNetworkStatus();
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
@@ -48,18 +48,6 @@ const Map = () => {
 		setSearchCenter({ lat, lng });
 		setIsMoved(false);
 	};
-
-	useEffect(() => {
-		const handleOffline = () => {
-			setType('network');
-			setIsSystemError(true);
-		};
-		window.addEventListener('offline', handleOffline);
-
-		return () => {
-			window.removeEventListener('offline', handleOffline);
-		};
-	}, []);
 
 	const controls = useAnimation();
 
