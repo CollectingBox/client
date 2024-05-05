@@ -5,7 +5,7 @@ import './styles.css';
 import BoxInformation from '../ui/sidebars/BoxInformation';
 import VisitRecord from '../ui/sidebars/VisitRecord';
 import DiscardMethod from '../ui/sidebars/DiscardMethod';
-import { OpenContext } from '../contexts/OpenProvider';
+import { MapDataContext } from '../contexts/MapDataProvider';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getCollectionDetail } from '@/service/collection';
 
@@ -14,7 +14,7 @@ export default function BottomSheet({
 }: {
 	controls: AnimationControls;
 }) {
-	const { collectionId } = useContext(OpenContext);
+	const { collectionId } = useContext(MapDataContext);
 
 	const { data: collectionDetailDTO, isError } = useQuery({
 		queryKey: ['collectionDetail', collectionId],

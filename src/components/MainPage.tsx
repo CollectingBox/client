@@ -2,18 +2,18 @@
 
 import React, { useContext, useRef, useState } from 'react';
 import Kakaomap from './Kakaomap';
-import MapController from './MapController';
 import useKakaoLoader from '@/utils/util';
-import { MovedContext } from './contexts/MovedProvider';
-import ReSearchBtn from './ui/ReSearchBtn';
 import ToastComplete from './ui/toasts/ToastComplete';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
 import { SystemContext } from './contexts/SystemProvider';
-import { useMediaQuery } from 'react-responsive';
 import { useAnimation } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import useCompletionStatus from '@/hooks/useCompletionStatus';
 import useNetworkStatus from '@/hooks/useNetworkStatus';
+import dynamic from 'next/dynamic';
+import { useMediaQuery } from 'react-responsive';
+import { MapDataContext } from './contexts/MapDataProvider';
+import MapController from './MapController';
+import ReSearchBtn from './ui/ReSearchBtn';
 
 const Sidebar = dynamic(() => import('./Sidebar'), {
 	ssr: false,
@@ -29,13 +29,12 @@ const DEFAULT_LOCATION = {
 const MainPage = () => {
 	useKakaoLoader();
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
 	const [location, setLocation] = useState<{ lat: number; lng: number }>();
 
 	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
 
-	const { isMoved, setIsMoved } = useContext(MovedContext);
+	const { isMoved, setIsMoved, center, setCenter } = useContext(MapDataContext);
 	const { isComplete } = useCompletionStatus();
 	const { isSystemError } = useContext(SystemContext);
 	useNetworkStatus();
@@ -63,13 +62,7 @@ const MainPage = () => {
 			<div className="absolute left-0 top-0 w-[100dvw]">
 				<div className="xl:flex xl:h-28 xl:items-start">
 					{isTabletOrMobile ? <BottomSheet controls={controls} /> : <Sidebar />}
-					<MapController
-						mapRef={mapRef}
-						setCenter={setCenter}
-						setSearchCenter={setSearchCenter}
-						location={location}
-						setLocation={setLocation}
-					/>
+					<MapController mapRef={mapRef} />
 					{isMoved && (
 						<ReSearchBtn onClick={() => handleClickResearch(mapRef.current!)} />
 					)}

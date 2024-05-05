@@ -1,26 +1,17 @@
-import React, { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
+import React, { RefObject, useContext, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import FilterButtons from './FilterButtons';
 import MapLevelController from './MapLevelController';
 import LocationIcon from '@/public/icons/location.svg';
+import { MapDataContext } from './contexts/MapDataProvider';
 
 interface Props {
-	location: { lat: number; lng: number } | undefined;
-	setLocation: Dispatch<
-		SetStateAction<{ lat: number; lng: number } | undefined>
-	>;
 	mapRef: RefObject<kakao.maps.Map>;
-	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
-	setSearchCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
 }
 
-const MapController = ({
-	location,
-	setLocation,
-	mapRef,
-	setCenter,
-	setSearchCenter,
-}: Props) => {
+const MapController = ({ mapRef }: Props) => {
+	const { setCenter, setSearchCenter, location, setLocation } =
+		useContext(MapDataContext);
 	const onClickLocation = () => {
 		if (!location) return;
 		setCenter(location);
@@ -62,5 +53,3 @@ const MapController = ({
 };
 
 export default MapController;
-
-// 1000 5874 0229

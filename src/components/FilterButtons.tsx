@@ -5,12 +5,12 @@ import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
 import { MouseEvent, useContext, useState } from 'react';
-import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
+import { MapDataContext } from './contexts/MapDataProvider';
 
 const FilterButtons = () => {
 	const [isFilterZero, setIsFilterZero] = useState(false);
-	const { selectedFilters, setSelectedFilters } = useContext(FilterContext);
+	const { selectedFilters, setSelectedFilters } = useContext(MapDataContext);
 	const filterButtonStyle = (filter: string, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
 		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium' : 'bg-white text-Gray-500 Label-Large'}`;

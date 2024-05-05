@@ -2,14 +2,14 @@
 
 import { useContext } from 'react';
 import Refresh from './icons/Refresh';
-import { OpenContext } from '../contexts/OpenProvider';
+import { MapDataContext } from '../contexts/MapDataProvider';
 
 interface Props {
 	onClick: () => void;
 }
 
 const ReSearchBtn = ({ onClick }: Props) => {
-	const { isSidebarOpen } = useContext(OpenContext);
+	const { isSidebarOpen } = useContext(MapDataContext);
 	return (
 		<button
 			onClick={onClick}

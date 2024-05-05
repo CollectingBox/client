@@ -12,7 +12,7 @@ import Button from '../Button';
 import Close from '@/public/icons/close.svg';
 import { postCollectionReview } from '@/service/collection';
 import { VisitHistoryType } from '@/types/collection';
-import { OpenContext } from '@/components/contexts/OpenProvider';
+import { MapDataContext } from '@/components/contexts/MapDataProvider';
 import { useQueryClient } from '@tanstack/react-query';
 import { CompleteContext } from '@/components/contexts/CompleteProvider';
 import { SystemContext } from '@/components/contexts/SystemProvider';
@@ -25,7 +25,7 @@ type Props = {
 const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const queryClient = useQueryClient();
 	const [option, setOption] = useState<VisitHistoryType>();
-	const { collectionId } = useContext(OpenContext);
+	const { collectionId } = useContext(MapDataContext);
 	const { setIsComplete, setContent } = useContext(CompleteContext);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 

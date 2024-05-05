@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import Alert from '../icons/Alert';
-import { OpenContext } from '@/components/contexts/OpenProvider';
+import { MapDataContext } from '@/components/contexts/MapDataProvider';
 
 interface Props {
 	title: string;
@@ -12,7 +12,7 @@ interface Props {
 
 export default function ToastError({ title, description, className }: Props) {
 	const [isVisible, setIsVisible] = useState(true);
-	const { isSidebarOpen } = useContext(OpenContext);
+	const { isSidebarOpen } = useContext(MapDataContext);
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setIsVisible(false);

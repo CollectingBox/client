@@ -4,11 +4,9 @@ import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import { getCollections } from '@/service/collection';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
-import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
 import { useQuery } from '@tanstack/react-query';
-import { OpenContext } from './contexts/OpenProvider';
-import { MovedContext } from './contexts/MovedProvider';
+import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 
 export default function Kakaomap({
@@ -33,8 +31,8 @@ export default function Kakaomap({
 }) {
 	useKakaoLoader();
 
-	const { selectedFilters } = useContext(FilterContext);
-	const { setIsSidebarOpen } = useContext(OpenContext);
+	const { setIsSidebarOpen, selectedFilters, setIsMoved } =
+		useContext(MapDataContext);
 
 	const { data: collectionsDTO } = useQuery({
 		queryKey: ['collections', searchCenter, selectedFilters],
@@ -50,7 +48,6 @@ export default function Kakaomap({
 		null,
 	);
 	const [isError, setIsError] = useState(false);
-	const { setIsMoved } = useContext(MovedContext);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -82,8 +79,8 @@ export default function Kakaomap({
 	}, [center]);
 
 	const handleLevelChange = (map: kakao.maps.Map) => {
-		const currentLavel = map.getLevel();
-		if (currentLavel > 8) {
+		const currentLevel = map.getLevel();
+		if (currentLevel > 8) {
 			map.setLevel(8);
 			setIsLevelExceed(true);
 			timerRef.current = setTimeout(() => {
