@@ -9,6 +9,33 @@ import ToastError from './ui/toasts/ToastError';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { CollectionTags } from '@/types/define';
 
+const FILTERS = [
+	{
+		tag: 'CLOTHES' as const,
+		color: 'bg-Green-400',
+		icon: ClothesIcon,
+		text: '폐의류',
+	},
+	{
+		tag: 'LAMP_BATTERY' as const,
+		color: 'bg-Blue-100',
+		icon: FluorescentLampIcon,
+		text: '폐형광등∙폐건전지',
+	},
+	{
+		tag: 'MEDICINE' as const,
+		color: 'bg-Brown-100',
+		icon: PillIcon,
+		text: '폐의약품',
+	},
+	{
+		tag: 'TRASH' as const,
+		color: 'bg-Red-100',
+		icon: TrashcanIcon,
+		text: '쓰레기통',
+	},
+];
+
 const FilterButtons = () => {
 	const [isFilterZero, setIsFilterZero] = useState(false);
 	const { selectedFilters, setSelectedFilters } = useContext(MapDataContext);
@@ -37,40 +64,17 @@ const FilterButtons = () => {
 
 	return (
 		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pr-3 scrollbar-hide xl:w-min">
-			<button
-				value="CLOTHES"
-				onClick={handleClickFilter}
-				className={filterButtonStyle('CLOTHES', 'bg-Green-400')}
-			>
-				<ClothesIcon enabled={selectedFilters.includes('CLOTHES')} />
-				폐의류
-			</button>
-			<button
-				value="LAMP_BATTERY"
-				onClick={handleClickFilter}
-				className={filterButtonStyle('LAMP_BATTERY', 'bg-Blue-100')}
-			>
-				<FluorescentLampIcon
-					enabled={selectedFilters.includes('LAMP_BATTERY')}
-				/>
-				폐형광등∙폐건전지
-			</button>
-			<button
-				value="MEDICINE"
-				onClick={handleClickFilter}
-				className={filterButtonStyle('MEDICINE', 'bg-Brown-100 ')}
-			>
-				<PillIcon enabled={selectedFilters.includes('MEDICINE')} />
-				폐의약품
-			</button>
-			<button
-				value="TRASH"
-				onClick={handleClickFilter}
-				className={filterButtonStyle('TRASH', 'bg-Red-100')}
-			>
-				<TrashcanIcon enabled={selectedFilters.includes('TRASH')} />
-				쓰레기통
-			</button>
+			{FILTERS.map(({ tag, color, icon: IconComponent }) => (
+				<button
+					key={tag}
+					value={tag}
+					onClick={handleClickFilter}
+					className={filterButtonStyle(tag, color)}
+				>
+					<IconComponent enabled={selectedFilters.includes(tag)} />
+				</button>
+			))}
+
 			{isFilterZero && <ToastError title="한 개 이상의 필터를 선택해주세요" />}
 		</div>
 	);
