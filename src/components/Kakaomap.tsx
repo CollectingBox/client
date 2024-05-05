@@ -1,13 +1,12 @@
 'use client';
-import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
-import { getCollections } from '@/service/collection';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
 import ToastError from './ui/toasts/ToastError';
-import { useQuery } from '@tanstack/react-query';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
+import useCollections from '@/hooks/useCollections';
 
 export default function Kakaomap({
 	controls,
@@ -27,15 +26,7 @@ export default function Kakaomap({
 		searchCenter,
 	} = useContext(MapDataContext);
 
-	const { data: collectionsDTO } = useQuery({
-		queryKey: ['collections', searchCenter, selectedFilters],
-		queryFn: () =>
-			getCollections({
-				latitude: searchCenter.lat,
-				longitude: searchCenter.lng,
-				tags: selectedFilters,
-			}),
-	});
+	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
