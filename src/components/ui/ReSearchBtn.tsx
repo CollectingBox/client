@@ -5,7 +5,7 @@ import Refresh from './icons/Refresh';
 import { MapDataContext } from '../contexts/MapDataProvider';
 
 const ReSearchBtn = () => {
-	const { isSidebarOpen, setSearchCenter, setIsMoved, mapRef } =
+	const { isSidebarOpen, setSearchCenter, isMoved, setIsMoved, mapRef } =
 		useContext(MapDataContext);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
@@ -15,7 +15,7 @@ const ReSearchBtn = () => {
 		setSearchCenter({ lat, lng });
 		setIsMoved(false);
 	};
-	return (
+	return isMoved ? (
 		<button
 			onClick={() => handleClickResearch(mapRef.current!)}
 			className={`z-5 Elevation-2-Bottom fixed bottom-[50px] left-0 right-0 mx-auto flex w-max justify-between gap-S-4 rounded-[32px] bg-Green-400 px-S-20 py-S-12 text-white Title-Small 
@@ -25,7 +25,7 @@ const ReSearchBtn = () => {
 		>
 			<Refresh color="white" />이 지역 재검색
 		</button>
-	);
+	) : null;
 };
 
 export default ReSearchBtn;
