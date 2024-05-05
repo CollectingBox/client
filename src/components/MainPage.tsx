@@ -2,7 +2,6 @@
 
 import React, { useContext } from 'react';
 import Kakaomap from './Kakaomap';
-import useKakaoLoader from '@/utils/util';
 import ToastComplete from './ui/toasts/ToastComplete';
 import SystemErrorModal from './ui/modal/SystemErrorModal';
 import { SystemContext } from './contexts/SystemProvider';
@@ -12,8 +11,6 @@ import useNetworkStatus from '@/hooks/useNetworkStatus';
 import MapInteraction from './MapInteraction';
 
 const MainPage = () => {
-	useKakaoLoader();
-
 	const { isComplete } = useCompletionStatus();
 	const { isSystemError } = useContext(SystemContext);
 	useNetworkStatus();
