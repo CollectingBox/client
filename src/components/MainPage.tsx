@@ -8,7 +8,11 @@ import { SystemContext } from './contexts/SystemProvider';
 import { useAnimation } from 'framer-motion';
 import useCompletionStatus from '@/hooks/useCompletionStatus';
 import useNetworkStatus from '@/hooks/useNetworkStatus';
-import MapInteraction from './MapInteraction';
+import dynamic from 'next/dynamic';
+
+const MapInteraction = dynamic(() => import('./MapInteraction'), {
+	ssr: false,
+});
 
 const MainPage = () => {
 	const { isComplete } = useCompletionStatus();

@@ -16,7 +16,7 @@ export interface ICollectionDetail {
 	roadName: string;
 	streetNumber: string;
 	modifiedDate: string;
-	tag: CollectionTags;
+	tag: string;
 	reviews: IReview[];
 }
 
