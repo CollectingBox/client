@@ -76,19 +76,14 @@ export default function Kakaomap({
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
 					setIsError(true);
 					setIsMoved(false);
-					timerRef.current = setTimeout(() => setIsError(false), 3000);
+					const timeout = setTimeout(() => setIsError(false), 3000);
+					return () => clearTimeout(timeout);
 				} else {
 					setIsMoved(true);
 				}
 			}
 		});
-
-		return () => {
-			if (timerRef.current !== null) {
-				clearTimeout(timerRef.current);
-			}
-		};
-	}, [center, geocoder, setIsMoved]);
+	}, [center, setIsError, setIsMoved, geocoder]);
 
 	return (
 		<Map
@@ -140,6 +135,13 @@ export default function Kakaomap({
 					description="지금은 서울시의 수거함만 조회할 수 있어요"
 				/>
 			)}
+			{(getType === 'search' && collectionsADR?.data.length === 0) ||
+				(getType === 'latlng' && collectionsDTO?.data.length === 0 && (
+					<ToastError
+						title="수거함 정보가 없습니다"
+						description="더 많은 정보를 불러올 수 있도록 준비 중이에요"
+					/>
+				))}
 		</Map>
 	);
 }
