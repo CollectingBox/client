@@ -64,7 +64,7 @@ const FilterButtons = () => {
 
 	return (
 		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pr-3 scrollbar-hide xl:w-min">
-			{FILTERS.map(({ tag, color, icon: IconComponent }) => (
+			{FILTERS.map(({ tag, color, icon: IconComponent, text }) => (
 				<button
 					key={tag}
 					value={tag}
@@ -72,6 +72,7 @@ const FilterButtons = () => {
 					className={filterButtonStyle(tag, color)}
 				>
 					<IconComponent enabled={selectedFilters.includes(tag)} />
+					{text}
 				</button>
 			))}
 
