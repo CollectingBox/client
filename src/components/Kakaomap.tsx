@@ -1,64 +1,39 @@
 'use client';
-import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
-import { getCollections } from '@/service/collection';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
-import { FilterContext } from './contexts/FilterProvider';
 import ToastError from './ui/toasts/ToastError';
-import { useQuery } from '@tanstack/react-query';
-import { OpenContext } from './contexts/OpenProvider';
-import { MovedContext } from './contexts/MovedProvider';
+import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
+import useCollections from '@/hooks/useCollections';
 
 export default function Kakaomap({
-	mapRef,
-	center,
-	location,
-	setCenter,
-	searchCenter,
 	controls,
 }: {
-	mapRef: RefObject<kakao.maps.Map>;
-	center: { lat: number; lng: number };
-	location?: { lat: number; lng: number };
-	setCenter: React.Dispatch<
-		React.SetStateAction<{
-			lat: number;
-			lng: number;
-		}>
-	>;
-	searchCenter: { lat: number; lng: number };
 	controls: AnimationControls;
 }) {
 	useKakaoLoader();
 
-	const { selectedFilters } = useContext(FilterContext);
-	const { setIsSidebarOpen } = useContext(OpenContext);
+	const {
+		mapRef,
+		setIsSidebarOpen,
+		selectedFilters,
+		setIsMoved,
+		center,
+		location,
+		setCenter,
+		searchCenter,
+	} = useContext(MapDataContext);
 
-	const { data: collectionsDTO } = useQuery({
-		queryKey: ['collections', searchCenter, selectedFilters],
-		queryFn: () =>
-			getCollections({
-				latitude: searchCenter.lat,
-				longitude: searchCenter.lng,
-				tags: selectedFilters,
-			}),
-	});
+	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
 	const [isError, setIsError] = useState(false);
-	const { setIsMoved } = useContext(MovedContext);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-	useEffect(() => {
-		kakao.maps.load(() => {
-			setGeocoder(new kakao.maps.services.Geocoder());
-		});
-	}, []);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
@@ -66,6 +41,28 @@ export default function Kakaomap({
 		const lng = latlng.getLng();
 		setCenter({ lat, lng });
 	};
+
+	const handleLevelChange = (map: kakao.maps.Map) => {
+		const currentLevel = map.getLevel();
+		if (currentLevel > 8) {
+			map.setLevel(8);
+			setIsLevelExceed(true);
+			timerRef.current = setTimeout(() => {
+				setIsLevelExceed(false);
+			}, 3000);
+		}
+	};
+
+	const handleClickMap = () => {
+		setIsSidebarOpen(false);
+		controls.start('closed');
+	};
+
+	useEffect(() => {
+		kakao.maps.load(() => {
+			setGeocoder(new kakao.maps.services.Geocoder());
+		});
+	}, []);
 
 	useEffect(() => {
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
@@ -79,30 +76,13 @@ export default function Kakaomap({
 				}
 			}
 		});
-	}, [center]);
 
-	const handleLevelChange = (map: kakao.maps.Map) => {
-		const currentLavel = map.getLevel();
-		if (currentLavel > 8) {
-			map.setLevel(8);
-			setIsLevelExceed(true);
-			timerRef.current = setTimeout(() => {
-				setIsLevelExceed(false);
-			}, 3000);
-		}
-	};
-	useEffect(() => {
 		return () => {
 			if (timerRef.current !== null) {
 				clearTimeout(timerRef.current);
 			}
 		};
-	}, []);
-
-	const handleClickMap = () => {
-		setIsSidebarOpen(false);
-		controls.start('closed');
-	};
+	}, [center, geocoder, setIsMoved]);
 
 	return (
 		<Map

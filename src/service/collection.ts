@@ -1,11 +1,12 @@
 import { APIResponse } from '@/types/app';
 import { ICollection, ICollectionDetail } from '@/types/collection';
 import { API_URL } from './apiurl';
+import { CollectionTags } from '@/types/define';
 
 export const getCollections = async (queries: {
 	latitude: number;
 	longitude: number;
-	tags: string[];
+	tags: CollectionTags[];
 }): Promise<APIResponse<ICollection[]>> => {
 	const params = new URLSearchParams();
 	params.append('latitude', queries.latitude.toString());

@@ -3,8 +3,7 @@ import React, { useContext } from 'react';
 import { ICollection } from '@/types/collection';
 import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
 import { getMarkerUrl, getSmallMarkerUrl } from '@/utils/util';
-import { OpenContext } from './contexts/OpenProvider';
-import { useMediaQuery } from 'react-responsive';
+import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 
 interface Props {
@@ -13,10 +12,8 @@ interface Props {
 }
 
 const MapMarker = ({ collection, controls }: Props) => {
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
-
 	const { collectionId, setCollectionId, setIsSidebarOpen } =
-		useContext(OpenContext);
+		useContext(MapDataContext);
 
 	const handleClickMaker = () => {
 		setCollectionId(collection.id);

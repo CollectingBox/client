@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useContext } from 'react';
-import { OpenContext } from './contexts/OpenProvider';
+import { MapDataContext } from './contexts/MapDataProvider';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
 import BoxInformation from './ui/sidebars/BoxInformation';
@@ -16,7 +16,7 @@ import { SystemContext } from './contexts/SystemProvider';
 
 const Sidebar = () => {
 	const { isSidebarOpen, setIsSidebarOpen, collectionId } =
-		useContext(OpenContext);
+		useContext(MapDataContext);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 
 	const { data: collectionDetailDTO, isError } = useQuery({

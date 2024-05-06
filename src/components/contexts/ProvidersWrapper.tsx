@@ -1,12 +1,20 @@
 import React from 'react';
 import RQProvider from './RQProvider';
-import OpenProvider from './OpenProvider';
+import OpenProvider from './MapDataProvider';
+import SystemProvider from './SystemProvider';
+import CompleteProvider from './CompleteProvider';
+
+const allProviders = [
+	RQProvider,
+	SystemProvider,
+	CompleteProvider,
+	OpenProvider,
+];
 
 const ProvidersWrapper = ({ children }: { children: React.ReactNode }) => {
-	return (
-		<RQProvider>
-			<OpenProvider>{children}</OpenProvider>
-		</RQProvider>
+	return allProviders.reduce(
+		(acc, Provider) => <Provider>{acc}</Provider>,
+		children,
 	);
 };
 

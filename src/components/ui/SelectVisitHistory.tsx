@@ -7,7 +7,7 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/shadcn-ui/select';
 import Tag from './Tag';
 import { VisitHistoryType } from '@/types/collection';
 

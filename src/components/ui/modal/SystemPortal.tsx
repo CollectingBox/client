@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 interface Props {
@@ -8,13 +7,10 @@ interface Props {
 }
 
 const SystemPortal = ({ children }: Props) => {
-	const [hasMounted, setHasMounted] = useState(false);
-	useEffect(() => {
-		setHasMounted(true);
-	}, []);
-	if (!hasMounted) {
+	if (typeof window === 'undefined') {
 		return null;
 	}
+
 	const el = document.getElementById('system') as HTMLElement;
 	return ReactDOM.createPortal(children, el);
 };
