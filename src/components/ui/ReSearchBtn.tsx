@@ -3,16 +3,26 @@
 import { useContext } from 'react';
 import Refresh from './icons/Refresh';
 import { MapDataContext } from '../contexts/MapDataProvider';
+import { getTypeContext } from '../contexts/GetTypeProvider';
 
 const ReSearchBtn = () => {
-	const { isSidebarOpen, setSearchCenter, isMoved, setIsMoved, mapRef } =
-		useContext(MapDataContext);
+	const {
+		isSidebarOpen,
+		setSearchCenter,
+		isMoved,
+		setIsMoved,
+		mapRef,
+		setQuery,
+	} = useContext(MapDataContext);
+
+	const { setGetType } = useContext(getTypeContext);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
 		setSearchCenter({ lat, lng });
+		setGetType('latlng');
 		setIsMoved(false);
 	};
 	return isMoved ? (

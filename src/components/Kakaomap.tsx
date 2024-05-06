@@ -7,6 +7,8 @@ import ToastError from './ui/toasts/ToastError';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
+import useSearchCollections from '@/hooks/useSearchCollections';
+import { getTypeContext } from './contexts/GetTypeProvider';
 
 export default function Kakaomap({
 	controls,
@@ -24,9 +26,13 @@ export default function Kakaomap({
 		location,
 		setCenter,
 		searchCenter,
+		query,
 	} = useContext(MapDataContext);
 
+	const { getType } = useContext(getTypeContext);
+
 	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
+	const { collectionsADR } = useSearchCollections(query, selectedFilters);
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
@@ -105,7 +111,20 @@ export default function Kakaomap({
 		>
 			{collectionsDTO &&
 				collectionsDTO?.data?.length > 0 &&
+				getType !== 'search' &&
 				collectionsDTO.data
+					.filter((collection) => selectedFilters.includes(collection.tag))
+					.map((collection) => (
+						<MapMarker
+							key={collection.id}
+							collection={collection}
+							controls={controls}
+						/>
+					))}
+			{collectionsADR &&
+				collectionsADR?.data?.length > 0 &&
+				getType === 'search' &&
+				collectionsADR.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
 						<MapMarker

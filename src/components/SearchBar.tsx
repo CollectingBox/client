@@ -16,13 +16,16 @@ import SearchIcon from '@/public/icons/search.svg';
 import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
 import { SystemContext } from './contexts/SystemProvider';
+import { getTypeContext } from './contexts/GetTypeProvider';
 
 interface Props {
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
 	setSearchCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
+	setQuery: Dispatch<SetStateAction<string>>;
+	searchCenter: { lat: number; lng: number };
 }
 
-const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
+const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
@@ -33,6 +36,7 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
+	const { setGetType } = useContext(getTypeContext);
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
@@ -53,7 +57,13 @@ const SearchBar = ({ setCenter, setSearchCenter }: Props) => {
 				const ystr = data[0].y;
 				console.log(xstr, ystr);
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
-				setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
+				if (value.endsWith('구') || value.endsWith('동')) {
+					setQuery(value);
+					setGetType('search');
+				} else {
+					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
+					setGetType('latlng');
+				}
 			} else {
 				setIsError(true);
 				timerRef.current = setTimeout(() => setIsError(false), 3000);
