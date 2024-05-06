@@ -4,10 +4,10 @@ import FluorescentLampIcon from './ui/icons/FluorescentLampIcon';
 import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
-import { MouseEvent, useContext, useState } from 'react';
-import ToastError from './ui/toasts/ToastError';
+import { MouseEvent, useContext, useEffect, useState } from 'react';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { CollectionTags } from '@/types/define';
+import { ErrorContext } from './contexts/ErrorProvider';
 
 const FILTERS = [
 	{
@@ -39,6 +39,7 @@ const FILTERS = [
 const FilterButtons = () => {
 	const [isFilterZero, setIsFilterZero] = useState(false);
 	const { selectedFilters, setSelectedFilters } = useContext(MapDataContext);
+	const { setContent, setIsToastError } = useContext(ErrorContext);
 	const filterButtonStyle = (filter: CollectionTags, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
 		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium' : 'bg-white text-Gray-500 Label-Large'}`;
@@ -62,6 +63,13 @@ const FilterButtons = () => {
 		});
 	};
 
+	useEffect(() => {
+		if (isFilterZero) {
+			setContent('filter');
+			setIsToastError(true);
+		}
+	}, [isFilterZero, setContent, setIsToastError]);
+
 	return (
 		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pr-3 scrollbar-hide xl:w-min">
 			{FILTERS.map(({ tag, color, icon: IconComponent, text }) => (
@@ -75,8 +83,6 @@ const FilterButtons = () => {
 					{text}
 				</button>
 			))}
-
-			{isFilterZero && <ToastError title="한 개 이상의 필터를 선택해주세요" />}
 		</div>
 	);
 };

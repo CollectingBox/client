@@ -9,6 +9,8 @@ import { useAnimation } from 'framer-motion';
 import useCompletionStatus from '@/hooks/useCompletionStatus';
 import useNetworkStatus from '@/hooks/useNetworkStatus';
 import dynamic from 'next/dynamic';
+import ToastError from './ui/toasts/ToastError';
+import useErrorStatus from '@/hooks/useErrorStatus';
 
 const MapInteraction = dynamic(() => import('./MapInteraction'), {
 	ssr: false,
@@ -16,6 +18,7 @@ const MapInteraction = dynamic(() => import('./MapInteraction'), {
 
 const MainPage = () => {
 	const { isComplete } = useCompletionStatus();
+	const { isToastError } = useErrorStatus();
 	const { isSystemError } = useContext(SystemContext);
 	useNetworkStatus();
 
@@ -29,6 +32,7 @@ const MainPage = () => {
 			{/** Toast Messages */}
 			{isComplete && <ToastComplete />}
 			{isSystemError && <SystemErrorModal />}
+			{isToastError && <ToastError />}
 		</div>
 	);
 };

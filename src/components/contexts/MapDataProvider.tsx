@@ -26,6 +26,8 @@ interface IMapDataProviderContext {
 	location: LocationType | undefined;
 	setLocation: Dispatch<SetStateAction<LocationType | undefined>>;
 	mapRef: RefObject<kakao.maps.Map>;
+	query: string;
+	setQuery: Dispatch<SetStateAction<string>>;
 }
 
 // NOTE: 위치정보 미허용시 default 값 서울특별시청
@@ -49,6 +51,8 @@ export const MapDataContext = createContext<IMapDataProviderContext>({
 	location: undefined,
 	setLocation: () => {},
 	mapRef: { current: null },
+	query: '',
+	setQuery: () => {},
 });
 
 export default function MapDataProvider({
@@ -66,6 +70,7 @@ export default function MapDataProvider({
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
 	const [location, setLocation] = useState<LocationType>();
+	const [query, setQuery] = useState('');
 
 	return (
 		<MapDataContext.Provider
@@ -85,6 +90,8 @@ export default function MapDataProvider({
 				setSearchCenter,
 				location,
 				setLocation,
+				query,
+				setQuery,
 			}}
 		>
 			{children}

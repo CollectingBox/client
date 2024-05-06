@@ -3,7 +3,6 @@
 import React from 'react';
 import { useMediaQuery } from 'react-responsive';
 import MapController from './MapController';
-import ReSearchBtn from './ui/ReSearchBtn';
 import { AnimationControls } from 'framer-motion';
 import dynamic from 'next/dynamic';
 
@@ -27,7 +26,6 @@ const MapInteraction = ({ controls }: Props) => {
 					<MapController />
 				</div>
 			</div>
-			<ReSearchBtn />
 		</>
 	);
 };
