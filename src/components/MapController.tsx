@@ -4,6 +4,7 @@ import FilterButtons from './FilterButtons';
 import MapLevelController from './MapLevelController';
 import LocationIcon from '@/public/icons/location.svg';
 import { MapDataContext } from './contexts/MapDataProvider';
+import ReSearchBtn from './ui/ReSearchBtn';
 
 const MapController = () => {
 	const {
@@ -14,6 +15,7 @@ const MapController = () => {
 		setLocation,
 		setQuery,
 		searchCenter,
+		setIsMoved,
 	} = useContext(MapDataContext);
 	const onClickLocation = () => {
 		if (!location) return;
@@ -45,6 +47,7 @@ const MapController = () => {
 						setSearchCenter={setSearchCenter}
 						setQuery={setQuery}
 						searchCenter={searchCenter}
+						setIsMoved={setIsMoved}
 					/>
 					<button
 						onClick={onClickLocation}
@@ -55,6 +58,7 @@ const MapController = () => {
 				</div>
 				<FilterButtons />
 			</div>
+			<ReSearchBtn />
 			<MapLevelController mapRef={mapRef} />
 		</div>
 	);

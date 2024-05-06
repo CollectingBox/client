@@ -4,6 +4,7 @@ import OpenProvider from './MapDataProvider';
 import SystemProvider from './SystemProvider';
 import CompleteProvider from './CompleteProvider';
 import GetTypeProvider from './GetTypeProvider';
+import ErrorProvider from './ErrorProvider';
 
 const allProviders = [
 	RQProvider,
@@ -11,6 +12,7 @@ const allProviders = [
 	CompleteProvider,
 	OpenProvider,
 	GetTypeProvider,
+	ErrorProvider,
 ];
 
 const ProvidersWrapper = ({ children }: { children: React.ReactNode }) => {

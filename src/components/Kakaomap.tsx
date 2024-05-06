@@ -9,6 +9,7 @@ import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
 import useSearchCollections from '@/hooks/useSearchCollections';
 import { getTypeContext } from './contexts/GetTypeProvider';
+import { ErrorContext } from './contexts/ErrorProvider';
 
 export default function Kakaomap({
 	controls,
@@ -30,6 +31,7 @@ export default function Kakaomap({
 	} = useContext(MapDataContext);
 
 	const { getType } = useContext(getTypeContext);
+	const { setIsToastError, setContent, content } = useContext(ErrorContext);
 
 	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
 	const { collectionsADR } = useSearchCollections(query, selectedFilters);
@@ -37,7 +39,7 @@ export default function Kakaomap({
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isError, setIsError] = useState(false);
+	const [isNotSeoul, setIsNotSeoul] = useState(false);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -74,16 +76,47 @@ export default function Kakaomap({
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
-					setIsError(true);
+					setIsNotSeoul(true);
 					setIsMoved(false);
-					const timeout = setTimeout(() => setIsError(false), 3000);
+					const timeout = setTimeout(() => setIsNotSeoul(false), 3000);
 					return () => clearTimeout(timeout);
 				} else {
-					setIsMoved(true);
+					if (
+						searchCenter.lat !== center.lat ||
+						searchCenter.lng !== center.lng
+					) {
+						setIsMoved(true);
+					}
 				}
 			}
 		});
-	}, [center, setIsError, setIsMoved, geocoder]);
+	}, [center, setIsNotSeoul, setIsMoved, geocoder]);
+
+	useEffect(() => {
+		if (isNotSeoul || isLevelExceed) {
+			setContent('seoul');
+			setIsToastError(true);
+		}
+	}, [isNotSeoul, isLevelExceed, setContent, setIsToastError]);
+
+	useEffect(() => {
+		if (
+			(getType === 'search' &&
+				collectionsADR?.data?.length === 0 &&
+				content !== 'seoul') ||
+			(getType === 'latlng' && collectionsDTO?.data?.length === 0)
+		) {
+			setContent('data');
+			setIsToastError(true);
+		}
+	}, [
+		setContent,
+		getType,
+		collectionsDTO,
+		collectionsADR,
+		setIsToastError,
+		content,
+	]);
 
 	return (
 		<Map
@@ -129,19 +162,6 @@ export default function Kakaomap({
 						/>
 					))}
 			{location && <Marker position={location} />}
-			{(isError || isLevelExceed) && (
-				<ToastError
-					title="더 이상 조회할 수 없습니다"
-					description="지금은 서울시의 수거함만 조회할 수 있어요"
-				/>
-			)}
-			{(getType === 'search' && collectionsADR?.data.length === 0) ||
-				(getType === 'latlng' && collectionsDTO?.data.length === 0 && (
-					<ToastError
-						title="수거함 정보가 없습니다"
-						description="더 많은 정보를 불러올 수 있도록 준비 중이에요"
-					/>
-				))}
 		</Map>
 	);
 }

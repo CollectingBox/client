@@ -9,7 +9,6 @@ import {
 	useState,
 } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import ToastError from './ui/toasts/ToastError';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
 import SearchIcon from '@/public/icons/search.svg';
@@ -17,19 +16,26 @@ import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
 import { SystemContext } from './contexts/SystemProvider';
 import { getTypeContext } from './contexts/GetTypeProvider';
+import { ErrorContext } from './contexts/ErrorProvider';
 
 interface Props {
 	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
 	setSearchCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
 	setQuery: Dispatch<SetStateAction<string>>;
 	searchCenter: { lat: number; lng: number };
+	setIsMoved: Dispatch<SetStateAction<boolean>>;
 }
 
-const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
+const SearchBar = ({
+	setCenter,
+	setSearchCenter,
+	setQuery,
+	setIsMoved,
+}: Props) => {
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isError, setIsError] = useState(false);
+	const [isSearchError, setIsSearchError] = useState(false);
 	const [value, setValue] = useState('');
 	const [completes, setCompletes] = useState<string[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(-1);
@@ -37,6 +43,7 @@ const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 	const { setGetType } = useContext(getTypeContext);
+	const { setIsToastError, setContent } = useContext(ErrorContext);
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
@@ -49,24 +56,24 @@ const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
 	}, 300);
 
 	const handleSearch = (value: string) => {
-		if (!geocoder) return;
+		if (!geocoder || value.length === 0) return;
 
 		geocoder.addressSearch(value, (data, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				const xstr = data[0].x;
 				const ystr = data[0].y;
-				console.log(xstr, ystr);
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
 				if (value.endsWith('구') || value.endsWith('동')) {
 					setQuery(value);
 					setGetType('search');
-				} else {
+				} else if (value.length > 0) {
 					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 					setGetType('latlng');
 				}
+				setIsMoved(false);
 			} else {
-				setIsError(true);
-				timerRef.current = setTimeout(() => setIsError(false), 3000);
+				setIsSearchError(true);
+				timerRef.current = setTimeout(() => setIsSearchError(false), 3000);
 			}
 		});
 	};
@@ -76,7 +83,7 @@ const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
 			if (currentIndex !== -1) {
 				handleSearch(completes[currentIndex]);
 				setValue('');
-			} else {
+			} else if (value.length > 0) {
 				handleSearch(value);
 				setValue('');
 			}
@@ -135,6 +142,13 @@ const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
 		setCurrentIndex(-1);
 	}, [completes]);
 
+	useEffect(() => {
+		if (isSearchError) {
+			setIsToastError(true);
+			setContent('search');
+		}
+	}, [isSearchError, setIsToastError, setContent]);
+
 	return (
 		<div className="relative" ref={searchRef}>
 			<span className="relative">
@@ -163,12 +177,6 @@ const SearchBar = ({ setCenter, setSearchCenter, setQuery }: Props) => {
 					</>
 				)}
 			</span>
-			{isError && (
-				<ToastError
-					title="검색 결과가 없습니다"
-					description="검색어를 다시 확인해주세요"
-				/>
-			)}
 			{completes.length > 0 && (
 				<AutoCompleteContainer
 					items={completes}
