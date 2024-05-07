@@ -48,8 +48,8 @@ export default function BottomSheet({
 				half: { y: '250px' },
 				closed: { y: '100%' },
 			}}
-			dragConstraints={{ top: 150 }}
-			dragElastic={0.2}
+			dragConstraints={{ top: 0 }}
+			dragElastic={0}
 			style={{
 				position: 'fixed',
 				bottom: 0,
