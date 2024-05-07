@@ -7,13 +7,13 @@ import { CompleteContext } from './contexts/CompleteProvider';
 
 export default function Copy({ text }: { text: string }) {
 	const [icon, setIcon] = useState(CopyIcon);
-	const { setIsComplete, setContent } = useContext(CompleteContext);
+	const { setIsComplete, setCompleteContent } = useContext(CompleteContext);
 
 	const copy = async () => {
 		await navigator?.clipboard?.writeText(text);
 		setIcon(CheckIcon);
 		setTimeout(() => setIcon(CopyIcon), 2000);
-		setContent('copy');
+		setCompleteContent('copy');
 		setIsComplete(true);
 	};
 

@@ -16,6 +16,17 @@ export const getCollections = async (queries: {
 	return fetch(url).then((res) => res.json());
 };
 
+export const getSearchCollections = async (queries: {
+	query: string;
+	tags: CollectionTags[];
+}): Promise<APIResponse<ICollection[]>> => {
+	const params = new URLSearchParams();
+	params.append('query', queries.query);
+	queries.tags.forEach((tag) => params.append('tags', tag));
+	const url = `${API_URL}/collections/search?${params}`;
+	return fetch(url).then((res) => res.json());
+};
+
 export const getCollectionDetail = async (
 	collectionId: number,
 ): Promise<APIResponse<ICollectionDetail>> => {

@@ -1,3 +1,5 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import { CollectionTags, LocationType } from '@/types/define';
 import { getCollections } from '@/service/collection';
@@ -6,7 +8,7 @@ function useCollections(
 	searchCenter: LocationType,
 	selectedFilters: CollectionTags[],
 ) {
-	const { data: collectionsDTO, ...queryInfo } = useQuery({
+	const { data: collectionsLATLNG, ...queryInfo } = useQuery({
 		queryKey: ['collections', searchCenter, selectedFilters],
 		queryFn: () =>
 			getCollections({
@@ -16,7 +18,7 @@ function useCollections(
 			}),
 	});
 
-	return { collectionsDTO, ...queryInfo };
+	return { collectionsLATLNG, ...queryInfo };
 }
 
 export default useCollections;

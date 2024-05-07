@@ -3,10 +3,13 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
-import ToastError from './ui/toasts/ToastError';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
+import useSearchCollections from '@/hooks/useSearchCollections';
+import { getTypeContext } from './contexts/GetTypeProvider';
+import { ErrorContext } from './contexts/ErrorProvider';
+import { SystemContext } from './contexts/SystemProvider';
 
 export default function Kakaomap({
 	controls,
@@ -24,15 +27,28 @@ export default function Kakaomap({
 		location,
 		setCenter,
 		searchCenter,
+		query,
 	} = useContext(MapDataContext);
 
-	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
+	const { getType } = useContext(getTypeContext);
+	const { setIsToastError, setErrorContent, isToastError } =
+		useContext(ErrorContext);
+
+	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
+		searchCenter,
+		selectedFilters,
+	);
+	const { collectionsADDRESS, isLoading: isADRLoading } = useSearchCollections(
+		query,
+		selectedFilters,
+	);
+	const { setIsSystemError, setType } = useContext(SystemContext);
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isError, setIsError] = useState(false);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
+	const [isNotSeoul, setIsNotSeoul] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
@@ -68,21 +84,61 @@ export default function Kakaomap({
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
-					setIsError(true);
+					if (isToastError) {
+						setIsToastError(false);
+					}
+					setIsNotSeoul(true);
+					setErrorContent('seoul');
+					setIsToastError(true);
 					setIsMoved(false);
-					timerRef.current = setTimeout(() => setIsError(false), 3000);
 				} else {
-					setIsMoved(true);
+					setIsNotSeoul(false);
+					if (
+						searchCenter.lat !== center.lat ||
+						searchCenter.lng !== center.lng
+					) {
+						setIsMoved(true);
+					}
 				}
 			}
 		});
+	}, [center]);
 
-		return () => {
-			if (timerRef.current !== null) {
-				clearTimeout(timerRef.current);
+	useEffect(() => {
+		if (isLevelExceed) {
+			setErrorContent('seoul');
+			setIsToastError(true);
+		}
+	}, [isLevelExceed]);
+
+	useEffect(() => {
+		if (
+			(collectionsADDRESS?.status === 500 && getType === 'search') ||
+			(collectionsLATLNG?.status === 500 && getType === 'latlng')
+		) {
+			setType('server');
+			setIsSystemError(true);
+		}
+	}, [collectionsLATLNG, collectionsADDRESS]);
+
+	useEffect(() => {
+		const isSearchDataEmpty =
+			getType === 'search' && collectionsADDRESS?.data?.length === 0;
+		const isLatlngDataEmpty =
+			getType === 'latlng' && collectionsLATLNG?.data?.length === 0;
+
+		if (
+			(isSearchDataEmpty || isLatlngDataEmpty) &&
+			!isNotSeoul &&
+			!(isADRLoading || isDTOLoading)
+		) {
+			if (isToastError) {
+				setIsToastError(false);
 			}
-		};
-	}, [center, geocoder, setIsMoved]);
+			setErrorContent('data');
+			setIsToastError(true);
+		}
+	}, [collectionsLATLNG, collectionsADDRESS, isNotSeoul]);
 
 	return (
 		<Map
@@ -103,9 +159,22 @@ export default function Kakaomap({
 			}}
 			onClick={handleClickMap}
 		>
-			{collectionsDTO &&
-				collectionsDTO?.data?.length > 0 &&
-				collectionsDTO.data
+			{collectionsLATLNG &&
+				collectionsLATLNG?.data?.length > 0 &&
+				getType !== 'search' &&
+				collectionsLATLNG.data
+					.filter((collection) => selectedFilters.includes(collection.tag))
+					.map((collection) => (
+						<MapMarker
+							key={collection.id}
+							collection={collection}
+							controls={controls}
+						/>
+					))}
+			{collectionsADDRESS &&
+				collectionsADDRESS?.data?.length > 0 &&
+				getType === 'search' &&
+				collectionsADDRESS.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
 						<MapMarker
@@ -115,12 +184,6 @@ export default function Kakaomap({
 						/>
 					))}
 			{location && <Marker position={location} />}
-			{(isError || isLevelExceed) && (
-				<ToastError
-					title="더 이상 조회할 수 없습니다"
-					description="지금은 서울시의 수거함만 조회할 수 있어요"
-				/>
-			)}
 		</Map>
 	);
 }

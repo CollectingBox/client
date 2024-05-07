@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 
 export default function ToastComplete() {
 	const [isVisible, setIsVisible] = useState(true);
-	const { content } = useContext(CompleteContext);
+	const { completeContent } = useContext(CompleteContext);
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setIsVisible(false);
@@ -24,7 +24,7 @@ export default function ToastComplete() {
 		>
 			<Success />
 			<p className="text-white Title-Small">
-				{content === 'register'
+				{completeContent === 'register'
 					? '방문 기록이 등록되었습니다'
 					: '주소가 복사되었습니다'}
 			</p>

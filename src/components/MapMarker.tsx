@@ -34,6 +34,12 @@ const MapMarker = ({ collection, controls }: Props) => {
 					collectionId === collection.id
 						? { width: 60, height: 60 }
 						: { width: 34, height: 34 },
+				options: {
+					offset:
+						collectionId === collection.id
+							? { x: 30, y: 30 }
+							: { x: 17, y: 17 },
+				},
 			}}
 		/>
 	);
