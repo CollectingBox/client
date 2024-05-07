@@ -90,7 +90,7 @@ export default function Kakaomap({
 				}
 			}
 		});
-	}, [center, setIsNotSeoul, setIsMoved, geocoder]);
+	}, [center, setIsNotSeoul, setIsMoved, geocoder, searchCenter]);
 
 	useEffect(() => {
 		if (isNotSeoul || isLevelExceed) {
