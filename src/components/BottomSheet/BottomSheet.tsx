@@ -24,8 +24,8 @@ export default function BottomSheet({
 	});
 
 	function onDragEnd(event: MouseEvent, info: PanInfo) {
-		const shouldClose = info.point.y / window.screen.height > 0.55;
-		console.log(info.point.y / window.screen.height);
+		const shouldClose =
+			info.velocity.y > 20 || (info.velocity.y >= 0 && info.point.y > 45);
 		if (shouldClose) {
 			controls.start('half');
 		} else {
