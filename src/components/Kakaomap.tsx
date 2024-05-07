@@ -3,7 +3,6 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
-import ToastError from './ui/toasts/ToastError';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
@@ -31,7 +30,8 @@ export default function Kakaomap({
 	} = useContext(MapDataContext);
 
 	const { getType } = useContext(getTypeContext);
-	const { setIsToastError, setContent, content } = useContext(ErrorContext);
+	const { setIsToastError, setErrorContent, errorContent } =
+		useContext(ErrorContext);
 
 	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
 	const { collectionsADR } = useSearchCollections(query, selectedFilters);
@@ -39,8 +39,8 @@ export default function Kakaomap({
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isNotSeoul, setIsNotSeoul] = useState(false);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
+	const [isNotSeoul, setIsNotSeoul] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
@@ -77,10 +77,11 @@ export default function Kakaomap({
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
 					setIsNotSeoul(true);
+					setErrorContent('seoul');
+					setIsToastError(true);
 					setIsMoved(false);
-					const timeout = setTimeout(() => setIsNotSeoul(false), 3000);
-					return () => clearTimeout(timeout);
 				} else {
+					setIsNotSeoul(false);
 					if (
 						searchCenter.lat !== center.lat ||
 						searchCenter.lng !== center.lng
@@ -90,32 +91,39 @@ export default function Kakaomap({
 				}
 			}
 		});
-	}, [center, setIsNotSeoul, setIsMoved, geocoder, searchCenter]);
+	}, [
+		center,
+		setIsMoved,
+		geocoder,
+		searchCenter,
+		setErrorContent,
+		setIsToastError,
+	]);
 
 	useEffect(() => {
-		if (isNotSeoul || isLevelExceed) {
-			setContent('seoul');
+		if (isLevelExceed) {
+			setErrorContent('seoul');
 			setIsToastError(true);
 		}
-	}, [isNotSeoul, isLevelExceed, setContent, setIsToastError]);
+	}, [isLevelExceed, setErrorContent, setIsToastError]);
 
 	useEffect(() => {
-		if (
-			(getType === 'search' &&
-				collectionsADR?.data?.length === 0 &&
-				content !== 'seoul') ||
-			(getType === 'latlng' && collectionsDTO?.data?.length === 0)
-		) {
-			setContent('data');
+		const isSearchEmpty =
+			getType === 'search' && collectionsADR?.data?.length === 0;
+		const isLatlngEmpty =
+			getType === 'latlng' && collectionsDTO?.data?.length === 0;
+
+		if ((isSearchEmpty || isLatlngEmpty) && !isNotSeoul) {
+			setErrorContent('data');
 			setIsToastError(true);
 		}
 	}, [
-		setContent,
+		setErrorContent,
 		getType,
 		collectionsDTO,
 		collectionsADR,
 		setIsToastError,
-		content,
+		isNotSeoul,
 	]);
 
 	return (

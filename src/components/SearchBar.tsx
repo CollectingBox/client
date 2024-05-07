@@ -43,7 +43,7 @@ const SearchBar = ({
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 	const { setGetType } = useContext(getTypeContext);
-	const { setIsToastError, setContent } = useContext(ErrorContext);
+	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
@@ -145,9 +145,9 @@ const SearchBar = ({
 	useEffect(() => {
 		if (isSearchError) {
 			setIsToastError(true);
-			setContent('search');
+			setErrorContent('search');
 		}
-	}, [isSearchError, setIsToastError, setContent]);
+	}, [isSearchError, setIsToastError, setErrorContent]);
 
 	return (
 		<div className="relative" ref={searchRef}>

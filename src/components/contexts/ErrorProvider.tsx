@@ -5,15 +5,15 @@ import { Dispatch, SetStateAction, createContext, useState } from 'react';
 interface IErrorProviderContext {
 	isToastError: boolean;
 	setIsToastError: Dispatch<SetStateAction<boolean>>;
-	content: string;
-	setContent: Dispatch<SetStateAction<string>>;
+	errorContent: string;
+	setErrorContent: Dispatch<SetStateAction<string>>;
 }
 
 export const ErrorContext = createContext<IErrorProviderContext>({
 	isToastError: false,
 	setIsToastError: () => {},
-	content: 'register',
-	setContent: () => {},
+	errorContent: 'register',
+	setErrorContent: () => {},
 });
 
 export default function ErrorProvider({
@@ -22,11 +22,11 @@ export default function ErrorProvider({
 	children: React.ReactNode;
 }) {
 	const [isToastError, setIsToastError] = useState(false);
-	const [content, setContent] = useState('register');
+	const [errorContent, setErrorContent] = useState('register');
 
 	return (
 		<ErrorContext.Provider
-			value={{ isToastError, setIsToastError, content, setContent }}
+			value={{ isToastError, setIsToastError, errorContent, setErrorContent }}
 		>
 			{children}
 		</ErrorContext.Provider>

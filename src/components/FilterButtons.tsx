@@ -39,7 +39,7 @@ const FILTERS = [
 const FilterButtons = () => {
 	const [isFilterZero, setIsFilterZero] = useState(false);
 	const { selectedFilters, setSelectedFilters } = useContext(MapDataContext);
-	const { setContent, setIsToastError } = useContext(ErrorContext);
+	const { setErrorContent, setIsToastError } = useContext(ErrorContext);
 	const filterButtonStyle = (filter: CollectionTags, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
 		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium' : 'bg-white text-Gray-500 Label-Large'}`;
@@ -65,10 +65,10 @@ const FilterButtons = () => {
 
 	useEffect(() => {
 		if (isFilterZero) {
-			setContent('filter');
+			setErrorContent('filter');
 			setIsToastError(true);
 		}
-	}, [isFilterZero, setContent, setIsToastError]);
+	}, [isFilterZero, setErrorContent, setIsToastError]);
 
 	return (
 		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pr-3 scrollbar-hide xl:w-min">
