@@ -43,7 +43,8 @@ const SearchBar = ({
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 	const { setGetType } = useContext(getTypeContext);
-	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
+	const { setIsToastError, setErrorContent, isToastError } =
+		useContext(ErrorContext);
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
@@ -56,7 +57,7 @@ const SearchBar = ({
 	}, 300);
 
 	const handleSearch = (value: string) => {
-		if (!geocoder || value.length === 0) return;
+		if (!geocoder) return;
 
 		geocoder.addressSearch(value, (data, status) => {
 			if (status === kakao.maps.services.Status.OK) {
@@ -66,7 +67,7 @@ const SearchBar = ({
 				if (value.endsWith('구') || value.endsWith('동')) {
 					setQuery(value);
 					setGetType('search');
-				} else if (value.length > 0) {
+				} else {
 					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 					setGetType('latlng');
 				}
@@ -144,10 +145,13 @@ const SearchBar = ({
 
 	useEffect(() => {
 		if (isSearchError) {
+			if (isToastError) {
+				setIsToastError(false);
+			}
 			setIsToastError(true);
 			setErrorContent('search');
 		}
-	}, [isSearchError, setIsToastError, setErrorContent]);
+	}, [isSearchError, setIsToastError, setErrorContent, isToastError]);
 
 	return (
 		<div className="relative" ref={searchRef}>
