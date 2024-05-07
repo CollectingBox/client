@@ -36,6 +36,9 @@ export default function ToastError() {
 				setTitle('더 이상 조회할 수 없습니다');
 				setDescription('지금은 서울시의 수거함만 조회할 수 있어요');
 				return;
+			case 'review':
+				setTitle('방문 기록을 등록할 수 없습니다');
+				setDescription('방문 기록은 24시간 이후에 재등록할 수 있어요');
 		}
 	}, [content]);
 	return (

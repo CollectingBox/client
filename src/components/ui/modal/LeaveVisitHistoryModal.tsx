@@ -17,6 +17,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { CompleteContext } from '@/components/contexts/CompleteProvider';
 import { SystemContext } from '@/components/contexts/SystemProvider';
 import ModalPortal from './Portal';
+import { ErrorContext } from '@/components/contexts/ErrorProvider';
 
 type Props = {
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -26,8 +27,9 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const queryClient = useQueryClient();
 	const [option, setOption] = useState<VisitHistoryType>();
 	const { collectionId } = useContext(MapDataContext);
-	const { setIsComplete, setContent } = useContext(CompleteContext);
+	const { setIsComplete, setCompleteContent } = useContext(CompleteContext);
 	const { setIsSystemError, setType } = useContext(SystemContext);
+	const { setContent, setIsToastError } = useContext(ErrorContext);
 
 	const handleSelectOption = (value: VisitHistoryType) => setOption(value);
 	const handleLeaveVisitHistory = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -49,9 +51,8 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 				const timeDiff = now.getTime() - lastCreatedAt.getTime();
 				const hoursPassed = timeDiff / (1000 * 60 * 60);
 				if (hoursPassed < 24) {
-					alert(
-						'이미 리뷰를 작성한 수거함입니다. 24시간 후에 다시 작성 가능합니다.',
-					);
+					setContent('review');
+					setIsToastError(true);
 					return;
 				}
 			} else {
@@ -69,7 +70,7 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 			await queryClient.invalidateQueries({
 				queryKey: ['collectionDetail', collectionId],
 			});
-			setContent('register');
+			setCompleteContent('register');
 			setIsComplete(true);
 			setIsModalOpen(false);
 		} catch (e) {
