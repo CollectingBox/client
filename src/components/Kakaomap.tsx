@@ -3,13 +3,13 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
-import ToastError from './ui/toasts/ToastError';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
 import useSearchCollections from '@/hooks/useSearchCollections';
 import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
+import { SystemContext } from './contexts/SystemProvider';
 
 export default function Kakaomap({
 	controls,
@@ -31,16 +31,24 @@ export default function Kakaomap({
 	} = useContext(MapDataContext);
 
 	const { getType } = useContext(getTypeContext);
-	const { setIsToastError, setContent, content } = useContext(ErrorContext);
+	const { setIsToastError, setErrorContent, isToastError } =
+		useContext(ErrorContext);
 
-	const { collectionsDTO } = useCollections(searchCenter, selectedFilters);
-	const { collectionsADR } = useSearchCollections(query, selectedFilters);
+	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
+		searchCenter,
+		selectedFilters,
+	);
+	const { collectionsADDRESS, isLoading: isADRLoading } = useSearchCollections(
+		query,
+		selectedFilters,
+	);
+	const { setIsSystemError, setType } = useContext(SystemContext);
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isNotSeoul, setIsNotSeoul] = useState(false);
 	const [isLevelExceed, setIsLevelExceed] = useState(false);
+	const [isNotSeoul, setIsNotSeoul] = useState(false);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
@@ -76,11 +84,15 @@ export default function Kakaomap({
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
+					if (isToastError) {
+						setIsToastError(false);
+					}
 					setIsNotSeoul(true);
+					setErrorContent('seoul');
+					setIsToastError(true);
 					setIsMoved(false);
-					const timeout = setTimeout(() => setIsNotSeoul(false), 3000);
-					return () => clearTimeout(timeout);
 				} else {
+					setIsNotSeoul(false);
 					if (
 						searchCenter.lat !== center.lat ||
 						searchCenter.lng !== center.lng
@@ -90,33 +102,43 @@ export default function Kakaomap({
 				}
 			}
 		});
-	}, [center, setIsNotSeoul, setIsMoved, geocoder]);
+	}, [center]);
 
 	useEffect(() => {
-		if (isNotSeoul || isLevelExceed) {
-			setContent('seoul');
+		if (isLevelExceed) {
+			setErrorContent('seoul');
 			setIsToastError(true);
 		}
-	}, [isNotSeoul, isLevelExceed, setContent, setIsToastError]);
+	}, [isLevelExceed]);
 
 	useEffect(() => {
 		if (
-			(getType === 'search' &&
-				collectionsADR?.data?.length === 0 &&
-				content !== 'seoul') ||
-			(getType === 'latlng' && collectionsDTO?.data?.length === 0)
+			(collectionsADDRESS?.status === 500 && getType === 'search') ||
+			(collectionsLATLNG?.status === 500 && getType === 'latlng')
 		) {
-			setContent('data');
+			setType('server');
+			setIsSystemError(true);
+		}
+	}, [collectionsLATLNG, collectionsADDRESS]);
+
+	useEffect(() => {
+		const isSearchDataEmpty =
+			getType === 'search' && collectionsADDRESS?.data?.length === 0;
+		const isLatlngDataEmpty =
+			getType === 'latlng' && collectionsLATLNG?.data?.length === 0;
+
+		if (
+			(isSearchDataEmpty || isLatlngDataEmpty) &&
+			!isNotSeoul &&
+			!(isADRLoading || isDTOLoading)
+		) {
+			if (isToastError) {
+				setIsToastError(false);
+			}
+			setErrorContent('data');
 			setIsToastError(true);
 		}
-	}, [
-		setContent,
-		getType,
-		collectionsDTO,
-		collectionsADR,
-		setIsToastError,
-		content,
-	]);
+	}, [collectionsLATLNG, collectionsADDRESS, isNotSeoul]);
 
 	return (
 		<Map
@@ -137,10 +159,10 @@ export default function Kakaomap({
 			}}
 			onClick={handleClickMap}
 		>
-			{collectionsDTO &&
-				collectionsDTO?.data?.length > 0 &&
+			{collectionsLATLNG &&
+				collectionsLATLNG?.data?.length > 0 &&
 				getType !== 'search' &&
-				collectionsDTO.data
+				collectionsLATLNG.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
 						<MapMarker
@@ -149,10 +171,10 @@ export default function Kakaomap({
 							controls={controls}
 						/>
 					))}
-			{collectionsADR &&
-				collectionsADR?.data?.length > 0 &&
+			{collectionsADDRESS &&
+				collectionsADDRESS?.data?.length > 0 &&
 				getType === 'search' &&
-				collectionsADR.data
+				collectionsADDRESS.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
 						<MapMarker

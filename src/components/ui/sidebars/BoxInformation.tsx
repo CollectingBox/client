@@ -48,6 +48,7 @@ export default function BoxInformation({
 					<div className="flex justify-between gap-[10px]">
 						<Link
 							href={`https://map.kakao.com/link/roadview/${latitude},${longitude}`}
+							target="_blank"
 							className="w-1/2"
 						>
 							<Button>
@@ -57,6 +58,7 @@ export default function BoxInformation({
 						</Link>
 						<Link
 							href={`https://map.kakao.com/link/to/${location},${latitude},${longitude}`}
+							target="_blank"
 							className="w-1/2"
 						>
 							<Button variant="contained">

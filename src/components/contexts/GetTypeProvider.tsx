@@ -2,8 +2,8 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface IGetTypeProviderContext {
-	getType: string;
-	setGetType: Dispatch<SetStateAction<string>>;
+	getType: 'latlng' | 'search';
+	setGetType: Dispatch<SetStateAction<'latlng' | 'search'>>;
 }
 
 export const getTypeContext = createContext<IGetTypeProviderContext>({
@@ -12,7 +12,7 @@ export const getTypeContext = createContext<IGetTypeProviderContext>({
 });
 
 const GetTypeProvider = ({ children }: { children: React.ReactNode }) => {
-	const [getType, setGetType] = useState('latlng');
+	const [getType, setGetType] = useState<'latlng' | 'search'>('latlng');
 
 	return (
 		<getTypeContext.Provider value={{ getType, setGetType }}>

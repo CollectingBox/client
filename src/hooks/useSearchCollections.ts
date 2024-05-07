@@ -6,16 +6,17 @@ function useSearchCollections(
 	query: string,
 	selectedFilters: CollectionTags[],
 ) {
-	const { data: collectionsADR, ...queryInfo } = useQuery({
+	const { data: collectionsADDRESS, ...queryInfo } = useQuery({
 		queryKey: ['collections', query, selectedFilters],
 		queryFn: () =>
 			getSearchCollections({
 				query: query,
 				tags: selectedFilters,
 			}),
+		enabled: query !== '',
 	});
 
-	return { collectionsADR, ...queryInfo };
+	return { collectionsADDRESS, ...queryInfo };
 }
 
 export default useSearchCollections;
