@@ -24,11 +24,12 @@ export default function BottomSheet({
 	});
 
 	function onDragEnd(event: MouseEvent, info: PanInfo) {
-		const shouldPull = info.velocity.y < 0;
-		if (shouldPull) {
-			controls.start('full');
-		} else {
+		const shouldClose =
+			info.velocity.y > 20 || (info.velocity.y >= 0 && info.point.y > 45);
+		if (shouldClose) {
 			controls.start('half');
+		} else {
+			controls.start('full');
 		}
 	}
 
