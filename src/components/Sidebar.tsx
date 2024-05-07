@@ -37,7 +37,7 @@ const Sidebar = () => {
 
 	return (
 		<aside
-			className={`relative z-20 flex h-[100dvh] flex-col bg-white  
+			className={`Elevation-4-Bottom relative z-20 flex h-[100dvh] flex-col bg-white  
 			${isSidebarOpen ? 'w-[390px]' : 'w-[86px]'} transition-all duration-500`}
 		>
 			<div className="max-h-[calc(100dvh_-_24px)] overflow-y-scroll scrollbar-hide">
