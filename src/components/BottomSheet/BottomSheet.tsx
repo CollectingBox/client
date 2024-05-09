@@ -1,5 +1,5 @@
 'use client';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AnimationControls, PanInfo, motion } from 'framer-motion';
 import './styles.css';
 import BoxInformation from '../ui/sidebars/BoxInformation';
@@ -15,7 +15,7 @@ export default function BottomSheet({
 	controls: AnimationControls;
 }) {
 	const { collectionId } = useContext(MapDataContext);
-
+	const [isDraggable, setIsDraggable] = useState(false);
 	const { data: collectionDetailDTO, isError } = useQuery({
 		queryKey: ['collectionDetail', collectionId],
 		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
@@ -49,6 +49,7 @@ export default function BottomSheet({
 				half: { y: '250px' },
 				closed: { y: '100%' },
 			}}
+			dragListener={isDraggable}
 			dragConstraints={{ top: 0 }}
 			dragElastic={0}
 			style={{
@@ -66,11 +67,15 @@ export default function BottomSheet({
 				zIndex: 5,
 			}}
 		>
-			<div className="DragHandleEdge">
+			<div
+				className="DragHandleEdge"
+				onPointerDown={() => setIsDraggable(true)}
+				onPointerUp={() => setIsDraggable(false)}
+			>
 				<div className="DragHandle" />
 			</div>
 			{collectionDetailDTO?.data && (
-				<div className="h-[480px] overflow-y-scroll pt-6 scrollbar-hide">
+				<div className={`h-[480px] overflow-y-scroll pt-6 scrollbar-hide`}>
 					<BoxInformation collectionDetail={collectionDetailDTO?.data} />
 					<VisitRecord reviews={collectionDetailDTO?.data.reviews} />
 					{collectionDetailDTO?.data.tag !== '쓰레기통' && (
