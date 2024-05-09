@@ -42,8 +42,8 @@ const FilterButtons = () => {
 	const { setErrorContent, setIsToastError, isToastError } =
 		useContext(ErrorContext);
 	const filterButtonStyle = (filter: CollectionTags, color: string) => {
-		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full Elevation-3-Bottom
-		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium' : 'bg-white text-Gray-500 Label-Large'}`;
+		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full
+		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium Elevation-3-Bottom' : 'bg-white text-Gray-500 Label-Large Elevation-2-Bottom'}`;
 	};
 
 	const handleClickFilter = (e: MouseEvent<HTMLButtonElement>) => {
@@ -75,7 +75,7 @@ const FilterButtons = () => {
 	}, [isFilterZero, setErrorContent, setIsToastError, isToastError]);
 
 	return (
-		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pr-3 scrollbar-hide xl:w-min">
+		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pb-S-16 pr-3 scrollbar-hide xl:w-min">
 			{FILTERS.map(({ tag, color, icon: IconComponent, text }) => (
 				<button
 					key={tag}
