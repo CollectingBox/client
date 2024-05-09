@@ -41,6 +41,7 @@ const MapMarker = ({ collection, controls }: Props) => {
 							: { x: 17, y: 17 },
 				},
 			}}
+			zIndex={collectionId === collection.id ? 10 : 1}
 		/>
 	);
 };
