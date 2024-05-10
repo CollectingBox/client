@@ -39,7 +39,7 @@ const MapController = () => {
 	}, [location, setCenter, setSearchCenter]);
 
 	return (
-		<div className="fixed left-0 top-0 w-full px-6 pt-6 xl:static">
+		<div className="fixed left-0 top-0 w-full px-6 pt-12 xl:static xl:pt-6">
 			<div className="flex flex-col gap-S-14">
 				<div className="flex gap-S-12">
 					<SearchBar
