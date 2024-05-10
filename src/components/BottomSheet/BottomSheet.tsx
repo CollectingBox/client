@@ -1,11 +1,6 @@
 'use client';
-import { useContext, useRef, useState } from 'react';
-import {
-	AnimationControls,
-	PanInfo,
-	motion,
-	useDragControls,
-} from 'framer-motion';
+import { useContext, useState } from 'react';
+import { AnimationControls, PanInfo, motion } from 'framer-motion';
 import './styles.css';
 import BoxInformation from '../ui/sidebars/BoxInformation';
 import VisitRecord from '../ui/sidebars/VisitRecord';
@@ -23,22 +18,10 @@ export default function BottomSheet({
 	const [isDraggable, setIsDraggable] = useState(false);
 	const { data: collectionDetailDTO, isError } = useQuery({
 		queryKey: ['collectionDetail', collectionId],
-		queryFn: () => getCollectionDetail(collectionId!),
+		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
 		enabled: !!collectionId,
 		placeholderData: keepPreviousData,
 	});
-
-	const onDragStart = (event: MouseEvent, info: PanInfo) => {
-		// HACK
-		const target = event.target as unknown as { className: string };
-		const cn = target?.className;
-		if (target && cn.includes('DragHandle')) {
-			console.log('draggable');
-			setIsDraggable(true);
-			return;
-		}
-		setIsDraggable(false);
-	};
 
 	function onDragEnd(event: MouseEvent, info: PanInfo) {
 		const shouldClose =
@@ -53,6 +36,7 @@ export default function BottomSheet({
 	return (
 		<motion.div
 			drag="y"
+			onDragEnd={onDragEnd}
 			initial="closed"
 			animate={controls}
 			transition={{
@@ -65,8 +49,6 @@ export default function BottomSheet({
 				half: { y: '250px' },
 				closed: { y: '100%' },
 			}}
-			onDragStart={onDragStart}
-			onDragEnd={onDragEnd}
 			dragListener={isDraggable}
 			dragConstraints={{ top: 0 }}
 			dragElastic={0}
@@ -86,10 +68,9 @@ export default function BottomSheet({
 			}}
 		>
 			<div
-				id="dragHandle"
-				onMouseEnter={() => setIsDraggable(true)}
-				onMouseLeave={() => setIsDraggable(false)}
 				className="DragHandleEdge"
+				onPointerDown={() => setIsDraggable(true)}
+				onPointerUp={() => setIsDraggable(false)}
 			>
 				<div className="DragHandle" />
 			</div>
