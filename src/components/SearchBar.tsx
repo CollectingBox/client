@@ -157,7 +157,7 @@ const SearchBar = ({
 		<div className="relative w-full xl:w-max" ref={searchRef}>
 			<span className="relative w-full">
 				<input
-					className={`${completes.length === 0 ? 'rounded-b-[16px] pr-[46px]' : 'rounded-b-none pr-S-64'} Elevation-2-Bottom w-full rounded-t-[16px] border-[1.5px] border-Green-400 py-[14px] pl-[46px] text-Gray-800 outline-none Title-Small placeholder:text-Gray-200 placeholder:Body-Large xl:max-w-[360px]`}
+					className={`${completes.length === 0 ? 'rounded-b-[16px]' : 'rounded-b-none'} ${value.length === 0 ? 'pr-S-14' : 'pr-S-64'} Elevation-2-Bottom w-full rounded-t-[16px] border-[1.5px] border-Green-400 py-[14px] pl-[46px] text-Gray-800 outline-none Title-Small placeholder:text-Gray-200 placeholder:Body-Large xl:w-[360px]`}
 					type="text"
 					placeholder="동네명 검색 (Ex. 강남구, 역삼1동)"
 					value={value}
