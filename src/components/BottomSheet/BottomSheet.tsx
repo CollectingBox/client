@@ -46,7 +46,7 @@ export default function BottomSheet({
 			}}
 			variants={{
 				full: { y: '10%' },
-				half: { y: '360px' },
+				half: { y: '250px' },
 				closed: { y: '100%' },
 			}}
 			dragListener={isDraggable}
@@ -58,7 +58,7 @@ export default function BottomSheet({
 				display: 'inline-block',
 				backgroundColor: 'white',
 				width: '100%',
-				height: 660,
+				height: 520,
 				border: '1px solid #E0E0E0',
 				boxShadow:
 					'0px 2px 5px rgba(0, 0, 0, 0.06), 0px 2px 13px rgba(0, 0, 0, 0.12)',
