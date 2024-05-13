@@ -5,6 +5,7 @@ import { MapMarker as KakaoMapMaker } from 'react-kakao-maps-sdk';
 import { getMarkerUrl, getSmallMarkerUrl } from '@/utils/util';
 import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
+import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 
 interface Props {
 	collection: ICollection;
@@ -12,8 +13,8 @@ interface Props {
 }
 
 const MapMarker = ({ collection, controls }: Props) => {
-	const { collectionId, setCollectionId, setIsSidebarOpen } =
-		useContext(MapDataContext);
+	const { collectionId, setCollectionId } = useContext(MapDataContext);
+	const setIsSidebarOpen = useSetIsSidebarOpen();
 
 	const handleClickMaker = () => {
 		setCollectionId(collection.id);

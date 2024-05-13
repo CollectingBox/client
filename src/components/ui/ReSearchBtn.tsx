@@ -4,10 +4,12 @@ import { useContext } from 'react';
 import Refresh from './icons/Refresh';
 import { MapDataContext } from '../contexts/MapDataProvider';
 import { getTypeContext } from '../contexts/GetTypeProvider';
+import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 
 const ReSearchBtn = () => {
-	const { isSidebarOpen, setSearchCenter, isMoved, setIsMoved, mapRef } =
+	const { setSearchCenter, isMoved, setIsMoved, mapRef } =
 		useContext(MapDataContext);
+	const isSidebarOpen = useIsSidebarOpen();
 
 	const { setGetType } = useContext(getTypeContext);
 

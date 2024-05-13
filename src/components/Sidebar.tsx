@@ -13,11 +13,16 @@ import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { SystemContext } from './contexts/SystemProvider';
+import {
+	useIsSidebarOpen,
+	useSetIsSidebarOpen,
+} from '@/store/sidebarStateStore';
 
 const Sidebar = () => {
-	const { isSidebarOpen, setIsSidebarOpen, collectionId } =
-		useContext(MapDataContext);
+	const { collectionId } = useContext(MapDataContext);
 	const { setIsSystemError, setType } = useContext(SystemContext);
+	const isSidebarOpen = useIsSidebarOpen();
+	const setIsSidebarOpen = useSetIsSidebarOpen();
 
 	const { data: collectionDetailDTO, isError } = useQuery({
 		queryKey: ['collectionDetail', collectionId],

@@ -10,6 +10,7 @@ import useSearchCollections from '@/hooks/useSearchCollections';
 import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
 import { SystemContext } from './contexts/SystemProvider';
+import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 
 export default function Kakaomap({
 	controls,
@@ -20,7 +21,6 @@ export default function Kakaomap({
 
 	const {
 		mapRef,
-		setIsSidebarOpen,
 		selectedFilters,
 		setIsMoved,
 		center,
@@ -29,6 +29,7 @@ export default function Kakaomap({
 		searchCenter,
 		query,
 	} = useContext(MapDataContext);
+	const setIsSidebarOpen = useSetIsSidebarOpen();
 
 	const { getType } = useContext(getTypeContext);
 	const { setIsToastError, setErrorContent, isToastError } =

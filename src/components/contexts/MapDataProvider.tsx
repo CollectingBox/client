@@ -11,8 +11,6 @@ import {
 } from 'react';
 
 interface IMapDataProviderContext {
-	isSidebarOpen: boolean;
-	setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
 	collectionId?: number;
 	setCollectionId: (value: number) => void;
 	selectedFilters: CollectionTags[];
@@ -37,8 +35,6 @@ const DEFAULT_LOCATION = {
 };
 
 export const MapDataContext = createContext<IMapDataProviderContext>({
-	isSidebarOpen: false,
-	setIsSidebarOpen: () => {},
 	setCollectionId: (value: number) => {},
 	selectedFilters: [],
 	setSelectedFilters: () => {},
@@ -61,7 +57,6 @@ export default function MapDataProvider({
 	children: React.ReactNode;
 }) {
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [collectionId, setCollectionId] = useState<number>();
 	const [selectedFilters, setSelectedFilters] = useState<CollectionTags[]>([
 		'CLOTHES',
@@ -76,8 +71,6 @@ export default function MapDataProvider({
 		<MapDataContext.Provider
 			value={{
 				mapRef,
-				isSidebarOpen,
-				setIsSidebarOpen,
 				collectionId,
 				setCollectionId,
 				selectedFilters,
