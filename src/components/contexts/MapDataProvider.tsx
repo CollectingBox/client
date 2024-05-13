@@ -11,8 +11,6 @@ import {
 } from 'react';
 
 interface IMapDataProviderContext {
-	collectionId?: number;
-	setCollectionId: (value: number) => void;
 	selectedFilters: CollectionTags[];
 	setSelectedFilters: Dispatch<SetStateAction<CollectionTags[]>>;
 	isMoved: boolean;
@@ -35,7 +33,6 @@ const DEFAULT_LOCATION = {
 };
 
 export const MapDataContext = createContext<IMapDataProviderContext>({
-	setCollectionId: (value: number) => {},
 	selectedFilters: [],
 	setSelectedFilters: () => {},
 	isMoved: false,
@@ -57,7 +54,6 @@ export default function MapDataProvider({
 	children: React.ReactNode;
 }) {
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [collectionId, setCollectionId] = useState<number>();
 	const [selectedFilters, setSelectedFilters] = useState<CollectionTags[]>([
 		'CLOTHES',
 	]);
@@ -71,8 +67,6 @@ export default function MapDataProvider({
 		<MapDataContext.Provider
 			value={{
 				mapRef,
-				collectionId,
-				setCollectionId,
 				selectedFilters,
 				setSelectedFilters,
 				isMoved,
