@@ -1,6 +1,6 @@
 'use client';
 
-import { CollectionTags, LocationType } from '@/types/define';
+import { LocationType } from '@/types/define';
 import {
 	Dispatch,
 	RefObject,
@@ -11,8 +11,6 @@ import {
 } from 'react';
 
 interface IMapDataProviderContext {
-	selectedFilters: CollectionTags[];
-	setSelectedFilters: Dispatch<SetStateAction<CollectionTags[]>>;
 	isMoved: boolean;
 	setIsMoved: Dispatch<SetStateAction<boolean>>;
 	center: LocationType;
@@ -33,8 +31,6 @@ const DEFAULT_LOCATION = {
 };
 
 export const MapDataContext = createContext<IMapDataProviderContext>({
-	selectedFilters: [],
-	setSelectedFilters: () => {},
 	isMoved: false,
 	setIsMoved: () => {},
 	center: DEFAULT_LOCATION,
@@ -54,9 +50,6 @@ export default function MapDataProvider({
 	children: React.ReactNode;
 }) {
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [selectedFilters, setSelectedFilters] = useState<CollectionTags[]>([
-		'CLOTHES',
-	]);
 	const [isMoved, setIsMoved] = useState(false);
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
@@ -67,8 +60,6 @@ export default function MapDataProvider({
 		<MapDataContext.Provider
 			value={{
 				mapRef,
-				selectedFilters,
-				setSelectedFilters,
 				isMoved,
 				setIsMoved,
 				center,

@@ -11,6 +11,7 @@ import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
 import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
+import { useSelectedFilters } from '@/store/\bcollectionFilterStore';
 
 export default function Kakaomap({
 	controls,
@@ -21,7 +22,6 @@ export default function Kakaomap({
 
 	const {
 		mapRef,
-		selectedFilters,
 		setIsMoved,
 		center,
 		location,
@@ -30,6 +30,7 @@ export default function Kakaomap({
 		query,
 	} = useContext(MapDataContext);
 	const setIsSidebarOpen = useSetIsSidebarOpen();
+	const selectedFilters = useSelectedFilters();
 
 	const { getType } = useContext(getTypeContext);
 	const { setIsToastError, setErrorContent, isToastError } =
