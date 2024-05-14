@@ -11,7 +11,7 @@ import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
 import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
-import { useSelectedFilters } from '@/store/\bcollectionFilterStore';
+import { useSelectedFilters } from '@/store/collectionFilterStore';
 
 export default function Kakaomap({
 	controls,

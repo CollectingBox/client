@@ -10,7 +10,7 @@ import { ErrorContext } from './contexts/ErrorProvider';
 import {
 	useSelectedFilters,
 	useSetSelectedFilters,
-} from '@/store/\bcollectionFilterStore';
+} from '@/store/collectionFilterStore';
 
 const FILTERS = [
 	{
