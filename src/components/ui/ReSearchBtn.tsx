@@ -11,6 +11,8 @@ const ReSearchBtn = () => {
 		useContext(MapDataContext);
 	const isSidebarOpen = useIsSidebarOpen();
 
+	console.log(center);
+	console.log(searchCenter);
 	const { setGetType } = useContext(getTypeContext);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
@@ -21,7 +23,8 @@ const ReSearchBtn = () => {
 		setGetType('latlng');
 	};
 
-	const isMoved = center !== searchCenter;
+	const isMoved =
+		center.lat !== searchCenter.lat || center.lng !== searchCenter.lng;
 	return isMoved ? (
 		<button
 			onClick={() => handleClickResearch(mapRef.current!)}
