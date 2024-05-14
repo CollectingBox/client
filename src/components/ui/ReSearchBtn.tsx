@@ -7,7 +7,7 @@ import { getTypeContext } from '../contexts/GetTypeProvider';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 
 const ReSearchBtn = () => {
-	const { setSearchCenter, isMoved, setIsMoved, mapRef } =
+	const { center, searchCenter, setSearchCenter, mapRef } =
 		useContext(MapDataContext);
 	const isSidebarOpen = useIsSidebarOpen();
 
@@ -19,8 +19,9 @@ const ReSearchBtn = () => {
 		const lng = latlng.getLng();
 		setSearchCenter({ lat, lng });
 		setGetType('latlng');
-		setIsMoved(false);
 	};
+
+	const isMoved = center !== searchCenter;
 	return isMoved ? (
 		<button
 			onClick={() => handleClickResearch(mapRef.current!)}

@@ -11,8 +11,6 @@ import {
 } from 'react';
 
 interface IMapDataProviderContext {
-	isMoved: boolean;
-	setIsMoved: Dispatch<SetStateAction<boolean>>;
 	center: LocationType;
 	setCenter: Dispatch<SetStateAction<LocationType>>;
 	searchCenter: LocationType;
@@ -31,8 +29,6 @@ const DEFAULT_LOCATION = {
 };
 
 export const MapDataContext = createContext<IMapDataProviderContext>({
-	isMoved: false,
-	setIsMoved: () => {},
 	center: DEFAULT_LOCATION,
 	setCenter: () => {},
 	searchCenter: DEFAULT_LOCATION,
@@ -50,7 +46,6 @@ export default function MapDataProvider({
 	children: React.ReactNode;
 }) {
 	const mapRef = useRef<kakao.maps.Map>(null);
-	const [isMoved, setIsMoved] = useState(false);
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
 	const [location, setLocation] = useState<LocationType>();
@@ -60,8 +55,6 @@ export default function MapDataProvider({
 		<MapDataContext.Provider
 			value={{
 				mapRef,
-				isMoved,
-				setIsMoved,
 				center,
 				setCenter,
 				searchCenter,

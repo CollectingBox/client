@@ -20,15 +20,8 @@ export default function Kakaomap({
 }) {
 	useKakaoLoader();
 
-	const {
-		mapRef,
-		setIsMoved,
-		center,
-		location,
-		setCenter,
-		searchCenter,
-		query,
-	} = useContext(MapDataContext);
+	const { mapRef, center, location, setCenter, searchCenter, query } =
+		useContext(MapDataContext);
 	const setIsSidebarOpen = useSetIsSidebarOpen();
 	const selectedFilters = useSelectedFilters();
 
@@ -92,15 +85,8 @@ export default function Kakaomap({
 					setIsNotSeoul(true);
 					setErrorContent('seoul');
 					setIsToastError(true);
-					setIsMoved(false);
 				} else {
 					setIsNotSeoul(false);
-					if (
-						searchCenter.lat !== center.lat ||
-						searchCenter.lng !== center.lng
-					) {
-						setIsMoved(true);
-					}
 				}
 			}
 		});

@@ -13,8 +13,7 @@ import { ErrorContext } from './contexts/ErrorProvider';
 import { MapDataContext } from './contexts/MapDataProvider';
 
 const SearchBar = () => {
-	const { setCenter, setSearchCenter, setQuery, setIsMoved } =
-		useContext(MapDataContext);
+	const { setCenter, setSearchCenter, setQuery } = useContext(MapDataContext);
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
@@ -54,7 +53,6 @@ const SearchBar = () => {
 					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 					setGetType('latlng');
 				}
-				setIsMoved(false);
 			} else {
 				setIsSearchError(true);
 				timerRef.current = setTimeout(() => setIsSearchError(false), 3000);
