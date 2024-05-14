@@ -11,8 +11,6 @@ const ReSearchBtn = () => {
 		useContext(MapDataContext);
 	const isSidebarOpen = useIsSidebarOpen();
 
-	console.log(center);
-	console.log(searchCenter);
 	const { setGetType } = useContext(getTypeContext);
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
