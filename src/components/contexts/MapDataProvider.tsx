@@ -1,14 +1,7 @@
 'use client';
 
 import { LocationType } from '@/types/define';
-import {
-	Dispatch,
-	RefObject,
-	SetStateAction,
-	createContext,
-	useRef,
-	useState,
-} from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface IMapDataProviderContext {
 	center: LocationType;
@@ -17,7 +10,6 @@ interface IMapDataProviderContext {
 	setSearchCenter: Dispatch<SetStateAction<LocationType>>;
 	location: LocationType | undefined;
 	setLocation: Dispatch<SetStateAction<LocationType | undefined>>;
-	mapRef: RefObject<kakao.maps.Map>;
 	query: string;
 	setQuery: Dispatch<SetStateAction<string>>;
 }
@@ -35,7 +27,6 @@ export const MapDataContext = createContext<IMapDataProviderContext>({
 	setSearchCenter: () => {},
 	location: undefined,
 	setLocation: () => {},
-	mapRef: { current: null },
 	query: '',
 	setQuery: () => {},
 });
@@ -45,7 +36,6 @@ export default function MapDataProvider({
 }: {
 	children: React.ReactNode;
 }) {
-	const mapRef = useRef<kakao.maps.Map>(null);
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
 	const [location, setLocation] = useState<LocationType>();
@@ -54,7 +44,6 @@ export default function MapDataProvider({
 	return (
 		<MapDataContext.Provider
 			value={{
-				mapRef,
 				center,
 				setCenter,
 				searchCenter,

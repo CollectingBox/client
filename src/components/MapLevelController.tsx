@@ -1,14 +1,11 @@
 'use client';
 import PlusIcon from '@/public/icons/plus.svg';
 import MinusIcon from '@/public/icons/minus.svg';
+import { useMapRef } from '@/store/useMapRefStore';
 
-import { RefObject } from 'react';
+const MapLevelController = () => {
+	const mapRef = useMapRef();
 
-const MapLevelController = ({
-	mapRef,
-}: {
-	mapRef: RefObject<kakao.maps.Map>;
-}) => {
 	const handleLevel = (type: 'increase' | 'decrease') => {
 		const map = mapRef.current;
 		if (!map) return;

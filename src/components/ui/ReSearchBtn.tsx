@@ -5,11 +5,12 @@ import Refresh from './icons/Refresh';
 import { MapDataContext } from '../contexts/MapDataProvider';
 import { getTypeContext } from '../contexts/GetTypeProvider';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
+import { useMapRef } from '@/store/useMapRefStore';
 
 const ReSearchBtn = () => {
-	const { center, searchCenter, setSearchCenter, mapRef } =
-		useContext(MapDataContext);
+	const { center, searchCenter, setSearchCenter } = useContext(MapDataContext);
 	const isSidebarOpen = useIsSidebarOpen();
+	const mapRef = useMapRef();
 
 	const { setGetType } = useContext(getTypeContext);
 

@@ -1,4 +1,4 @@
-import React, { RefObject, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import FilterButtons from './FilterButtons';
 import MapLevelController from './MapLevelController';
@@ -7,8 +7,9 @@ import { MapDataContext } from './contexts/MapDataProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
 
 const MapController = () => {
-	const { mapRef, setCenter, setSearchCenter, location, setLocation } =
+	const { setCenter, setSearchCenter, location, setLocation } =
 		useContext(MapDataContext);
+
 	const onClickLocation = () => {
 		if (!location) return;
 		setCenter(location);
@@ -45,7 +46,7 @@ const MapController = () => {
 				<FilterButtons />
 			</div>
 			<ReSearchBtn />
-			<MapLevelController mapRef={mapRef} />
+			<MapLevelController />
 		</div>
 	);
 };

@@ -12,6 +12,7 @@ import { ErrorContext } from './contexts/ErrorProvider';
 import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
+import { useMapRef } from '@/store/useMapRefStore';
 
 export default function Kakaomap({
 	controls,
@@ -20,10 +21,11 @@ export default function Kakaomap({
 }) {
 	useKakaoLoader();
 
-	const { mapRef, center, location, setCenter, searchCenter, query } =
+	const { center, location, setCenter, searchCenter, query } =
 		useContext(MapDataContext);
 	const setIsSidebarOpen = useSetIsSidebarOpen();
 	const selectedFilters = useSelectedFilters();
+	const mapRef = useMapRef();
 
 	const { getType } = useContext(getTypeContext);
 	const { setIsToastError, setErrorContent, isToastError } =
