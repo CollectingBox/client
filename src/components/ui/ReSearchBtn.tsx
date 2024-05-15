@@ -4,10 +4,13 @@ import { useContext } from 'react';
 import Refresh from './icons/Refresh';
 import { MapDataContext } from '../contexts/MapDataProvider';
 import { getTypeContext } from '../contexts/GetTypeProvider';
+import { useIsSidebarOpen } from '@/store/sidebarStateStore';
+import { useMapRef } from '@/store/useMapRefStore';
 
 const ReSearchBtn = () => {
-	const { isSidebarOpen, setSearchCenter, isMoved, setIsMoved, mapRef } =
-		useContext(MapDataContext);
+	const { center, searchCenter, setSearchCenter } = useContext(MapDataContext);
+	const isSidebarOpen = useIsSidebarOpen();
+	const mapRef = useMapRef();
 
 	const { setGetType } = useContext(getTypeContext);
 
@@ -17,8 +20,10 @@ const ReSearchBtn = () => {
 		const lng = latlng.getLng();
 		setSearchCenter({ lat, lng });
 		setGetType('latlng');
-		setIsMoved(false);
 	};
+
+	const isMoved =
+		center.lat !== searchCenter.lat || center.lng !== searchCenter.lng;
 	return isMoved ? (
 		<button
 			onClick={() => handleClickResearch(mapRef.current!)}

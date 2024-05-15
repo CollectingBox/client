@@ -2,12 +2,13 @@
 
 import { useContext, useEffect, useState } from 'react';
 import Alert from '../icons/Alert';
-import { MapDataContext } from '@/components/contexts/MapDataProvider';
 import { ErrorContext } from '@/components/contexts/ErrorProvider';
+import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 
 export default function ToastError() {
 	const [isVisible, setIsVisible] = useState(true);
-	const { isSidebarOpen } = useContext(MapDataContext);
+	const isSidebarOpen = useIsSidebarOpen();
+
 	const { errorContent } = useContext(ErrorContext);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');

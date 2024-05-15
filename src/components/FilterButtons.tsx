@@ -5,9 +5,12 @@ import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
 import { MouseEvent, useContext, useEffect, useState } from 'react';
-import { MapDataContext } from './contexts/MapDataProvider';
 import { CollectionTags } from '@/types/define';
 import { ErrorContext } from './contexts/ErrorProvider';
+import {
+	useSelectedFilters,
+	useSetSelectedFilters,
+} from '@/store/collectionFilterStore';
 
 const FILTERS = [
 	{
@@ -38,7 +41,8 @@ const FILTERS = [
 
 const FilterButtons = () => {
 	const [isFilterZero, setIsFilterZero] = useState(false);
-	const { selectedFilters, setSelectedFilters } = useContext(MapDataContext);
+	const selectedFilters = useSelectedFilters();
+	const setSelectedFilters = useSetSelectedFilters();
 	const { setErrorContent, setIsToastError, isToastError } =
 		useContext(ErrorContext);
 	const filterButtonStyle = (filter: CollectionTags, color: string) => {

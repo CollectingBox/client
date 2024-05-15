@@ -10,6 +10,9 @@ import useSearchCollections from '@/hooks/useSearchCollections';
 import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
 import { SystemContext } from './contexts/SystemProvider';
+import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
+import { useSelectedFilters } from '@/store/collectionFilterStore';
+import { useMapRef } from '@/store/useMapRefStore';
 
 export default function Kakaomap({
 	controls,
@@ -18,17 +21,11 @@ export default function Kakaomap({
 }) {
 	useKakaoLoader();
 
-	const {
-		mapRef,
-		setIsSidebarOpen,
-		selectedFilters,
-		setIsMoved,
-		center,
-		location,
-		setCenter,
-		searchCenter,
-		query,
-	} = useContext(MapDataContext);
+	const { center, location, setCenter, searchCenter, query } =
+		useContext(MapDataContext);
+	const setIsSidebarOpen = useSetIsSidebarOpen();
+	const selectedFilters = useSelectedFilters();
+	const mapRef = useMapRef();
 
 	const { getType } = useContext(getTypeContext);
 	const { setIsToastError, setErrorContent, isToastError } =
@@ -90,15 +87,8 @@ export default function Kakaomap({
 					setIsNotSeoul(true);
 					setErrorContent('seoul');
 					setIsToastError(true);
-					setIsMoved(false);
 				} else {
 					setIsNotSeoul(false);
-					if (
-						searchCenter.lat !== center.lat ||
-						searchCenter.lng !== center.lng
-					) {
-						setIsMoved(true);
-					}
 				}
 			}
 		});

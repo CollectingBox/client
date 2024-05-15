@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useContext } from 'react';
-import { MapDataContext } from './contexts/MapDataProvider';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
 import BoxInformation from './ui/sidebars/BoxInformation';
@@ -13,16 +12,22 @@ import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { SystemContext } from './contexts/SystemProvider';
+import {
+	useIsSidebarOpen,
+	useSetIsSidebarOpen,
+} from '@/store/sidebarStateStore';
+import { useSelectedCollectionId } from '@/store/selectedCollectionStore';
 
 const Sidebar = () => {
-	const { isSidebarOpen, setIsSidebarOpen, collectionId } =
-		useContext(MapDataContext);
+	const selectCollectionId = useSelectedCollectionId();
 	const { setIsSystemError, setType } = useContext(SystemContext);
+	const isSidebarOpen = useIsSidebarOpen();
+	const setIsSidebarOpen = useSetIsSidebarOpen();
 
 	const { data: collectionDetailDTO, isError } = useQuery({
-		queryKey: ['collectionDetail', collectionId],
-		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
-		enabled: !!collectionId,
+		queryKey: ['collectionDetail', selectCollectionId],
+		queryFn: () => getCollectionDetail(selectCollectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
+		enabled: !!selectCollectionId,
 		placeholderData: keepPreviousData,
 	});
 

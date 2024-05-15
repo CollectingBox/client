@@ -1,31 +1,15 @@
 'use client';
 
-import { CollectionTags, LocationType } from '@/types/define';
-import {
-	Dispatch,
-	RefObject,
-	SetStateAction,
-	createContext,
-	useRef,
-	useState,
-} from 'react';
+import { LocationType } from '@/types/define';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface IMapDataProviderContext {
-	isSidebarOpen: boolean;
-	setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
-	collectionId?: number;
-	setCollectionId: (value: number) => void;
-	selectedFilters: CollectionTags[];
-	setSelectedFilters: Dispatch<SetStateAction<CollectionTags[]>>;
-	isMoved: boolean;
-	setIsMoved: Dispatch<SetStateAction<boolean>>;
 	center: LocationType;
 	setCenter: Dispatch<SetStateAction<LocationType>>;
 	searchCenter: LocationType;
 	setSearchCenter: Dispatch<SetStateAction<LocationType>>;
 	location: LocationType | undefined;
 	setLocation: Dispatch<SetStateAction<LocationType | undefined>>;
-	mapRef: RefObject<kakao.maps.Map>;
 	query: string;
 	setQuery: Dispatch<SetStateAction<string>>;
 }
@@ -37,20 +21,12 @@ const DEFAULT_LOCATION = {
 };
 
 export const MapDataContext = createContext<IMapDataProviderContext>({
-	isSidebarOpen: false,
-	setIsSidebarOpen: () => {},
-	setCollectionId: (value: number) => {},
-	selectedFilters: [],
-	setSelectedFilters: () => {},
-	isMoved: false,
-	setIsMoved: () => {},
 	center: DEFAULT_LOCATION,
 	setCenter: () => {},
 	searchCenter: DEFAULT_LOCATION,
 	setSearchCenter: () => {},
 	location: undefined,
 	setLocation: () => {},
-	mapRef: { current: null },
 	query: '',
 	setQuery: () => {},
 });
@@ -60,13 +36,6 @@ export default function MapDataProvider({
 }: {
 	children: React.ReactNode;
 }) {
-	const mapRef = useRef<kakao.maps.Map>(null);
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	const [collectionId, setCollectionId] = useState<number>();
-	const [selectedFilters, setSelectedFilters] = useState<CollectionTags[]>([
-		'CLOTHES',
-	]);
-	const [isMoved, setIsMoved] = useState(false);
 	const [center, setCenter] = useState(DEFAULT_LOCATION);
 	const [searchCenter, setSearchCenter] = useState(DEFAULT_LOCATION);
 	const [location, setLocation] = useState<LocationType>();
@@ -75,15 +44,6 @@ export default function MapDataProvider({
 	return (
 		<MapDataContext.Provider
 			value={{
-				mapRef,
-				isSidebarOpen,
-				setIsSidebarOpen,
-				collectionId,
-				setCollectionId,
-				selectedFilters,
-				setSelectedFilters,
-				isMoved,
-				setIsMoved,
 				center,
 				setCenter,
 				searchCenter,

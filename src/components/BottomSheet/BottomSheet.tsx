@@ -1,25 +1,26 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { AnimationControls, PanInfo, motion } from 'framer-motion';
 import './styles.css';
 import BoxInformation from '../ui/sidebars/BoxInformation';
 import VisitRecord from '../ui/sidebars/VisitRecord';
 import DiscardMethod from '../ui/sidebars/DiscardMethod';
-import { MapDataContext } from '../contexts/MapDataProvider';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getCollectionDetail } from '@/service/collection';
+import { useSelectedCollectionId } from '@/store/selectedCollectionStore';
 
 export default function BottomSheet({
 	controls,
 }: {
 	controls: AnimationControls;
 }) {
-	const { collectionId } = useContext(MapDataContext);
+	const selectCollectionId = useSelectedCollectionId();
+
 	const [isDraggable, setIsDraggable] = useState(false);
 	const { data: collectionDetailDTO, isError } = useQuery({
-		queryKey: ['collectionDetail', collectionId],
-		queryFn: () => getCollectionDetail(collectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
-		enabled: !!collectionId,
+		queryKey: ['collectionDetail', selectCollectionId],
+		queryFn: () => getCollectionDetail(selectCollectionId!), //TODO: type assertion 없이 타입에러 내지 않을 방법 필요
+		enabled: !!selectCollectionId,
 		placeholderData: keepPreviousData,
 	});
 

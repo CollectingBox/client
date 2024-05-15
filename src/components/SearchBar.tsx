@@ -1,13 +1,6 @@
 'use client';
 
-import {
-	Dispatch,
-	SetStateAction,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
@@ -17,21 +10,10 @@ import Close from '@/public/icons/close.svg';
 import { SystemContext } from './contexts/SystemProvider';
 import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
+import { MapDataContext } from './contexts/MapDataProvider';
 
-interface Props {
-	setCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
-	setSearchCenter: Dispatch<SetStateAction<{ lat: number; lng: number }>>;
-	setQuery: Dispatch<SetStateAction<string>>;
-	searchCenter: { lat: number; lng: number };
-	setIsMoved: Dispatch<SetStateAction<boolean>>;
-}
-
-const SearchBar = ({
-	setCenter,
-	setSearchCenter,
-	setQuery,
-	setIsMoved,
-}: Props) => {
+const SearchBar = () => {
+	const { setCenter, setSearchCenter, setQuery } = useContext(MapDataContext);
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
@@ -71,7 +53,6 @@ const SearchBar = ({
 					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
 					setGetType('latlng');
 				}
-				setIsMoved(false);
 			} else {
 				setIsSearchError(true);
 				timerRef.current = setTimeout(() => setIsSearchError(false), 3000);
@@ -84,7 +65,7 @@ const SearchBar = ({
 			if (currentIndex !== -1) {
 				handleSearch(completes[currentIndex]);
 				setValue('');
-			} else if (value.length > 0) {
+			} else if (value.length > 0 && e.nativeEvent.isComposing === false) {
 				handleSearch(value);
 				setValue('');
 			}
