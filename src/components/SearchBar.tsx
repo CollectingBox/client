@@ -65,7 +65,7 @@ const SearchBar = () => {
 			if (currentIndex !== -1) {
 				handleSearch(completes[currentIndex]);
 				setValue('');
-			} else if (value.length > 0) {
+			} else if (value.length > 0 && e.nativeEvent.isComposing === false) {
 				handleSearch(value);
 				setValue('');
 			}
