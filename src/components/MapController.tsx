@@ -1,14 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import SearchBar from './SearchBar';
 import FilterButtons from './FilterButtons';
 import MapLevelController from './MapLevelController';
 import LocationIcon from '@/public/icons/location.svg';
-import { MapDataContext } from './contexts/MapDataProvider';
 import ReSearchBtn from './ui/ReSearchBtn';
+import { useMapDataStore } from '@/store/useMapDataStore';
+import { useShallow } from 'zustand/react/shallow';
 
 const MapController = () => {
-	const { setCenter, setSearchCenter, location, setLocation } =
-		useContext(MapDataContext);
+	const { setCenter, setSearchCenter, location, setLocation } = useMapDataStore(
+		useShallow((state) => state),
+	);
 
 	const onClickLocation = () => {
 		if (!location) return;

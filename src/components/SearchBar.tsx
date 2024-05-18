@@ -10,10 +10,13 @@ import Close from '@/public/icons/close.svg';
 import { SystemContext } from './contexts/SystemProvider';
 import { getTypeContext } from './contexts/GetTypeProvider';
 import { ErrorContext } from './contexts/ErrorProvider';
-import { MapDataContext } from './contexts/MapDataProvider';
+import { useShallow } from 'zustand/react/shallow';
+import { useMapDataStore } from '@/store/useMapDataStore';
 
 const SearchBar = () => {
-	const { setCenter, setSearchCenter, setQuery } = useContext(MapDataContext);
+	const { setCenter, setSearchCenter, setQuery } = useMapDataStore(
+		useShallow((state) => state),
+	);
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
