@@ -26,7 +26,6 @@ type Props = {
 const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const queryClient = useQueryClient();
 	const [option, setOption] = useState<VisitHistoryType>();
-	const [isSelectOpen, setIsSelectOpen] = useState(false);
 	const selectCollectionId = useSelectedCollectionId();
 	const { setIsComplete, setCompleteContent } = useContext(CompleteContext);
 	const { setIsSystemError, setType } = useContext(SystemContext);
@@ -36,7 +35,7 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const handleSelectOption = (value: VisitHistoryType) => setOption(value);
 	const handleLeaveVisitHistory = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		if (!selectCollectionId || !option || !isSelectOpen) return;
+		if (!selectCollectionId || !option) return;
 
 		try {
 			const reviewHistoryJSON = localStorage.getItem('reviewHistory');
@@ -103,12 +102,7 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 							<Close />
 						</button>
 					</header>
-					<SelectVisitHistory
-						handleSelectOption={handleSelectOption}
-						onOpenChange={(open) => {
-							setIsSelectOpen(open);
-						}}
-					/>
+					<SelectVisitHistory handleSelectOption={handleSelectOption} />
 					<section className="flex justify-between gap-10">
 						<Button onClick={() => setIsModalOpen(false)}>취소하기</Button>
 						<Button
