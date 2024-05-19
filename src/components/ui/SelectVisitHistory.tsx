@@ -13,16 +13,22 @@ import { VisitHistoryType } from '@/types/collection';
 
 interface Props {
 	handleSelectOption: (value: VisitHistoryType) => void;
-	onOpenChange: (value: boolean) => void;
 }
 
-export function SelectVisitHistory({
-	handleSelectOption,
-	onOpenChange,
-}: Props) {
+export function SelectVisitHistory({ handleSelectOption }: Props) {
+	const [isOpen, setIsOpen] = React.useState(false);
+	console.log(isOpen);
+	const handleChangeIsOpen = (isOpen: boolean) => {
+		setIsOpen(isOpen);
+	};
 	return (
-		<Select onValueChange={handleSelectOption} onOpenChange={onOpenChange}>
-			<SelectTrigger className="h-S-56 w-full focus:border-Green-400">
+		<Select
+			onValueChange={handleSelectOption}
+			onOpenChange={handleChangeIsOpen}
+		>
+			<SelectTrigger
+				className={`h-S-56 w-full ${isOpen ? 'mb-16' : 'mb-0'} focus:border-Green-400`}
+			>
 				<SelectValue placeholder="선택" />
 			</SelectTrigger>
 			<SelectContent>
