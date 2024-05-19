@@ -13,11 +13,15 @@ import { VisitHistoryType } from '@/types/collection';
 
 interface Props {
 	handleSelectOption: (value: VisitHistoryType) => void;
+	onOpenChange: (value: boolean) => void;
 }
 
-export function SelectVisitHistory({ handleSelectOption }: Props) {
+export function SelectVisitHistory({
+	handleSelectOption,
+	onOpenChange,
+}: Props) {
 	return (
-		<Select onValueChange={handleSelectOption}>
+		<Select onValueChange={handleSelectOption} onOpenChange={onOpenChange}>
 			<SelectTrigger className="h-S-56 w-full focus:border-Green-400">
 				<SelectValue placeholder="선택" />
 			</SelectTrigger>
