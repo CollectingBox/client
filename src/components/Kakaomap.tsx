@@ -3,7 +3,6 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
-import { MapDataContext } from './contexts/MapDataProvider';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
 import useSearchCollections from '@/hooks/useSearchCollections';
@@ -13,6 +12,8 @@ import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
 import { useMapRef } from '@/store/useMapRefStore';
+import { useMapDataStore } from '@/store/useMapDataStore';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function Kakaomap({
 	controls,
@@ -21,8 +22,9 @@ export default function Kakaomap({
 }) {
 	useKakaoLoader();
 
-	const { center, location, setCenter, searchCenter, query } =
-		useContext(MapDataContext);
+	const { center, location, setCenter, searchCenter, query } = useMapDataStore(
+		useShallow((state) => state),
+	);
 	const setIsSidebarOpen = useSetIsSidebarOpen();
 	const selectedFilters = useSelectedFilters();
 	const mapRef = useMapRef();

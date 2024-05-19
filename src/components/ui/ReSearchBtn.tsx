@@ -2,13 +2,16 @@
 
 import { useContext } from 'react';
 import Refresh from './icons/Refresh';
-import { MapDataContext } from '../contexts/MapDataProvider';
 import { getTypeContext } from '../contexts/GetTypeProvider';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useMapRef } from '@/store/useMapRefStore';
+import { useMapDataStore } from '@/store/useMapDataStore';
+import { useShallow } from 'zustand/react/shallow';
 
 const ReSearchBtn = () => {
-	const { center, searchCenter, setSearchCenter } = useContext(MapDataContext);
+	const { center, searchCenter, setSearchCenter } = useMapDataStore(
+		useShallow((state) => state),
+	);
 	const isSidebarOpen = useIsSidebarOpen();
 	const mapRef = useMapRef();
 

@@ -13,11 +13,7 @@ type CollectionFilterStoreType = {
 const useCollectionFilterStore = createStore<CollectionFilterStoreType>(
 	(set) => ({
 		selectedFilters: ['CLOTHES'],
-		setselectedFilters: (
-			value:
-				| CollectionTags[]
-				| ((prevState: CollectionTags[]) => CollectionTags[]),
-		) =>
+		setselectedFilters: (value) =>
 			set((state) => {
 				state.selectedFilters =
 					typeof value === 'function' ? value(state.selectedFilters) : value;
