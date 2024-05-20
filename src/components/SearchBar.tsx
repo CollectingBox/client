@@ -9,9 +9,9 @@ import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
 import { SystemContext } from './contexts/SystemProvider';
 import { getTypeContext } from './contexts/GetTypeProvider';
-import { ErrorContext } from './contexts/ErrorProvider';
 import { useShallow } from 'zustand/react/shallow';
 import { useMapDataStore } from '@/store/useMapDataStore';
+import { useErrorToastStore } from '@/store/errorToastStore';
 
 const SearchBar = () => {
 	const { setCenter, setSearchCenter, setQuery } = useMapDataStore(
@@ -26,7 +26,7 @@ const SearchBar = () => {
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 	const { setGetType } = useContext(getTypeContext);
-	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
+	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {

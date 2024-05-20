@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
@@ -14,6 +14,7 @@ import { useSelectedFilters } from '@/store/collectionFilterStore';
 import { useMapRef } from '@/store/useMapRefStore';
 import { useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
+import { useErrorToastStore } from '@/store/errorToastStore';
 
 export default function Kakaomap({
 	controls,
@@ -30,7 +31,7 @@ export default function Kakaomap({
 	const mapRef = useMapRef();
 
 	const { getType } = useContext(getTypeContext);
-	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
+	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
 	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
 		searchCenter,
