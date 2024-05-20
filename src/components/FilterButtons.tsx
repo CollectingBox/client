@@ -4,13 +4,13 @@ import FluorescentLampIcon from './ui/icons/FluorescentLampIcon';
 import PillIcon from './ui/icons/PillIcon';
 import TrashcanIcon from './ui/icons/TrashcanIcon';
 import ClothesIcon from './ui/icons/ClothesIcon';
-import { MouseEvent, useContext, useEffect, useState } from 'react';
+import { MouseEvent } from 'react';
 import { CollectionTags } from '@/types/define';
-import { ErrorContext } from './contexts/ErrorProvider';
 import {
 	useSelectedFilters,
 	useSetSelectedFilters,
 } from '@/store/collectionFilterStore';
+import { useErrorToastStore } from '@/store/errorToastStore';
 
 const FILTERS = [
 	{
@@ -42,7 +42,7 @@ const FILTERS = [
 const FilterButtons = () => {
 	const selectedFilters = useSelectedFilters();
 	const setSelectedFilters = useSetSelectedFilters();
-	const { setErrorContent, setIsToastError } = useContext(ErrorContext);
+	const { setErrorContent, setIsToastError } = useErrorToastStore();
 	const filterButtonStyle = (filter: CollectionTags, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full
 		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium Elevation-3-Bottom' : 'bg-white text-Gray-500 Label-Large Elevation-2-Bottom'}`;

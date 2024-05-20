@@ -1,17 +1,17 @@
 'use client';
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { getSearchComplete } from '@/service/searchComplete';
 import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
 import SearchIcon from '@/public/icons/search.svg';
 import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
-import { SystemContext } from './contexts/SystemProvider';
-import { getTypeContext } from './contexts/GetTypeProvider';
-import { ErrorContext } from './contexts/ErrorProvider';
 import { useShallow } from 'zustand/react/shallow';
 import { useMapDataStore } from '@/store/useMapDataStore';
+import { useErrorToastStore } from '@/store/errorToastStore';
+import { useGetTypeStore } from '@/store/getTypeStore';
+import { useSystemStore } from '@/store/systemErrorStore';
 
 const SearchBar = () => {
 	const { setCenter, setSearchCenter, setQuery } = useMapDataStore(
@@ -24,16 +24,16 @@ const SearchBar = () => {
 	const [completes, setCompletes] = useState<string[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(-1);
 	const searchRef = useRef<HTMLDivElement | null>(null);
-	const { setIsSystemError, setType } = useContext(SystemContext);
-	const { setGetType } = useContext(getTypeContext);
-	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
+	const { setIsSystemError, setType } = useSystemStore();
+	const { setGetType } = useGetTypeStore();
+	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
 			const res = await getSearchComplete(value);
 			setCompletes(res.data.items);
 		} catch (e) {
-			setType('server');
+			setType('SERVER');
 			setIsSystemError(true);
 		}
 	}, 300);
@@ -48,10 +48,10 @@ const SearchBar = () => {
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
 				if (value.endsWith('구') || value.endsWith('동')) {
 					setQuery(value);
-					setGetType('search');
+					setGetType('SEARCH');
 				} else {
 					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
-					setGetType('latlng');
+					setGetType('LATLNG');
 				}
 			} else {
 				setErrorContent('SEARCH');

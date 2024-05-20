@@ -1,12 +1,12 @@
-import { SystemContext } from '@/components/contexts/SystemProvider';
-import { useContext, useEffect } from 'react';
+import { useSystemStore } from '@/store/systemErrorStore';
+import { useEffect } from 'react';
 
 const useNetworkStatus = () => {
-	const { setIsSystemError, setType } = useContext(SystemContext);
+	const { setIsSystemError, setType } = useSystemStore();
 
 	useEffect(() => {
 		const handleOffline = () => {
-			setType('network');
+			setType('OFFLINE');
 			setIsSystemError(true);
 		};
 		window.addEventListener('offline', handleOffline);

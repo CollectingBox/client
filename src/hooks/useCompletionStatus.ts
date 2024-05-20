@@ -1,9 +1,9 @@
-import { CompleteContext } from '@/components/contexts/CompleteProvider';
-import { useContext, useEffect, useRef } from 'react';
+import { useCompleteToastStore } from '@/store/completeToastStore';
+import { useEffect, useRef } from 'react';
 
 const useCompletionStatus = () => {
 	const { isComplete, setIsComplete, completeContent } =
-		useContext(CompleteContext);
+		useCompleteToastStore();
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {

@@ -1,9 +1,9 @@
 'use client';
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Alert from '../icons/Alert';
-import { ErrorContext } from '@/components/contexts/ErrorProvider';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
+import { useErrorToastStore } from '@/store/errorToastStore';
 
 const errorMessages = {
 	FILTER: {
@@ -31,7 +31,7 @@ const errorMessages = {
 export default function ToastError() {
 	const [isVisible, setIsVisible] = useState(true);
 	const isSidebarOpen = useIsSidebarOpen();
-	const { errorContent } = useContext(ErrorContext);
+	const { errorContent } = useErrorToastStore();
 	const [errorMessage, setErrorMessage] = useState({
 		title: '',
 		description: '',
