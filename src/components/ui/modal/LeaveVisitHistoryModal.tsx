@@ -70,7 +70,7 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 			await queryClient.invalidateQueries({
 				queryKey: ['collectionDetail', selectCollectionId],
 			});
-			setCompleteContent('register');
+			setCompleteContent('REGISTER');
 			setIsComplete(true);
 			setIsModalOpen(false);
 		} catch (e) {
