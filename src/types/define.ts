@@ -7,3 +7,5 @@ export type ErrorToast = 'FILTER' | 'SEARCH' | 'SEOUL' | 'DATA' | 'REVIEW';
 export type CompleteContent = 'REGISTER' | 'COPY';
 
 export type RequestMarkersType = 'LATLNG' | 'SEARCH';
+
+export type SystemErrorType = 'SERVER' | 'OFFLINE';

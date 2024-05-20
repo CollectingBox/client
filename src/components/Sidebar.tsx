@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import LogoIcon from '@/public/icons/logo.svg';
 import LogoWordIcon from '@/public/icons/logo_word.svg';
 import BoxInformation from './ui/sidebars/BoxInformation';
@@ -11,16 +11,16 @@ import VisitRecord from './ui/sidebars/VisitRecord';
 import DiscardMethod from './ui/sidebars/DiscardMethod';
 import { getCollectionDetail } from '@/service/collection';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { SystemContext } from './contexts/SystemProvider';
 import {
 	useIsSidebarOpen,
 	useSetIsSidebarOpen,
 } from '@/store/sidebarStateStore';
 import { useSelectedCollectionId } from '@/store/selectedCollectionStore';
+import { useSystemStore } from '@/store/systemErrorStore';
 
 const Sidebar = () => {
 	const selectCollectionId = useSelectedCollectionId();
-	const { setIsSystemError, setType } = useContext(SystemContext);
+	const { setIsSystemError, setType } = useSystemStore();
 	const isSidebarOpen = useIsSidebarOpen();
 	const setIsSidebarOpen = useSetIsSidebarOpen();
 
@@ -32,7 +32,7 @@ const Sidebar = () => {
 	});
 
 	if (isError) {
-		setType('server');
+		setType('SERVER');
 		setIsSystemError(true);
 	}
 

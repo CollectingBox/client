@@ -7,11 +7,11 @@ import AutoCompleteContainer from './ui/searchbars/AutoCompleteContainer';
 import SearchIcon from '@/public/icons/search.svg';
 import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
-import { SystemContext } from './contexts/SystemProvider';
 import { useShallow } from 'zustand/react/shallow';
 import { useMapDataStore } from '@/store/useMapDataStore';
 import { useErrorToastStore } from '@/store/errorToastStore';
 import { useGetTypeStore } from '@/store/getTypeStore';
+import { useSystemStore } from '@/store/systemErrorStore';
 
 const SearchBar = () => {
 	const { setCenter, setSearchCenter, setQuery } = useMapDataStore(
@@ -24,7 +24,7 @@ const SearchBar = () => {
 	const [completes, setCompletes] = useState<string[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(-1);
 	const searchRef = useRef<HTMLDivElement | null>(null);
-	const { setIsSystemError, setType } = useContext(SystemContext);
+	const { setIsSystemError, setType } = useSystemStore();
 	const { setGetType } = useGetTypeStore();
 	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
@@ -33,7 +33,7 @@ const SearchBar = () => {
 			const res = await getSearchComplete(value);
 			setCompletes(res.data.items);
 		} catch (e) {
-			setType('server');
+			setType('SERVER');
 			setIsSystemError(true);
 		}
 	}, 300);

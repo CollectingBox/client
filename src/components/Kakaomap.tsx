@@ -6,7 +6,6 @@ import useKakaoLoader from '@/utils/util';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
 import useSearchCollections from '@/hooks/useSearchCollections';
-import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
 import { useMapRef } from '@/store/useMapRefStore';
@@ -14,6 +13,7 @@ import { useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useErrorToastStore } from '@/store/errorToastStore';
 import { useGetTypeStore } from '@/store/getTypeStore';
+import { useSystemStore } from '@/store/systemErrorStore';
 
 export default function Kakaomap({
 	controls,
@@ -40,7 +40,7 @@ export default function Kakaomap({
 		query,
 		selectedFilters,
 	);
-	const { setIsSystemError, setType } = useContext(SystemContext);
+	const { setIsSystemError, setType } = useSystemStore();
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
@@ -93,7 +93,7 @@ export default function Kakaomap({
 			(collectionsADDRESS?.status === 500 && getType === 'SEARCH') ||
 			(collectionsLATLNG?.status === 500 && getType === 'LATLNG')
 		) {
-			setType('server');
+			setType('SERVER');
 			setIsSystemError(true);
 		}
 	}, [collectionsLATLNG, collectionsADDRESS]);
