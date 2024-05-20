@@ -30,8 +30,7 @@ export default function Kakaomap({
 	const mapRef = useMapRef();
 
 	const { getType } = useContext(getTypeContext);
-	const { setIsToastError, setErrorContent, isToastError } =
-		useContext(ErrorContext);
+	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
 
 	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
 		searchCenter,
@@ -46,9 +45,7 @@ export default function Kakaomap({
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isLevelExceed, setIsLevelExceed] = useState(false);
 	const [isNotSeoul, setIsNotSeoul] = useState(false);
-	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
@@ -61,10 +58,8 @@ export default function Kakaomap({
 		const currentLevel = map.getLevel();
 		if (currentLevel > 8) {
 			map.setLevel(8);
-			setIsLevelExceed(true);
-			timerRef.current = setTimeout(() => {
-				setIsLevelExceed(false);
-			}, 3000);
+			setErrorContent('SEOUL');
+			setIsToastError(true);
 		}
 	};
 
@@ -83,11 +78,8 @@ export default function Kakaomap({
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
-					if (isToastError) {
-						setIsToastError(false);
-					}
 					setIsNotSeoul(true);
-					setErrorContent('seoul');
+					setErrorContent('SEOUL');
 					setIsToastError(true);
 				} else {
 					setIsNotSeoul(false);
@@ -95,13 +87,6 @@ export default function Kakaomap({
 			}
 		});
 	}, [center]);
-
-	useEffect(() => {
-		if (isLevelExceed) {
-			setErrorContent('seoul');
-			setIsToastError(true);
-		}
-	}, [isLevelExceed]);
 
 	useEffect(() => {
 		if (
@@ -124,10 +109,7 @@ export default function Kakaomap({
 			!isNotSeoul &&
 			!(isADRLoading || isDTOLoading)
 		) {
-			if (isToastError) {
-				setIsToastError(false);
-			}
-			setErrorContent('data');
+			setErrorContent('DATA');
 			setIsToastError(true);
 		}
 	}, [collectionsLATLNG, collectionsADDRESS, isNotSeoul]);

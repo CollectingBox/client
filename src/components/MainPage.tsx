@@ -28,11 +28,9 @@ const MainPage = () => {
 		<div className="absolute">
 			<Kakaomap controls={controls} />
 			<MapInteraction controls={controls} />
-
-			{/** Toast Messages */}
+			{isToastError && <ToastError />}
 			{isComplete && <ToastComplete />}
 			{isSystemError && <SystemErrorModal />}
-			{isToastError && <ToastError />}
 		</div>
 	);
 };

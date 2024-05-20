@@ -2,7 +2,8 @@ import { ErrorContext } from '@/components/contexts/ErrorProvider';
 import { useContext, useEffect, useRef } from 'react';
 
 const useErrorStatus = () => {
-	const { isToastError, setIsToastError } = useContext(ErrorContext);
+	const { isToastError, setIsToastError, errorContent } =
+		useContext(ErrorContext);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
@@ -16,7 +17,7 @@ const useErrorStatus = () => {
 				clearTimeout(timerRef.current);
 			}
 		};
-	}, [isToastError, setIsToastError]);
+	}, [isToastError, errorContent, setIsToastError]);
 
 	return { isToastError };
 };

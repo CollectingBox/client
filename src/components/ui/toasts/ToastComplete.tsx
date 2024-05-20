@@ -2,18 +2,33 @@
 
 import { CompleteContext } from '@/components/contexts/CompleteProvider';
 import Success from '@/public/icons/success.svg';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+
+const completeMessages = {
+	REGISTER: '방문 기록이 등록되었습니다',
+	COPY: '주소가 복사되었습니다',
+};
 
 export default function ToastComplete() {
 	const [isVisible, setIsVisible] = useState(true);
 	const { completeContent } = useContext(CompleteContext);
+	const [completeMessage, setCompleteMessage] = useState('');
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
+
 	useEffect(() => {
-		const timer = setTimeout(() => {
+		const message = completeMessages[completeContent] || '';
+		setCompleteMessage(message);
+		timerRef.current = setTimeout(() => {
 			setIsVisible(false);
 		}, 2500);
 
-		return () => clearTimeout(timer);
-	}, []);
+		return () => {
+			if (timerRef.current !== null) {
+				clearTimeout(timerRef.current);
+			}
+		};
+	}, [completeContent]);
+
 	return (
 		<div
 			className={`${isVisible ? 'opacity-90' : 'opacity-0'} 
@@ -23,11 +38,7 @@ export default function ToastComplete() {
             xl:bottom-[S-24] xl:left-[414px] xl:mx-0 xl:w-[340px]`}
 		>
 			<Success />
-			<p className="text-white Title-Small">
-				{completeContent === 'register'
-					? '방문 기록이 등록되었습니다'
-					: '주소가 복사되었습니다'}
-			</p>
+			<p className="text-white Title-Small">{completeMessage}</p>
 		</div>
 	);
 }
