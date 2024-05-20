@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 	icons: {
 		icon: '/favicon.png',
 	},
+	keywords: ['수거함', '의류수거함', '폐건전지', '폐형광등', '폐의약품'],
 };
 
 export default function RootLayout({
