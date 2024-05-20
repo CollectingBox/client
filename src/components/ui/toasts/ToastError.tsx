@@ -38,19 +38,16 @@ export default function ToastError() {
 	});
 
 	useEffect(() => {
-		const timer = setTimeout(() => {
-			setIsVisible(false);
-		}, 2500);
-
-		return () => clearTimeout(timer);
-	}, []);
-
-	useEffect(() => {
 		const message = errorMessages[errorContent] || {
 			title: '',
 			description: '',
 		};
 		setErrorMessage(message);
+		const timer = setTimeout(() => {
+			setIsVisible(false);
+		}, 2500);
+
+		return () => clearTimeout(timer);
 	}, [errorContent]);
 
 	return (
