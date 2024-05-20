@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import Kakaomap from './Kakaomap';
 import ToastComplete from './ui/toasts/ToastComplete';
 import SystemErrorModal from './ui/modal/SystemErrorModal';

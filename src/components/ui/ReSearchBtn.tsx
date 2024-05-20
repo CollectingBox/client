@@ -1,6 +1,5 @@
 'use client';
 
-import { useContext } from 'react';
 import Refresh from './icons/Refresh';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useMapRef } from '@/store/useMapRefStore';
