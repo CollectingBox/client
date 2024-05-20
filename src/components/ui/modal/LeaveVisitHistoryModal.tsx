@@ -13,11 +13,11 @@ import Close from '@/public/icons/close.svg';
 import { postCollectionReview } from '@/service/collection';
 import { VisitHistoryType } from '@/types/collection';
 import { useQueryClient } from '@tanstack/react-query';
-import { CompleteContext } from '@/components/contexts/CompleteProvider';
 import { SystemContext } from '@/components/contexts/SystemProvider';
 import ModalPortal from './Portal';
-import { ErrorContext } from '@/components/contexts/ErrorProvider';
 import { useSelectedCollectionId } from '@/store/selectedCollectionStore';
+import { useErrorToastStore } from '@/store/errorToastStore';
+import { useCompleteToastStore } from '@/store/completeToastStore';
 
 type Props = {
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -27,9 +27,9 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const queryClient = useQueryClient();
 	const [option, setOption] = useState<VisitHistoryType>();
 	const selectCollectionId = useSelectedCollectionId();
-	const { setIsComplete, setCompleteContent } = useContext(CompleteContext);
+	const { setIsComplete, setCompleteContent } = useCompleteToastStore();
 	const { setIsSystemError, setType } = useContext(SystemContext);
-	const { setErrorContent, setIsToastError } = useContext(ErrorContext);
+	const { setErrorContent, setIsToastError } = useErrorToastStore();
 
 	const handleSelectOption = (value: VisitHistoryType) => setOption(value);
 	const handleLeaveVisitHistory = async (e: MouseEvent<HTMLButtonElement>) => {

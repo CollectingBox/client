@@ -1,13 +1,13 @@
 'use client';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import React from 'react';
 import CopyIcon from '@/public/icons/copy.svg';
 import CheckIcon from '@/public/icons/check.svg';
-import { CompleteContext } from './contexts/CompleteProvider';
+import { useCompleteToastStore } from '@/store/completeToastStore';
 
 export default function Copy({ text }: { text: string }) {
 	const [icon, setIcon] = useState(CopyIcon);
-	const { setIsComplete, setCompleteContent } = useContext(CompleteContext);
+	const { setIsComplete, setCompleteContent } = useCompleteToastStore();
 
 	const copy = async () => {
 		await navigator?.clipboard?.writeText(text);

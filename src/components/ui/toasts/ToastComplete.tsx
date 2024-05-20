@@ -1,8 +1,8 @@
 'use client';
 
-import { CompleteContext } from '@/components/contexts/CompleteProvider';
 import Success from '@/public/icons/success.svg';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCompleteToastStore } from '@/store/completeToastStore';
+import { useEffect, useRef, useState } from 'react';
 
 const completeMessages = {
 	REGISTER: '방문 기록이 등록되었습니다',
@@ -11,7 +11,7 @@ const completeMessages = {
 
 export default function ToastComplete() {
 	const [isVisible, setIsVisible] = useState(true);
-	const { completeContent } = useContext(CompleteContext);
+	const { completeContent } = useCompleteToastStore();
 	const [completeMessage, setCompleteMessage] = useState('');
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 

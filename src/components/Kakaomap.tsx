@@ -7,7 +7,6 @@ import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
 import useSearchCollections from '@/hooks/useSearchCollections';
 import { getTypeContext } from './contexts/GetTypeProvider';
-import { ErrorContext } from './contexts/ErrorProvider';
 import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
