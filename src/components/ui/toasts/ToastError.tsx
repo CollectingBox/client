@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Alert from '../icons/Alert';
 import { ErrorContext } from '@/components/contexts/ErrorProvider';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
@@ -36,6 +36,7 @@ export default function ToastError() {
 		title: '',
 		description: '',
 	});
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
 		const message = errorMessages[errorContent] || {
@@ -43,11 +44,15 @@ export default function ToastError() {
 			description: '',
 		};
 		setErrorMessage(message);
-		const timer = setTimeout(() => {
+		timerRef.current = setTimeout(() => {
 			setIsVisible(false);
 		}, 2500);
 
-		return () => clearTimeout(timer);
+		return () => {
+			if (timerRef.current !== null) {
+				clearTimeout(timerRef.current);
+			}
+		};
 	}, [errorContent]);
 
 	return (
