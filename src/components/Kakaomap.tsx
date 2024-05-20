@@ -6,7 +6,6 @@ import useKakaoLoader from '@/utils/util';
 import { AnimationControls } from 'framer-motion';
 import useCollections from '@/hooks/useCollections';
 import useSearchCollections from '@/hooks/useSearchCollections';
-import { getTypeContext } from './contexts/GetTypeProvider';
 import { SystemContext } from './contexts/SystemProvider';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
@@ -14,6 +13,7 @@ import { useMapRef } from '@/store/useMapRefStore';
 import { useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useErrorToastStore } from '@/store/errorToastStore';
+import { useGetTypeStore } from '@/store/getTypeStore';
 
 export default function Kakaomap({
 	controls,
@@ -29,7 +29,7 @@ export default function Kakaomap({
 	const selectedFilters = useSelectedFilters();
 	const mapRef = useMapRef();
 
-	const { getType } = useContext(getTypeContext);
+	const { getType } = useGetTypeStore();
 	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
 	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
@@ -90,8 +90,8 @@ export default function Kakaomap({
 
 	useEffect(() => {
 		if (
-			(collectionsADDRESS?.status === 500 && getType === 'search') ||
-			(collectionsLATLNG?.status === 500 && getType === 'latlng')
+			(collectionsADDRESS?.status === 500 && getType === 'SEARCH') ||
+			(collectionsLATLNG?.status === 500 && getType === 'LATLNG')
 		) {
 			setType('server');
 			setIsSystemError(true);
@@ -100,9 +100,9 @@ export default function Kakaomap({
 
 	useEffect(() => {
 		const isSearchDataEmpty =
-			getType === 'search' && collectionsADDRESS?.data?.length === 0;
+			getType === 'SEARCH' && collectionsADDRESS?.data?.length === 0;
 		const isLatlngDataEmpty =
-			getType === 'latlng' && collectionsLATLNG?.data?.length === 0;
+			getType === 'LATLNG' && collectionsLATLNG?.data?.length === 0;
 
 		if (
 			(isSearchDataEmpty || isLatlngDataEmpty) &&
@@ -135,7 +135,7 @@ export default function Kakaomap({
 		>
 			{collectionsLATLNG &&
 				collectionsLATLNG?.data?.length > 0 &&
-				getType !== 'search' &&
+				getType !== 'SEARCH' &&
 				collectionsLATLNG.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
@@ -147,7 +147,7 @@ export default function Kakaomap({
 					))}
 			{collectionsADDRESS &&
 				collectionsADDRESS?.data?.length > 0 &&
-				getType === 'search' &&
+				getType === 'SEARCH' &&
 				collectionsADDRESS.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (

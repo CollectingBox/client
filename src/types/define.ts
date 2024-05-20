@@ -5,3 +5,5 @@ export type LocationType = { lat: number; lng: number };
 export type ErrorToast = 'FILTER' | 'SEARCH' | 'SEOUL' | 'DATA' | 'REVIEW';
 
 export type CompleteContent = 'REGISTER' | 'COPY';
+
+export type RequestMarkersType = 'LATLNG' | 'SEARCH';

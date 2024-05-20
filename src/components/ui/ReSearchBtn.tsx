@@ -2,11 +2,11 @@
 
 import { useContext } from 'react';
 import Refresh from './icons/Refresh';
-import { getTypeContext } from '../contexts/GetTypeProvider';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useMapRef } from '@/store/useMapRefStore';
 import { useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
+import { useGetTypeStore } from '@/store/getTypeStore';
 
 const ReSearchBtn = () => {
 	const { center, searchCenter, setSearchCenter } = useMapDataStore(
@@ -15,14 +15,14 @@ const ReSearchBtn = () => {
 	const isSidebarOpen = useIsSidebarOpen();
 	const mapRef = useMapRef();
 
-	const { setGetType } = useContext(getTypeContext);
+	const { setGetType } = useGetTypeStore();
 
 	const handleClickResearch = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
 		const lat = latlng.getLat();
 		const lng = latlng.getLng();
 		setSearchCenter({ lat, lng });
-		setGetType('latlng');
+		setGetType('LATLNG');
 	};
 
 	const isMoved =

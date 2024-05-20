@@ -8,10 +8,10 @@ import SearchIcon from '@/public/icons/search.svg';
 import Line from '@/public/icons/seperate-line.svg';
 import Close from '@/public/icons/close.svg';
 import { SystemContext } from './contexts/SystemProvider';
-import { getTypeContext } from './contexts/GetTypeProvider';
 import { useShallow } from 'zustand/react/shallow';
 import { useMapDataStore } from '@/store/useMapDataStore';
 import { useErrorToastStore } from '@/store/errorToastStore';
+import { useGetTypeStore } from '@/store/getTypeStore';
 
 const SearchBar = () => {
 	const { setCenter, setSearchCenter, setQuery } = useMapDataStore(
@@ -25,7 +25,7 @@ const SearchBar = () => {
 	const [currentIndex, setCurrentIndex] = useState(-1);
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
-	const { setGetType } = useContext(getTypeContext);
+	const { setGetType } = useGetTypeStore();
 	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
@@ -48,10 +48,10 @@ const SearchBar = () => {
 				setCenter({ lat: Number(ystr), lng: Number(xstr) });
 				if (value.endsWith('구') || value.endsWith('동')) {
 					setQuery(value);
-					setGetType('search');
+					setGetType('SEARCH');
 				} else {
 					setSearchCenter({ lat: Number(ystr), lng: Number(xstr) });
-					setGetType('latlng');
+					setGetType('LATLNG');
 				}
 			} else {
 				setErrorContent('SEARCH');
