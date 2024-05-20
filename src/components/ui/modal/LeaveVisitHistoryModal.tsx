@@ -29,8 +29,7 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 	const selectCollectionId = useSelectedCollectionId();
 	const { setIsComplete, setCompleteContent } = useContext(CompleteContext);
 	const { setIsSystemError, setType } = useContext(SystemContext);
-	const { setErrorContent, setIsToastError, isToastError } =
-		useContext(ErrorContext);
+	const { setErrorContent, setIsToastError } = useContext(ErrorContext);
 
 	const handleSelectOption = (value: VisitHistoryType) => setOption(value);
 	const handleLeaveVisitHistory = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -52,9 +51,6 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 				const timeDiff = now.getTime() - lastCreatedAt.getTime();
 				const hoursPassed = timeDiff / (1000 * 60 * 60);
 				if (hoursPassed < 24) {
-					if (isToastError) {
-						setIsToastError(false);
-					}
 					setErrorContent('REVIEW');
 					setIsToastError(true);
 					return;

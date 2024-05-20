@@ -40,11 +40,9 @@ const FILTERS = [
 ];
 
 const FilterButtons = () => {
-	const [isFilterZero, setIsFilterZero] = useState(false);
 	const selectedFilters = useSelectedFilters();
 	const setSelectedFilters = useSetSelectedFilters();
-	const { setErrorContent, setIsToastError, isToastError } =
-		useContext(ErrorContext);
+	const { setErrorContent, setIsToastError } = useContext(ErrorContext);
 	const filterButtonStyle = (filter: CollectionTags, color: string) => {
 		return `flex items-center justify-between min-w-max h-S-36 px-S-12 py-S-6 gap-2 rounded-full
 		${selectedFilters.includes(filter) ? color + ' text-white Body-Medium Elevation-3-Bottom' : 'bg-white text-Gray-500 Label-Large Elevation-2-Bottom'}`;
@@ -58,22 +56,13 @@ const FilterButtons = () => {
 				return [...prev, value];
 			}
 			if (prev.length === 1) {
-				setIsFilterZero(true);
-				setTimeout(() => {
-					setIsFilterZero(false);
-				}, 3000);
+				setErrorContent('FILTER');
+				setIsToastError(true);
 				return prev;
 			}
 			return prev.filter((filter) => filter !== value);
 		});
 	};
-
-	useEffect(() => {
-		if (isFilterZero) {
-			setErrorContent('FILTER');
-			setIsToastError(true);
-		}
-	}, [isFilterZero, setErrorContent, setIsToastError, isToastError]);
 
 	return (
 		<div className="flex w-[95dvw] gap-S-6 overflow-scroll pb-S-16 pr-3 scrollbar-hide xl:w-min">

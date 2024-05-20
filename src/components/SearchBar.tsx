@@ -20,16 +20,13 @@ const SearchBar = () => {
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isSearchError, setIsSearchError] = useState(false);
 	const [value, setValue] = useState('');
 	const [completes, setCompletes] = useState<string[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(-1);
-	const timerRef = useRef<NodeJS.Timeout | null>(null);
 	const searchRef = useRef<HTMLDivElement | null>(null);
 	const { setIsSystemError, setType } = useContext(SystemContext);
 	const { setGetType } = useContext(getTypeContext);
-	const { setIsToastError, setErrorContent, isToastError } =
-		useContext(ErrorContext);
+	const { setIsToastError, setErrorContent } = useContext(ErrorContext);
 
 	const getSearchCompleteDebounced = useDebouncedCallback(async (value) => {
 		try {
@@ -57,8 +54,8 @@ const SearchBar = () => {
 					setGetType('latlng');
 				}
 			} else {
-				setIsSearchError(true);
-				timerRef.current = setTimeout(() => setIsSearchError(false), 3000);
+				setErrorContent('SEARCH');
+				setIsToastError(true);
 			}
 		});
 	};
@@ -116,26 +113,8 @@ const SearchBar = () => {
 	}, [value, getSearchCompleteDebounced]);
 
 	useEffect(() => {
-		return () => {
-			if (timerRef.current !== null) {
-				clearTimeout(timerRef.current);
-			}
-		};
-	}, []);
-
-	useEffect(() => {
 		setCurrentIndex(-1);
 	}, [completes]);
-
-	useEffect(() => {
-		if (isSearchError) {
-			if (isToastError) {
-				setIsToastError(false);
-			}
-			setIsToastError(true);
-			setErrorContent('SEARCH');
-		}
-	}, [isSearchError, setIsToastError, setErrorContent, isToastError]);
 
 	return (
 		<div className="relative w-full xl:w-max" ref={searchRef}>
