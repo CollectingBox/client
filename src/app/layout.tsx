@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
-import ProvidersWrapper from '@/components/contexts/ProvidersWrapper';
+import RQProvider from '@/components/contexts/RQProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,13 +28,13 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className={inter.className}>
-				<ProvidersWrapper>
+				<RQProvider>
 					<main className="flex w-[100dvw] overflow-hidden xl:flex-row">
 						{children}
 						<div id="system"></div>
 						<div id="portal"></div>
 					</main>
-				</ProvidersWrapper>
+				</RQProvider>
 			</body>
 		</html>
 	);

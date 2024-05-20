@@ -1,9 +1,8 @@
-import { ErrorContext } from '@/components/contexts/ErrorProvider';
-import { useContext, useEffect, useRef } from 'react';
+import { useErrorToastStore } from '@/store/errorToastStore';
+import { useEffect, useRef } from 'react';
 
 const useErrorStatus = () => {
-	const { isToastError, setIsToastError, errorContent } =
-		useContext(ErrorContext);
+	const { isToastError, setIsToastError, errorContent } = useErrorToastStore();
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {

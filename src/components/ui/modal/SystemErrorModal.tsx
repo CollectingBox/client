@@ -1,12 +1,11 @@
 'use client';
 
-import { SystemContext } from '@/components/contexts/SystemProvider';
 import Close from '@/public/icons/close.svg';
-import { useContext } from 'react';
 import SystemPortal from './SystemPortal';
+import { useSystemStore } from '@/store/systemErrorStore';
 
 const SystemErrorModal = () => {
-	const { type, isSystemError, setIsSystemError } = useContext(SystemContext);
+	const { type, isSystemError, setIsSystemError } = useSystemStore();
 
 	if (!isSystemError) return null;
 
@@ -27,7 +26,7 @@ const SystemErrorModal = () => {
 					<div className="flex flex-col justify-between gap-S-20">
 						<div className="flex justify-between">
 							<p className="text-Gray-900 Title-Large">
-								{type === 'server'
+								{type === 'SERVER'
 									? '일시적인 오류가 발생했습니다'
 									: '네트워크에 연결할 수 없습니다'}
 							</p>
@@ -40,7 +39,7 @@ const SystemErrorModal = () => {
 							</button>
 						</div>
 						<p className="text-Gray-700 Title-Medium">
-							{type === 'server'
+							{type === 'SERVER'
 								? '새로고침을 눌러 다시 시도해주세요.'
 								: '인터넷 연결 상태를 확인한 후 다시 시도해주세요.'}
 						</p>
@@ -51,7 +50,7 @@ const SystemErrorModal = () => {
 						}}
 						className="w-full rounded-[8px] bg-Green-500 px-S-16 py-S-12 text-white"
 					>
-						{type === 'server' ? '새로고침' : '재시도'}
+						{type === 'SERVER' ? '새로고침' : '재시도'}
 					</button>
 				</div>
 			</div>
