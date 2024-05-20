@@ -55,7 +55,7 @@ const LeaveVisitHistoryModal = ({ setIsModalOpen }: Props) => {
 					if (isToastError) {
 						setIsToastError(false);
 					}
-					setErrorContent('review');
+					setErrorContent('REVIEW');
 					setIsToastError(true);
 					return;
 				}

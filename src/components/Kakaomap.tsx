@@ -87,7 +87,7 @@ export default function Kakaomap({
 						setIsToastError(false);
 					}
 					setIsNotSeoul(true);
-					setErrorContent('seoul');
+					setErrorContent('SEOUL');
 					setIsToastError(true);
 				} else {
 					setIsNotSeoul(false);
@@ -98,7 +98,7 @@ export default function Kakaomap({
 
 	useEffect(() => {
 		if (isLevelExceed) {
-			setErrorContent('seoul');
+			setErrorContent('SEOUL');
 			setIsToastError(true);
 		}
 	}, [isLevelExceed]);
@@ -127,7 +127,7 @@ export default function Kakaomap({
 			if (isToastError) {
 				setIsToastError(false);
 			}
-			setErrorContent('data');
+			setErrorContent('DATA');
 			setIsToastError(true);
 		}
 	}, [collectionsLATLNG, collectionsADDRESS, isNotSeoul]);

@@ -70,10 +70,7 @@ const FilterButtons = () => {
 
 	useEffect(() => {
 		if (isFilterZero) {
-			if (isToastError) {
-				setIsToastError(false);
-			}
-			setErrorContent('filter');
+			setErrorContent('FILTER');
 			setIsToastError(true);
 		}
 	}, [isFilterZero, setErrorContent, setIsToastError, isToastError]);

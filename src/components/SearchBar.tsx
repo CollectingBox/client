@@ -133,7 +133,7 @@ const SearchBar = () => {
 				setIsToastError(false);
 			}
 			setIsToastError(true);
-			setErrorContent('search');
+			setErrorContent('SEARCH');
 		}
 	}, [isSearchError, setIsToastError, setErrorContent, isToastError]);
 
