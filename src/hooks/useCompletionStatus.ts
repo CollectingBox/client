@@ -2,7 +2,8 @@ import { CompleteContext } from '@/components/contexts/CompleteProvider';
 import { useContext, useEffect, useRef } from 'react';
 
 const useCompletionStatus = () => {
-	const { isComplete, setIsComplete } = useContext(CompleteContext);
+	const { isComplete, setIsComplete, completeContent } =
+		useContext(CompleteContext);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
@@ -16,7 +17,7 @@ const useCompletionStatus = () => {
 				clearTimeout(timerRef.current);
 			}
 		};
-	}, [isComplete, setIsComplete]);
+	}, [isComplete, setIsComplete, completeContent]);
 
 	return { isComplete };
 };
