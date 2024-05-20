@@ -12,6 +12,7 @@ export default function Copy({ text }: { text: string }) {
 	const copy = async () => {
 		await navigator?.clipboard?.writeText(text);
 		setIcon(CheckIcon);
+		setTimeout(() => setIcon(CopyIcon), 2000);
 		setCompleteContent('COPY');
 		setIsComplete(true);
 	};
