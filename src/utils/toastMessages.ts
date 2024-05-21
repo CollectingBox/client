@@ -19,9 +19,9 @@ export const ERROR_MESSAGES = {
 		title: '방문 기록을 등록할 수 없습니다',
 		description: '방문 기록은 24시간 이후에 재등록할 수 있어요',
 	},
-};
+} as const;
 
 export const COMPLETE_MESSAGES = {
 	REGISTER: '방문 기록이 등록되었습니다',
 	COPY: '주소가 복사되었습니다',
-};
+} as const;
