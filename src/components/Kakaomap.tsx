@@ -14,6 +14,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useErrorToastStore } from '@/store/errorToastStore';
 import { useGetTypeStore } from '@/store/getTypeStore';
 import { useSystemStore } from '@/store/systemErrorStore';
+import { useIsInSeoulStroe } from '@/store/isInSeoulStore';
 
 export default function Kakaomap({
 	controls,
@@ -41,7 +42,7 @@ export default function Kakaomap({
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isNotSeoul, setIsNotSeoul] = useState(false);
+	const { isInSeoul, setIsInSeoul } = useIsInSeoulStroe();
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
@@ -74,11 +75,11 @@ export default function Kakaomap({
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
-					setIsNotSeoul(true);
+					setIsInSeoul(false);
 					setErrorContent('SEOUL');
 					setIsToastError(true);
 				} else {
-					setIsNotSeoul(false);
+					setIsInSeoul(true);
 				}
 			}
 		});
@@ -103,7 +104,7 @@ export default function Kakaomap({
 			isADDRESSCollectionsLoading || isLATLNGCollectionsLoading;
 
 		if (isSearchDataEmpty || isLatlngDataEmpty) {
-			if (!isNotSeoul && !isDataLoading) {
+			if (isInSeoul && !isDataLoading) {
 				setErrorContent('DATA');
 				setIsToastError(true);
 			}
