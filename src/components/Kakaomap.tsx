@@ -9,7 +9,7 @@ import useSearchCollections from '@/hooks/useSearchCollections';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
 import { useMapRef } from '@/store/useMapRefStore';
-import { useMapDataStore } from '@/store/useMapDataStore';
+import { DEFAULT_LOCATION, useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useErrorToastStore } from '@/store/errorToastStore';
 import { useGetTypeStore } from '@/store/getTypeStore';
@@ -104,7 +104,7 @@ export default function Kakaomap({
 			isADDRESSCollectionsLoading || isLATLNGCollectionsLoading;
 
 		if (isSearchDataEmpty || isLatlngDataEmpty) {
-			if (isInSeoul && !isDataLoading) {
+			if (isInSeoul && !isDataLoading && center !== DEFAULT_LOCATION) {
 				setErrorContent('DATA');
 				setIsToastError(true);
 			}

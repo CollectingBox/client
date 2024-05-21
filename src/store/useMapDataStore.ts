@@ -3,7 +3,7 @@ import { createStore } from './store';
 import { LocationType } from '@/types/define';
 
 // NOTE: 위치정보 미허용시 default 값 서울특별시청
-const DEFAULT_LOCATION = {
+export const DEFAULT_LOCATION = {
 	lat: 37.566826004661,
 	lng: 126.978652258309,
 };

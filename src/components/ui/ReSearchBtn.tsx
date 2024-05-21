@@ -3,7 +3,7 @@
 import Refresh from './icons/Refresh';
 import { useIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useMapRef } from '@/store/useMapRefStore';
-import { useMapDataStore } from '@/store/useMapDataStore';
+import { DEFAULT_LOCATION, useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useGetTypeStore } from '@/store/getTypeStore';
 import { useIsInSeoulStroe } from '@/store/isInSeoulStore';
@@ -28,7 +28,7 @@ const ReSearchBtn = () => {
 
 	const isMoved =
 		center.lat !== searchCenter.lat || center.lng !== searchCenter.lng;
-	return isMoved && isInSeoul ? (
+	return isMoved && isInSeoul && center !== DEFAULT_LOCATION ? (
 		<button
 			onClick={() => handleClickResearch(mapRef.current!)}
 			className={`Elevation-2-Bottom fixed bottom-[50px] left-0 right-0 mx-auto flex w-max justify-between gap-S-4 rounded-[32px] bg-Green-400 px-S-20 py-S-12 text-white Title-Small 
