@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Map, MapMarker as Marker } from 'react-kakao-maps-sdk';
 import MapMarker from './MapMarker';
 import useKakaoLoader from '@/utils/util';
@@ -9,11 +9,12 @@ import useSearchCollections from '@/hooks/useSearchCollections';
 import { useSetIsSidebarOpen } from '@/store/sidebarStateStore';
 import { useSelectedFilters } from '@/store/collectionFilterStore';
 import { useMapRef } from '@/store/useMapRefStore';
-import { useMapDataStore } from '@/store/useMapDataStore';
+import { DEFAULT_LOCATION, useMapDataStore } from '@/store/useMapDataStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useErrorToastStore } from '@/store/errorToastStore';
 import { useGetTypeStore } from '@/store/getTypeStore';
 import { useSystemStore } from '@/store/systemErrorStore';
+import { useIsInSeoulStroe } from '@/store/isInSeoulStore';
 
 export default function Kakaomap({
 	controls,
@@ -32,20 +33,16 @@ export default function Kakaomap({
 	const { getType } = useGetTypeStore();
 	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
-	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
-		searchCenter,
-		selectedFilters,
-	);
-	const { collectionsADDRESS, isLoading: isADRLoading } = useSearchCollections(
-		query,
-		selectedFilters,
-	);
+	const { collectionsLATLNG, isLoading: isLATLNGCollectionsLoading } =
+		useCollections(searchCenter, selectedFilters);
+	const { collectionsADDRESS, isLoading: isADDRESSCollectionsLoading } =
+		useSearchCollections(query, selectedFilters);
 	const { setIsSystemError, setType } = useSystemStore();
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
 		null,
 	);
-	const [isNotSeoul, setIsNotSeoul] = useState(false);
+	const { isInSeoul, setIsInSeoul } = useIsInSeoulStroe();
 
 	const handleDragEnd = (map: kakao.maps.Map) => {
 		const latlng = map.getCenter();
@@ -73,16 +70,16 @@ export default function Kakaomap({
 			setGeocoder(new kakao.maps.services.Geocoder());
 		});
 	}, []);
-
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
 				if (result[0].address_name.slice(0, 5) !== '서울특별시') {
-					setIsNotSeoul(true);
+					setIsInSeoul(false);
 					setErrorContent('SEOUL');
 					setIsToastError(true);
 				} else {
-					setIsNotSeoul(false);
+					setIsInSeoul(true);
 				}
 			}
 		});
@@ -90,8 +87,8 @@ export default function Kakaomap({
 
 	useEffect(() => {
 		if (
-			(collectionsADDRESS?.status === 500 && getType === 'SEARCH') ||
-			(collectionsLATLNG?.status === 500 && getType === 'LATLNG')
+			collectionsADDRESS?.status === 500 ||
+			collectionsLATLNG?.status === 500
 		) {
 			setType('SERVER');
 			setIsSystemError(true);
@@ -103,16 +100,31 @@ export default function Kakaomap({
 			getType === 'SEARCH' && collectionsADDRESS?.data?.length === 0;
 		const isLatlngDataEmpty =
 			getType === 'LATLNG' && collectionsLATLNG?.data?.length === 0;
+		const isDataLoading =
+			isADDRESSCollectionsLoading || isLATLNGCollectionsLoading;
 
-		if (
-			(isSearchDataEmpty || isLatlngDataEmpty) &&
-			!isNotSeoul &&
-			!(isADRLoading || isDTOLoading)
-		) {
-			setErrorContent('DATA');
-			setIsToastError(true);
+		if (isSearchDataEmpty || isLatlngDataEmpty) {
+			if (isInSeoul && !isDataLoading && center !== DEFAULT_LOCATION) {
+				setErrorContent('DATA');
+				setIsToastError(true);
+			}
 		}
-	}, [collectionsLATLNG, collectionsADDRESS, isNotSeoul]);
+	}, [collectionsLATLNG, collectionsADDRESS]);
+	/* eslint-enable react-hooks/exhaustive-deps */
+
+	const filteredLATLNGCollections = useMemo(() => {
+		if (!collectionsLATLNG || !collectionsLATLNG.data) return [];
+		return collectionsLATLNG.data.filter((collection) =>
+			selectedFilters.includes(collection.tag),
+		);
+	}, [collectionsLATLNG, selectedFilters]);
+
+	const filteredADDRESSCollections = useMemo(() => {
+		if (!collectionsADDRESS || !collectionsADDRESS.data) return [];
+		return collectionsADDRESS.data.filter((collection) =>
+			selectedFilters.includes(collection.tag),
+		);
+	}, [collectionsADDRESS, selectedFilters]);
 
 	return (
 		<Map
@@ -133,30 +145,20 @@ export default function Kakaomap({
 			}}
 			onClick={handleClickMap}
 		>
-			{collectionsLATLNG &&
-				collectionsLATLNG?.data?.length > 0 &&
-				getType !== 'SEARCH' &&
-				collectionsLATLNG.data
-					.filter((collection) => selectedFilters.includes(collection.tag))
-					.map((collection) => (
-						<MapMarker
-							key={collection.id}
-							collection={collection}
-							controls={controls}
-						/>
-					))}
-			{collectionsADDRESS &&
-				collectionsADDRESS?.data?.length > 0 &&
-				getType === 'SEARCH' &&
-				collectionsADDRESS.data
-					.filter((collection) => selectedFilters.includes(collection.tag))
-					.map((collection) => (
-						<MapMarker
-							key={collection.id}
-							collection={collection}
-							controls={controls}
-						/>
-					))}
+			{filteredLATLNGCollections.map((collection) => (
+				<MapMarker
+					key={collection.id}
+					collection={collection}
+					controls={controls}
+				/>
+			))}
+			{filteredADDRESSCollections.map((collection) => (
+				<MapMarker
+					key={collection.id}
+					collection={collection}
+					controls={controls}
+				/>
+			))}
 			{location && <Marker position={location} />}
 		</Map>
 	);

@@ -3,11 +3,7 @@
 import Success from '@/public/icons/success.svg';
 import { useCompleteToastStore } from '@/store/completeToastStore';
 import { useEffect, useRef, useState } from 'react';
-
-const completeMessages = {
-	REGISTER: '방문 기록이 등록되었습니다',
-	COPY: '주소가 복사되었습니다',
-};
+import { COMPLETE_MESSAGES } from '@/utils/toastMessages';
 
 export default function ToastComplete() {
 	const [isVisible, setIsVisible] = useState(true);
@@ -16,7 +12,7 @@ export default function ToastComplete() {
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	useEffect(() => {
-		const message = completeMessages[completeContent] || '';
+		const message = COMPLETE_MESSAGES[completeContent] || '';
 		setCompleteMessage(message);
 		timerRef.current = setTimeout(() => {
 			setIsVisible(false);

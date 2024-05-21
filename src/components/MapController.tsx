@@ -16,7 +16,7 @@ const MapController = () => {
 		if (!location) return;
 		setCenter(location);
 	};
-
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition((position) => {
 			setLocation({
@@ -24,15 +24,15 @@ const MapController = () => {
 				lng: position.coords.longitude,
 			});
 		});
-	}, [setLocation]);
+	}, []);
 
 	useEffect(() => {
 		if (location) {
 			setCenter(location);
 			setSearchCenter(location);
 		}
-	}, [location, setCenter, setSearchCenter]);
-
+	}, [location]);
+	/* eslint-enable react-hooks/exhaustive-deps */
 	return (
 		<div className="fixed left-0 top-0 w-full px-6 pt-12 xl:static xl:pt-6">
 			<div className="flex flex-col gap-S-14">
