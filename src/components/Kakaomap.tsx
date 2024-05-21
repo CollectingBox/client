@@ -32,14 +32,10 @@ export default function Kakaomap({
 	const { getType } = useGetTypeStore();
 	const { setIsToastError, setErrorContent } = useErrorToastStore();
 
-	const { collectionsLATLNG, isLoading: isDTOLoading } = useCollections(
-		searchCenter,
-		selectedFilters,
-	);
-	const { collectionsADDRESS, isLoading: isADRLoading } = useSearchCollections(
-		query,
-		selectedFilters,
-	);
+	const { collectionsLATLNG, isLoading: isLATLNGCollectionsLoading } =
+		useCollections(searchCenter, selectedFilters);
+	const { collectionsADDRESS, isLoading: isADDRESSCollectionsLoading } =
+		useSearchCollections(query, selectedFilters);
 	const { setIsSystemError, setType } = useSystemStore();
 
 	const [geocoder, setGeocoder] = useState<kakao.maps.services.Geocoder | null>(
@@ -73,7 +69,7 @@ export default function Kakaomap({
 			setGeocoder(new kakao.maps.services.Geocoder());
 		});
 	}, []);
-
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		geocoder?.coord2RegionCode(center.lng, center.lat, (result, status) => {
 			if (status === kakao.maps.services.Status.OK) {
@@ -90,8 +86,8 @@ export default function Kakaomap({
 
 	useEffect(() => {
 		if (
-			(collectionsADDRESS?.status === 500 && getType === 'SEARCH') ||
-			(collectionsLATLNG?.status === 500 && getType === 'LATLNG')
+			collectionsADDRESS?.status === 500 ||
+			collectionsLATLNG?.status === 500
 		) {
 			setType('SERVER');
 			setIsSystemError(true);
@@ -103,17 +99,17 @@ export default function Kakaomap({
 			getType === 'SEARCH' && collectionsADDRESS?.data?.length === 0;
 		const isLatlngDataEmpty =
 			getType === 'LATLNG' && collectionsLATLNG?.data?.length === 0;
+		const isDataLoading =
+			isADDRESSCollectionsLoading || isLATLNGCollectionsLoading;
 
-		if (
-			(isSearchDataEmpty || isLatlngDataEmpty) &&
-			!isNotSeoul &&
-			!(isADRLoading || isDTOLoading)
-		) {
-			setErrorContent('DATA');
-			setIsToastError(true);
+		if (isSearchDataEmpty || isLatlngDataEmpty) {
+			if (!isNotSeoul && !isDataLoading) {
+				setErrorContent('DATA');
+				setIsToastError(true);
+			}
 		}
-	}, [collectionsLATLNG, collectionsADDRESS, isNotSeoul]);
-
+	}, [collectionsLATLNG, collectionsADDRESS]);
+	/* eslint-enable react-hooks/exhaustive-deps */
 	return (
 		<Map
 			center={center}
@@ -135,7 +131,7 @@ export default function Kakaomap({
 		>
 			{collectionsLATLNG &&
 				collectionsLATLNG?.data?.length > 0 &&
-				getType !== 'SEARCH' &&
+				getType === 'LATLNG' &&
 				collectionsLATLNG.data
 					.filter((collection) => selectedFilters.includes(collection.tag))
 					.map((collection) => (
