@@ -31,7 +31,8 @@ export default function Kakaomap({
 	const mapRef = useMapRef();
 
 	const { getType } = useGetTypeStore();
-	const { setIsToastError, setErrorContent } = useErrorToastStore();
+	const { setIsToastError, setErrorContent, isToastError } =
+		useErrorToastStore();
 
 	const { collectionsLATLNG, isLoading: isLATLNGCollectionsLoading } =
 		useCollections(searchCenter, selectedFilters);
@@ -145,20 +146,22 @@ export default function Kakaomap({
 			}}
 			onClick={handleClickMap}
 		>
-			{filteredLATLNGCollections.map((collection) => (
-				<MapMarker
-					key={collection.id}
-					collection={collection}
-					controls={controls}
-				/>
-			))}
-			{filteredADDRESSCollections.map((collection) => (
-				<MapMarker
-					key={collection.id}
-					collection={collection}
-					controls={controls}
-				/>
-			))}
+			{getType === 'LATLNG' &&
+				filteredLATLNGCollections.map((collection) => (
+					<MapMarker
+						key={collection.id}
+						collection={collection}
+						controls={controls}
+					/>
+				))}
+			{getType === 'SEARCH' &&
+				filteredADDRESSCollections.map((collection) => (
+					<MapMarker
+						key={collection.id}
+						collection={collection}
+						controls={controls}
+					/>
+				))}
 			{location && <Marker position={location} />}
 		</Map>
 	);
