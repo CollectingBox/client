@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: '우수함',
-	description: '우리동네 수거함',
+	description: '우리동네 수거함 위치, 우수함',
 	icons: {
 		icon: '/favicon.png',
 	},
