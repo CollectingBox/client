@@ -36,10 +36,10 @@ export default function ToastError() {
 	return (
 		<div
 			className={`${isVisible ? 'opacity-70' : 'opacity-0'} 
-			fixed bottom-[50px] left-0 right-0 mx-auto max-w-[400px] xl:bottom-[S-24] xl:mx-0 
+			fixed bottom-[50px] left-S-24 w-[calc(100dvw-48px)] max-w-[340px] xl:bottom-[S-24]
 			${isSidebarOpen ? 'xl:left-[402px]' : 'xl:left-[110px]'}  
-			Elevation-2-Bottom z-50 flex w-[95dvw] gap-S-8 rounded-lg bg-[#92908e] 
-			px-S-20 py-S-12 transition-opacity duration-500 xl:w-[360px]`}
+			Elevation-2-Bottom z-50 flex gap-S-8 rounded-lg bg-[#92908e] 
+			px-S-20 py-S-12 transition-opacity duration-500`}
 		>
 			<Alert color="white" />
 			<div className="flex flex-col gap-S-4">
