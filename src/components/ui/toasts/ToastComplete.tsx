@@ -28,10 +28,10 @@ export default function ToastComplete() {
 	return (
 		<div
 			className={`${isVisible ? 'opacity-90' : 'opacity-0'} 
-            Elevation-2-Bottom fixed bottom-S-24 left-0 right-0 z-50 mx-auto 
-            flex w-[95dvw] max-w-[400px] gap-S-8 rounded-[8px] bg-[#65B07B] 
+            Elevation-2-Bottom fixed bottom-S-24 left-S-24 z-50 
+            flex w-[calc(100dvw-48px)] max-w-[340px] gap-S-8 rounded-[8px] bg-[#65B07B] 
             px-S-20 py-S-12 transition-opacity duration-500 
-            xl:bottom-[S-24] xl:left-[414px] xl:mx-0 xl:w-[340px]`}
+            xl:bottom-[S-24] xl:left-[414px]`}
 		>
 			<Success />
 			<p className="text-white Title-Small">{completeMessage}</p>
