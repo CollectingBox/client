@@ -16,7 +16,7 @@ interface Props {
 }
 
 const MapInteraction = ({ controls }: Props) => {
-	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1224px' });
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width:1280px' });
 
 	return (
 		<>
