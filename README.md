@@ -2,12 +2,11 @@
 - **[2024 서울 열린데이터광장 공공데이터 활용 창업경진대회]** 출품작 
 - 서울시의 폐의류, 폐형광등/폐건전지, 폐의약품, 쓰레기통 위치 정보를 제공하고 방문 기록을 남길 수 있는 서비스
 
-## 서비스 링크
-<p align="center">
+## 서비스 링크:  https://woosuham.site/
   <a href="https://woosuham.site/" target="_blank">
     <img src="https://i.ibb.co/LQHcgpm/image.png" alt="HEARUS-logo" border="0" width="100"/>
   </a> 
-</p>
+ 
 
 ## 서비스 플로우
 <p align="center">
@@ -16,12 +15,12 @@
 
 
 ### **1. 수거함 종류 필터링** 
-- 카테고리 버튼 선택시 마커 색상으로 구분하여 위치 표시
+- 카테고리 버튼 선택시 지도 위에 마커 색상으로 구분하여 위치 표시
 - 필터링을 모두 끄려고 할 시 또는 데이터가 없을 때 토스트 메시지
  
 |  모바일  |  PC  |
 |--|--|
-| ![A-001-04  필터링을 모두 끄려고 할 시](https://github.com/user-attachments/assets/70a04b85-8af8-4207-be14-ad357497541c) | ![A-001-04  필터링을 모두 끄려고 할 시 (1)](https://github.com/user-attachments/assets/4b0ce7e5-348a-4126-bd8a-f5df08f9c563) |
+| ![image](https://github.com/user-attachments/assets/0f38bc6d-1b80-4c6c-ba5e-4088a7fe8e96) | ![image](https://github.com/user-attachments/assets/b48592aa-5eb4-40fc-a9ba-44f1893926a6) |
  
 ### **2. 수거함 상세 정보**
 - 위치 정보(이름, 주소, 카카오맵 길찾기, 카카오맵 로드뷰), 최근 방문기록, 배출방법 제공 
