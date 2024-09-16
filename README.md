@@ -78,10 +78,30 @@
 |  ![image](https://github.com/user-attachments/assets/c769160f-a8f7-4a08-a736-1c877e2fa7a9) | ![image](https://github.com/user-attachments/assets/fb91db80-87cc-4556-8ae0-9b01b951b501) |
 
 
+### **5. 시스템 얼럿**
+- 서버오류, 네트워크 연결 안될 시 알림
+
+<table>
+  <tr>
+    <td align="center" colspan="2">
+      <b>모바일</b>
+    </td>
+  </tr>    
+  <tr>
+    <td>
+      <img src="https://github.com/user-attachments/assets/27085bff-090b-4061-830f-676c80c1b4f3" width="49%">
+      <img src="https://github.com/user-attachments/assets/c7a5f473-6a6d-484f-bcb6-e4bc62ddc2c1" width="49%">
+    </td>
+  </tr>
+</table>
+
+| PC |
+|--|
+|![B-001-02  네트워크 오류 (1)](https://github.com/user-attachments/assets/2daaf095-7023-4a96-9818-729feba36431)|
+
 ## 기술 스택
 | 언어 | 프레임워크 | CSS | 상태관리(client) | 상태관리(server) | 배포 | CI/CD |
 |--|--|--|--|--|--|--|
-| ![image](https://github.com/user-attachments/assets/e5450c28-4022-4e1e-9c15-d962c8d0fe47) |  |  | ![image](https://github.com/user-attachments/assets/f4eb48fc-d54b-4ab5-9299-bc27c6ae93da) | ![image](https://github.com/user-attachments/assets/03506e89-883b-4da8-a334-e5cad795b420) |  |  |
 | TypeScript | Next.js | Tailwind CSS | Zustand | Tanstack React Query | Vercel | Github Actions |
 
 ## 주요 기여자
