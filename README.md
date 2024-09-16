@@ -10,8 +10,9 @@
 </p>
 
 ## 서비스 플로우
-![image](https://github.com/user-attachments/assets/0f2a5aa8-9d6b-41b7-9e27-a7d277fdd02f)
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0f2a5aa8-9d6b-41b7-9e27-a7d277fdd02f" />
+</p>
 
 
 ### **1. 수거함 종류 필터링** 
@@ -33,9 +34,9 @@
   </tr>    
   <tr>
     <td>
-      <img src="https://github.com/user-attachments/assets/73e4e3f9-0e23-4f11-81b4-0fe0c10b8c47" width="33%">
-      <img src="https://github.com/user-attachments/assets/83d56487-b210-487f-91cb-29bb136f46ec" width="33%">
-      <img src="https://github.com/user-attachments/assets/39a599ba-e565-4993-b84f-b99f31cb0b56" width="33%">
+      <img src="https://github.com/user-attachments/assets/73e4e3f9-0e23-4f11-81b4-0fe0c10b8c47" width="32%">
+      <img src="https://github.com/user-attachments/assets/83d56487-b210-487f-91cb-29bb136f46ec" width="32%">
+      <img src="https://github.com/user-attachments/assets/39a599ba-e565-4993-b84f-b99f31cb0b56" width="32%">
     </td>
   </tr>
 </table>
@@ -56,16 +57,29 @@
   </tr>    
   <tr>
     <td>
-      <img src="https://github.com/user-attachments/assets/9f20c30f-85e0-4fda-9d26-60b7d5cd6527" width="24%">
-      <img src="https://github.com/user-attachments/assets/588f8041-ea65-47ad-888d-f24fe7554a7d" width="24%">
-      <img src="https://github.com/user-attachments/assets/9cd9c95c-8e1c-46f6-9fd0-7bb21231b54c" width="24%">
-      <img src="https://github.com/user-attachments/assets/dea9e638-d39c-429a-8dd3-36d8274323f3" width="24%">
+      <img src="https://github.com/user-attachments/assets/c430ed8b-118d-44d0-a40e-010efcd6a9e8" width="24%">
+      <img src="https://github.com/user-attachments/assets/dd492bf7-ac15-4fa3-8be0-a5838c324d38" width="24%">
+      <img src="https://github.com/user-attachments/assets/8ce64efa-cf2a-4603-a906-6c890fb44526" width="24%">
+      <img src="https://github.com/user-attachments/assets/ae781050-8e90-449a-a0a6-9d99a0b2888d" width="24%">
     </td>
   </tr>
 </table>
 
+| PC |
+|--|
+|![image](https://github.com/user-attachments/assets/f9cf4a1a-ae26-44d7-a3b8-8b11fa392c21)|
+
+### **4. 검색**
+- 구, 동단위 검색
+- 행정동 기준으로 자동완성 지원
+
+| 모바일 | PC |
+|--|--|
+|  ![image](https://github.com/user-attachments/assets/c769160f-a8f7-4a08-a736-1c877e2fa7a9) | ![image](https://github.com/user-attachments/assets/fb91db80-87cc-4556-8ae0-9b01b951b501) |
+
+
 ## 기술 스택
-| Language | Library | CSS | State Management | Data Fetching | 배포 | CI/CD |
+| 언어 | 프레임워크 | CSS | 상태관리(client) | 상태관리(server) | 배포 | CI/CD |
 |--|--|--|--|--|--|--|
 | ![image](https://github.com/user-attachments/assets/e5450c28-4022-4e1e-9c15-d962c8d0fe47) |  |  | ![image](https://github.com/user-attachments/assets/f4eb48fc-d54b-4ab5-9299-bc27c6ae93da) | ![image](https://github.com/user-attachments/assets/03506e89-883b-4da8-a334-e5cad795b420) |  |  |
 | TypeScript | Next.js | Tailwind CSS | Zustand | Tanstack React Query | Vercel | Github Actions |
